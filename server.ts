@@ -177,6 +177,7 @@ interface DatabaseSchema {
   deliverables: any[];
   project_activities: any[];
   invoices: any[];
+  team_members: any[];
 }
 
 const INITIAL_CLIENTS = [
@@ -296,6 +297,11 @@ const INITIAL_INVOICES = [
   { id: "inv-2", projectId: "proj-1", invoiceNo: "INV-2026-089", amount: 25000, currency: "USD", company: "AeroGlobal Inc.", description: "Phase 3 Client Handover Operations", status: "unpaid", issueDate: "2026-06-14", dueDate: "2026-06-28" }
 ];
 
+const INITIAL_TEAM_MEMBERS = [
+  { id: "tm-1", projectId: "proj-1", userId: "u-3", role: "Developer", status: "active" },
+  { id: "tm-2", projectId: "proj-1", userId: "u-4", role: "Designer", status: "active" }
+];
+
 function loadDatabase(): DatabaseSchema {
   if (!fs.existsSync(DATA_FILE)) {
     const freshDb: DatabaseSchema = {
@@ -320,7 +326,8 @@ function loadDatabase(): DatabaseSchema {
       feedback: INITIAL_FEEDBACK,
       deliverables: INITIAL_DELIVERABLES,
       project_activities: INITIAL_PROJECT_ACTIVITIES,
-      invoices: INITIAL_INVOICES
+      invoices: INITIAL_INVOICES,
+      team_members: INITIAL_TEAM_MEMBERS
     };
     fs.writeFileSync(DATA_FILE, JSON.stringify(freshDb, null, 2));
     return freshDb;
@@ -350,7 +357,8 @@ function loadDatabase(): DatabaseSchema {
       feedback: parsed.feedback || INITIAL_FEEDBACK,
       deliverables: parsed.deliverables || INITIAL_DELIVERABLES,
       project_activities: parsed.project_activities || INITIAL_PROJECT_ACTIVITIES,
-      invoices: parsed.invoices || INITIAL_INVOICES
+      invoices: parsed.invoices || INITIAL_INVOICES,
+      team_members: parsed.team_members || INITIAL_TEAM_MEMBERS
     };
   } catch (e) {
     console.error("Failed to parse local database. Resetting schema...", e);
@@ -376,7 +384,8 @@ function loadDatabase(): DatabaseSchema {
       feedback: INITIAL_FEEDBACK,
       deliverables: INITIAL_DELIVERABLES,
       project_activities: INITIAL_PROJECT_ACTIVITIES,
-      invoices: INITIAL_INVOICES
+      invoices: INITIAL_INVOICES,
+      team_members: INITIAL_TEAM_MEMBERS
     };
   }
 }
@@ -2183,6 +2192,119 @@ async function startServer() {
 
     saveDatabase(db);
     res.json({ success: true, deliverable: del });
+  });
+
+  // APPROVALS API
+  app.get("/api/approvals", (req: any, res) => {
+    const db = loadDatabase();
+    const clientProfile = db.clients.find(c => c.userId === (req.user?.id || "u-2"));
+    const clientProjectIds = db.project_members
+      .filter(pm => pm.userId === (req.user?.id || "u-2"))
+      .map(pm => pm.projectId);
+    
+    const deliverables = db.deliverables.filter(d => clientProjectIds.includes(d.projectId));
+    const milestones = db.milestones.filter(m => clientProjectIds.includes(m.projectId));
+    
+    const approvals = [...deliverables.map(d => ({
+      id: d.id,
+      name: d.name,
+      status: d.status,
+      projectId: d.projectId,
+      type: "deliverable"
+    })), ...milestones.map(m => ({
+      id: m.id,
+      name: m.title,
+      status: m.status === "completed" ? "approved" : m.status === "active" ? "pending" : "pending",
+      projectId: m.projectId,
+      type: "milestone"
+    }))];
+    
+    res.json({ approvals });
+  });
+
+  // MEETINGS API
+  app.get("/api/meetings", (req: any, res) => {
+    const db = loadDatabase();
+    const clientProfile = db.clients.find(c => c.userId === (req.user?.id || "u-2"));
+    const clientProjectIds = db.project_members
+      .filter(pm => pm.userId === (req.user?.id || "u-2"))
+      .map(pm => pm.projectId);
+    
+    const milestones = db.milestones.filter(m => clientProjectIds.includes(m.projectId));
+    
+    const meetings = milestones.map((m, i) => ({
+      id: `mt-${i}`,
+      title: `${m.title} Review Meeting`,
+      date: m.date,
+      startTime: "10:00",
+      endTime: "11:00",
+      projectId: m.projectId,
+      status: m.status === "completed" ? "completed" : "upcoming"
+    }));
+    
+    res.json({ meetings });
+  });
+
+  // TEAM API
+  app.get("/api/team", (req: any, res) => {
+    const db = loadDatabase();
+    const clientProfile = db.clients.find(c => c.userId === (req.user?.id || "u-2"));
+    const teamMembers = db.team_members || [];
+    res.json({ team: teamMembers, client: clientProfile });
+  });
+
+  // REPORTS API
+  app.get("/api/reports", (req: any, res) => {
+    const db = loadDatabase();
+    const clientProfile = db.clients.find(c => c.userId === (req.user?.id || "u-2"));
+    const clientProjectIds = db.project_members.filter(pm => pm.userId === (req.user?.id || "u-2")).map(pm => pm.projectId);
+    const projects = db.projects.filter(p => clientProjectIds.includes(p.id));
+    const invoices = db.invoices.filter(i => clientProfile && i.clientId === clientProfile.id);
+    const deliverables = db.deliverables.filter(d => clientProjectIds.includes(d.projectId));
+    res.json({ 
+      summary: { projects: projects.length, invoices: invoices.length, deliverables: deliverables.length },
+      projects, invoices, deliverables 
+    });
+  });
+
+  // SETTINGS API
+  app.get("/api/settings", (req: any, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+    res.json({ settings: { profile: req.user, notifications: {} } });
+  });
+
+  app.put("/api/settings/profile", (req: any, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+    const { firstName, lastName, username } = req.body;
+    const db = loadDatabase();
+    const user = db.users.find(u => u.id === req.user.id);
+    if (user) {
+      user.firstName = firstName || user.firstName;
+      user.lastName = lastName || user.lastName;
+      user.username = username || user.username;
+      saveDatabase(db);
+    }
+    res.json({ success: true, user: { ...req.user, firstName, lastName, username } });
+  });
+
+  // FILES API
+  app.get("/api/files", (req: any, res) => {
+    const db = loadDatabase();
+    const clientProfile = db.clients.find(c => c.userId === (req.user?.id || "u-2"));
+    const clientProjectIds = db.project_members
+      .filter(pm => pm.userId === (req.user?.id || "u-2"))
+      .map(pm => pm.projectId);
+    
+    const files = db.files
+      .filter(f => clientProjectIds.includes(f.projectId))
+      .map(f => ({ ...f, size: f.fileSize || "1.0 MB" }));
+    
+    res.json({ files });
+  });
+
+  app.get("/api/settings/security", (req: any, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+    res.json({ security: { twoFactorEnabled: false, lastPasswordChange: new Date().toISOString() } });
   });
 
 

@@ -1,60 +1,98 @@
-import React from "react";
-import { Users, UserPlus, Mail, Shield, Calendar } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Users, Mail, Phone, ExternalLink } from "lucide-react";
+import { useAuth } from "../../components/AuthContext";
+
+interface TeamMember {
+  id: string;
+  userId: string;
+  role: string;
+  status: string;
+  user?: { firstName: string; lastName: string; email: string };
+}
 
 export default function TeamPage() {
-  const members = [
-    { id: "1", name: "Amara Vanguard", role: "Lead Architect", email: "amara@afriwaid.com", status: "online" },
-    { id: "2", name: "Waid Soko", role: "Project Manager", email: "waid@afriwaid.com", status: "online" },
-    { id: "3", name: "Client User", role: "Client", email: "client@example.com", status: "offline" },
-  ];
+  const { token } = useAuth();
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTeam = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch("/api/team", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setTeam(data.team || []);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadTeam();
+  }, [token]);
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-display font-black text-slate-900 dark:text-white mb-2">
-            Team
-          </h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">
-            Manage project team members.
-          </p>
-        </div>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg font-mono text-xs hover:bg-blue-600 flex items-center gap-2">
-          <UserPlus className="w-4 h-4" />
-          Add Member
-        </button>
+      <div>
+        <h1 className="text-2xl font-display font-black text-slate-900 dark:text-white mb-2">
+          Team
+        </h1>
+        <p className="text-slate-500 dark:text-zinc-400 text-sm">
+          Project team members and collaborators.
+        </p>
       </div>
 
-      <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-slate-200 dark:border-zinc-800">
-          <div className="relative">
-            <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search members..."
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-zinc-800 rounded-lg bg-white dark:bg-black text-sm"
-            />
-          </div>
+      {loading ? (
+        <div className="text-center py-12 text-slate-500">
+          <Users className="w-12 h-12 mx-auto mb-4 text-slate-300 animate-pulse" />
+          <p className="font-mono text-xs">Loading team...</p>
         </div>
-        <div className="divide-y divide-slate-200 dark:divide-zinc-800">
-          {members.map((member) => (
-            <div key={member.id} className="p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white flex items-center justify-center font-bold">
-                  {member.name[0]}
+      ) : team.length === 0 ? (
+        <div className="text-center py-12 text-slate-500">
+          <Users className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+          <p className="font-mono text-xs">No team members</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {team.map((m) => (
+            <div key={m.id} className="p-4 rounded-xl bg-white dark:bg-black border border-slate-200 dark:border-zinc-800">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-zinc-700 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-slate-500" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900 dark:text-white">{member.name}</p>
-                  <p className="text-[10px] text-slate-500">{member.role}</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">
+                    {m.user?.firstName} {m.user?.lastName}
+                  </p>
+                  <p className="text-[10px] text-slate-400 font-mono">{m.role}</p>
                 </div>
               </div>
-              <div className={`w-2 h-2 rounded-full ${
-                member.status === "online" ? "bg-emerald-500" : "bg-slate-400"
-              }`} />
+              <div className="space-y-2 text-[10px]">
+                <div className="flex items-center gap-2 text-slate-500">
+                  <Mail className="w-3 h-3" />
+                  <span>{m.user?.email}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className={`px-2 py-1 rounded font-mono uppercase ${
+                    m.status === "active" 
+                      ? "bg-emerald-500/20 text-emerald-600" 
+                      : "bg-slate-200 dark:bg-zinc-700 text-slate-500"
+                  }`}>
+                    {m.status}
+                  </span>
+                  <button className="text-slate-400 hover:text-slate-600">
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

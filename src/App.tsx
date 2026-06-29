@@ -709,7 +709,7 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col items-center justify-center font-sans space-y-4">
         <Sparkles className="w-8 h-8 text-blue-600 animate-spin" />
-        <span className="text-xs uppercase tracking-widest text-slate-500 font-mono font-bold">BOOTING AFRIWAID CLIENT ENGINE...</span>
+        <span className="text-xs uppercase tracking-widest text-slate-500 font-mono font-bold">BOOTING AFRIWAID STUDIO ENGINE...</span>
       </div>
     );
   }

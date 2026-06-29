@@ -1,18 +1,45 @@
-import React, { useState } from "react";
-import { User, Bell, Shield, Key, Palette, CreditCard, Link, Save } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Settings, User, Bell, Shield, Palette, Save } from "lucide-react";
+import { useAuth } from "../../components/AuthContext";
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("profile");
+  const { token } = useAuth();
+  const [settings, setSettings] = useState({ profile: { firstName: "", lastName: "", username: "" }, notifications: { email: true, push: false } });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "notifications", label: "Notifications", icon: Bell },
-    { id: "security", label: "Security", icon: Shield },
-    { id: "api-keys", label: "API Keys", icon: Key },
-    { id: "appearance", label: "Appearance", icon: Palette },
-    { id: "billing", label: "Billing", icon: CreditCard },
-    { id: "integrations", label: "Integrations", icon: Link },
-  ];
+  useEffect(() => {
+    const loadSettings = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch("/api/settings", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setSettings(data.settings || { profile: {}, notifications: {} });
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadSettings();
+  }, [token]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await fetch("/api/settings/profile", {
+        method: "PUT",
+        headers: { "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(settings.profile)
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -21,82 +48,70 @@ export default function SettingsPage() {
           Settings
         </h1>
         <p className="text-slate-500 dark:text-zinc-400 text-sm">
-          Configure your account and preferences.
+          Manage your account preferences and security settings.
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="w-full lg:w-48">
-          <nav className="space-y-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition ${
-                  activeTab === tab.id
-                    ? "bg-blue-500 text-white"
-                    : "text-slate-600 hover:bg-slate-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
-                }`}
-              >
-                <tab.icon className="w-4 h-4" />
-                <span>{tab.label}</span>
-              </button>
-            ))}
-          </nav>
+      <div className="space-y-6">
+        <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl p-6">
+          <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <User className="w-5 h-5" /> Profile Settings
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-mono text-slate-400 mb-1">First Name</label>
+              <input
+                type="text"
+                value={settings.profile.firstName || ""}
+                onChange={(e) => setSettings({...settings, profile: {...settings.profile, firstName: e.target.value}})}
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-700 rounded-lg text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-mono text-slate-400 mb-1">Last Name</label>
+              <input
+                type="text"
+                value={settings.profile.lastName || ""}
+                onChange={(e) => setSettings({...settings, profile: {...settings.profile, lastName: e.target.value}})}
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-700 rounded-lg text-sm"
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="flex-1 bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl p-6">
-          {activeTab === "profile" && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white">
-                Profile Settings
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] font-mono uppercase mb-1 block">First Name</label>
-                  <input type="text" className="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 rounded-lg bg-white dark:bg-black" />
-                </div>
-                <div>
-                  <label className="text-[10px] font-mono uppercase mb-1 block">Last Name</label>
-                  <input type="text" className="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 rounded-lg bg-white dark:bg-black" />
-                </div>
-              </div>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg font-mono text-xs hover:bg-blue-600 flex items-center gap-2">
-                <Save className="w-4 h-4" />
-                Save Changes
-              </button>
-            </div>
-          )}
+        <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl p-6">
+          <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <Bell className="w-5 h-5" /> Notification Preferences
+          </h3>
+          <div className="space-y-3">
+            <label className="flex items-center justify-between">
+              <span className="text-sm">Email Notifications</span>
+              <input type="checkbox" checked={settings.notifications.email} onChange={(e) => setSettings({...settings, notifications: {...settings.notifications, email: e.target.checked}})} className="toggle" />
+            </label>
+            <label className="flex items-center justify-between">
+              <span className="text-sm">Push Notifications</span>
+              <input type="checkbox" checked={settings.notifications.push} onChange={(e) => setSettings({...settings, notifications: {...settings.notifications, push: e.target.checked}})} className="toggle" />
+            </label>
+          </div>
+        </div>
 
-          {activeTab === "security" && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white">
-                Security Settings
-              </h3>
-              <div className="space-y-3">
-                <button className="w-full text-left p-3 bg-slate-50 dark:bg-zinc-950 rounded-lg">
-                  <p className="font-mono text-xs text-slate-500 mb-1">Change Password</p>
-                  <p className="text-sm text-slate-700 dark:text-white">Update your password</p>
-                </button>
-                <button className="w-full text-left p-3 bg-slate-50 dark:bg-zinc-950 rounded-lg">
-                  <p className="font-mono text-xs text-slate-500 mb-1">Two-Factor Authentication</p>
-                  <p className="text-sm text-slate-700 dark:text-white">Enable 2FA for extra security</p>
-                </button>
-              </div>
-            </div>
-          )}
+        <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl p-6">
+          <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <Shield className="w-5 h-5" /> Security
+          </h3>
+          <button className="text-sm text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white">
+            Change Password
+          </button>
+        </div>
 
-          {activeTab === "api-keys" && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white">
-                API Keys
-              </h3>
-              <div className="text-center py-12 text-slate-500">
-                <Key className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-                <p className="font-mono text-xs">API keys management - Coming soon</p>
-              </div>
-            </div>
-          )}
+        <div className="flex justify-end">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg text-sm font-medium disabled:opacity-50"
+          >
+            <Save className="w-4 h-4" /> Save Changes
+          </button>
         </div>
       </div>
     </div>

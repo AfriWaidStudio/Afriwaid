@@ -22,6 +22,17 @@ import ModeratorDashboard from "../../components/ModeratorDashboard";
 import AuditorDashboard from "../../components/AuditorDashboard";
 import DeveloperDashboard from "../../components/DeveloperDashboard";
 import OperatorDashboard from "../../components/OperatorDashboard";
+import ClientDashboard from "../../pages/client/DashboardPage";
+import ClientProjects from "../../pages/client/ProjectsPage";
+import ClientDeliverablesPage from "../../pages/client/DeliverablesPage";
+import ClientApprovalsPage from "../../pages/client/ApprovalsPage";
+import ClientInvoicesPage from "../../pages/client/InvoicesPage";
+import ClientMeetingsPage from "../../pages/client/MeetingsPage";
+import ClientMessagesPage from "../../pages/client/MessagesPage";
+import ClientFilesPage from "../../pages/client/FilesPage";
+import ClientTeamPage from "../../pages/client/TeamPage";
+import ClientReportsPage from "../../pages/client/ReportsPage";
+import ClientSettingsPage from "../../pages/client/SettingsPage";
 
 interface AppRouterProps {
   projects: Project[];
@@ -205,6 +216,94 @@ export function AppRouter({
           <div className="p-6">
             <OperatorDashboard clientProfiles={clients} />
           </div>
+        </ProtectedRoute>
+      } />
+
+      <Route path="/portal" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientDashboard />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/projects" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientProjects />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/deliverables" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientDeliverablesPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/approvals" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientApprovalsPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/invoices" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientInvoicesPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/meetings" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientMeetingsPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/messages" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientMessagesPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/files" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientFilesPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/team" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientTeamPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/reports" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientReportsPage />
+          </ClientWorkspaceLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/portal/settings" element={
+        <ProtectedRoute requiredRole="Client">
+          <ClientWorkspaceLayout>
+            <ClientSettingsPage />
+          </ClientWorkspaceLayout>
         </ProtectedRoute>
       } />
       

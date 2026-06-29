@@ -293,7 +293,7 @@
       "token": "token_2d96bc02456f9350de202f6d47b4e4b5d69cf43d9a1050426b9a767e8828a35a1396f8ea36dc2c67",
       "ipAddress": "127.0.0.1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
-      "isActive": true,
+      "isActive": false,
       "createdAt": "2026-06-29T16:37:01.542Z",
       "expiresAt": "2026-06-29T18:37:01.542Z"
     }
