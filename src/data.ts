@@ -48,7 +48,8 @@ export const INITIAL_CUSTOMIZATION: CustomizationSettings = {
   mediaSubtitle: "CINEMATIC DIGITAL ENG ENGAGEMENTS",
   journalTagline: "Active Developer Logs & System Milestones",
   journalTitle: "The AfriWaid Build Journal",
-  journalDescription: "Follow our transparent engineering roadmap. We push frequent hot-fixes, core architectural developments, spatial animations, and machine learning structures to the active sandbox stack."
+  journalDescription: "Follow our transparent engineering roadmap. We push frequent hot-fixes, core architectural developments, spatial animations, and machine learning structures to the active sandbox stack.",
+  founderPortraitUrl: ""
 };
 
 export const INITIAL_PROJECTS: Project[] = [

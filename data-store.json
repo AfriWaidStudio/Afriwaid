@@ -345,9 +345,29 @@
       "token": "token_38b06e9858839f9e12f2fe709f71b48c75bfc22854d92f10614d77691179629178d0026c5a437b13",
       "ipAddress": "127.0.0.1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
-      "isActive": true,
+      "isActive": false,
       "createdAt": "2026-06-30T05:02:00.051Z",
       "expiresAt": "2026-06-30T07:02:00.051Z"
+    },
+    {
+      "id": "s-54f15b2c-c4c1-449a-99d7-7270cde3a178",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "token": "token_3e4d460b04271f505ce1bf96c106a68e1a812cc46f195711a5b45e7948701deb7e93fa72d9defd62",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-06-30T05:23:06.640Z",
+      "expiresAt": "2026-06-30T07:23:06.640Z"
+    },
+    {
+      "id": "s-5f93b995-813b-48fb-856b-771d4dd4c1cf",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "token": "token_b8ad8e825723a012d0fe42adfa0b61986874203dd5b7f025f9067b0858395d394dba740ec61530a6",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-06-30T05:31:36.267Z",
+      "expiresAt": "2026-06-30T07:31:36.267Z"
     }
   ],
   "password_resets": [],
@@ -361,6 +381,50 @@
   ],
   "login_attempts": [],
   "audit_logs": [
+    {
+      "id": "l-ace71212-bc50-4c26-9dfc-d8da27935cce",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "username": "chinnikstah",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-06-30T05:31:36.267Z"
+    },
+    {
+      "id": "l-5e8fc53a-3e62-4f93-aa60-f4734f2a5418",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "username": "chinnikstah",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-06-30T05:27:35.987Z"
+    },
+    {
+      "id": "l-4134c745-5ae1-4cc7-abf6-a58aa034b798",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "username": "chinnikstah",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-06-30T05:23:06.640Z"
+    },
+    {
+      "id": "l-9853b744-f3e4-44cf-9709-92e4471d07fb",
+      "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",
+      "username": "chinnikstah",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-06-30T05:18:51.916Z"
+    },
     {
       "id": "l-8cf64330-5ad2-4deb-a41c-2b4985ad40a6",
       "userId": "u-334e17e6-d41e-4c0a-80bd-7603fcd08cb7",

@@ -1399,7 +1399,7 @@ function AppContent() {
 
         {/* Render: Founder Profile */}
         {activeTab === "Founder Profile" && (
-          <FounderProfile cvs={cvs} onDownloadIncrement={handleDownloadIncrement} onContactClick={() => setActiveTab("Services")} />
+          <FounderProfile cvs={cvs} onDownloadIncrement={handleDownloadIncrement} onContactClick={() => setActiveTab("Services")} customization={customization} />
         )}
 
         {/* Render: 9. Company Profile */}

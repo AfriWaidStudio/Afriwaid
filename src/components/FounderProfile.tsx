@@ -30,12 +30,13 @@ import {
   Search,
   MessageSquare
 } from "lucide-react";
-import { CV } from "../types";
+import { CV, CustomizationSettings } from "../types";
 
 interface FounderProfileProps {
   cvs?: CV[];
   onDownloadIncrement?: (id: string) => void;
   onContactClick?: () => void;
+  customization?: CustomizationSettings;
 }
 
 // 1. Definition of the 5 expressions of the founder
@@ -315,7 +316,7 @@ const CORE_PRINCIPLES = [
   }
 ];
 
-export default function FounderProfile({ cvs = [], onDownloadIncrement, onContactClick }: FounderProfileProps) {
+export default function FounderProfile({ cvs = [], onDownloadIncrement, onContactClick, customization }: FounderProfileProps) {
   const [activeTab, setActiveTab] = useState<"journey" | "studio" | "ecosystem" | "principles" | "vision">("journey");
   
   // Interactive Identity state
@@ -481,7 +482,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
     <div className="space-y-16 text-slate-800 dark:text-neutral-100 font-sans" id="founder-profile-system">
       
       {/* SECTION: HERO CONTAINER with Live Ecosystem Nodes backdrop */}
-      <div className="relative rounded-3xl overflow-hidden border border-slate-200/80 dark:border-neutral-800/80 bg-neutral-950 p-6 md:p-14 text-white min-h-[520px] flex flex-col justify-between shadow-xl">
+      <div className="relative left-1/2 w-[min(96vw,1720px)] -translate-x-1/2 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-neutral-800/80 bg-neutral-950 p-6 md:p-14 text-white min-h-[560px] flex flex-col justify-between shadow-xl">
         <div className="absolute inset-0 z-0">
           <canvas ref={canvasRef} className="w-full h-full block opacity-70" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent z-10" />
@@ -495,7 +496,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
           </span>
         </div>
 
-        <div className="relative z-20 max-w-4xl space-y-6 text-left my-8">
+        <div className="relative z-20 max-w-4xl lg:max-w-[58%] space-y-6 text-left my-8">
           <div className="space-y-2">
             <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-300">
               Nwogha Chigozie
@@ -514,7 +515,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
         </div>
 
         {/* CTA BUTTONS ROW */}
-        <div className="relative z-20 flex flex-wrap gap-2.5 font-mono text-[10px] uppercase tracking-wider">
+        <div className="relative z-20 flex flex-wrap gap-2.5 font-mono text-[10px] uppercase tracking-wider lg:max-w-[58%]">
           <button
             onClick={() => setActiveTab("journey")}
             className={`px-5 py-3 rounded-xl border font-bold transition duration-200 flex items-center gap-1.5 cursor-pointer hover:scale-103 ${
@@ -565,6 +566,27 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
               <span>Contact Founder</span>
             </button>
           )}
+        </div>
+
+        <div className="relative z-20 mt-8 lg:absolute lg:bottom-10 lg:right-10 lg:top-10 lg:mt-0 lg:w-[36%]">
+          <div className="relative h-full min-h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] p-3 shadow-[0_0_40px_rgba(147,51,234,0.16)] backdrop-blur-sm">
+            <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top,rgba(6,182,212,0.12),transparent_55%)]" />
+            {customization?.founderPortraitUrl ? (
+              <img
+                src={customization.founderPortraitUrl}
+                alt="Nwogha Chigozie, Founder of AfriWaid Studio"
+                className="relative z-10 h-full min-h-[336px] w-full rounded-2xl object-cover object-center"
+              />
+            ) : (
+              <div className="relative z-10 flex h-full min-h-[336px] flex-col items-center justify-center rounded-2xl border border-dashed border-cyan-400/30 bg-black/20 text-center">
+                <User className="mb-4 h-14 w-14 text-cyan-300/70" />
+                <p className="text-sm font-bold text-white">Founder portrait slot</p>
+                <p className="mt-2 max-w-xs text-xs leading-5 text-slate-400">
+                  Upload the founder image from Admin Central, Site Customization to replace this reserved area.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

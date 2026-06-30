@@ -230,6 +230,7 @@ export interface CustomizationSettings {
   journalTagline?: string;
   journalTitle?: string;
   journalDescription?: string;
+  founderPortraitUrl?: string;
   faviconUrl?: string;
   googleAnalyticsId?: string;
 }
@@ -318,7 +319,6 @@ export interface AuditLog {
   details: string;
   timestamp: string;
 }
-
 
 
 

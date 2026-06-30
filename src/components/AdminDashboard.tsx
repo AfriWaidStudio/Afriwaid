@@ -213,6 +213,7 @@ export default function AdminDashboard({
   const [custLogoText, setCustLogoText] = useState(customization?.logoText || "A");
   const [custLogoUrl, setCustLogoUrl] = useState(customization?.logoUrl || "");
   const [custFaviconUrl, setCustFaviconUrl] = useState(customization?.faviconUrl || "");
+  const [custFounderPortraitUrl, setCustFounderPortraitUrl] = useState(customization?.founderPortraitUrl || "");
   const [custGoogleAnalyticsId, setCustGoogleAnalyticsId] = useState(customization?.googleAnalyticsId || "");
   const [custStatsSubtitle, setCustStatsSubtitle] = useState(customization?.statsSubtitle || "Enterprise Impact Metric Matrix");
   const [custStatsTitle, setCustStatsTitle] = useState(customization?.statsTitle || "AfriWaid Studio Performance Indication");
@@ -274,6 +275,7 @@ export default function AdminDashboard({
       setCustLogoText(customization.logoText || "A");
       setCustLogoUrl(customization.logoUrl || "");
       setCustFaviconUrl(customization.faviconUrl || "");
+      setCustFounderPortraitUrl(customization.founderPortraitUrl || "");
       setCustGoogleAnalyticsId(customization.googleAnalyticsId || "");
       setCustStatsSubtitle(customization.statsSubtitle || "Enterprise Impact Metric Matrix");
       setCustStatsTitle(customization.statsTitle || "AfriWaid Studio Performance Indication");
@@ -334,6 +336,7 @@ export default function AdminDashboard({
         logoText: custLogoText,
         logoUrl: custLogoUrl,
         faviconUrl: custFaviconUrl,
+        founderPortraitUrl: custFounderPortraitUrl,
         googleAnalyticsId: custGoogleAnalyticsId,
         statsSubtitle: custStatsSubtitle,
         statsTitle: custStatsTitle,
@@ -393,6 +396,7 @@ export default function AdminDashboard({
         logoText: "A",
         logoUrl: "",
         faviconUrl: "",
+        founderPortraitUrl: "",
         googleAnalyticsId: "",
         statsSubtitle: "Enterprise Impact Metric Matrix",
         statsTitle: "AfriWaid Studio Performance Indication",
@@ -445,6 +449,7 @@ export default function AdminDashboard({
       setCustLogoText(defaults.logoText || "A");
       setCustLogoUrl(defaults.logoUrl || "");
       setCustFaviconUrl(defaults.faviconUrl || "");
+      setCustFounderPortraitUrl(defaults.founderPortraitUrl || "");
       setCustGoogleAnalyticsId(defaults.googleAnalyticsId || "");
       setCustStatsSubtitle(defaults.statsSubtitle || "Enterprise Impact Metric Matrix");
       setCustStatsTitle(defaults.statsTitle || "AfriWaid Studio Performance Indication");
@@ -4453,6 +4458,19 @@ export default function AdminDashboard({
                           label="Upload Custom Favicon (PNG/ICO)"
                           placeholderText="Drag & drop your favicon image here or click to browse"
                         />
+                      </div>
+
+                      <div className="pt-4 border-t border-neutral-800">
+                        <ImageUploadDropzone
+                          value={custFounderPortraitUrl}
+                          onChange={(newValue) => setCustFounderPortraitUrl(newValue)}
+                          multiple={false}
+                          label="Founder Hero Portrait"
+                          placeholderText="Upload the portrait used on the Founder Profile hero"
+                        />
+                        <p className="mt-2 text-[10px] leading-4 text-neutral-500 font-sans">
+                          This controls the protected portrait slot on the right side of the founder hero card. Use a tall image for best framing.
+                        </p>
                       </div>
                     </div>
 
