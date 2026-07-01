@@ -1,17 +1,28 @@
 import { getPortalAuthHeaders } from "./auth";
 
 export async function portalRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 15000);
   const headers = {
     ...getPortalAuthHeaders(),
     ...(options.body ? { "Content-Type": "application/json", "x-csrf-token": "afriwaid-csrf-v1" } : {}),
     ...(options.headers || {}),
   };
-  const res = await fetch(endpoint, { ...options, headers });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data.error || data.message || `Request failed (${res.status})`);
+  try {
+    const res = await fetch(endpoint, { ...options, headers, signal: options.signal || controller.signal });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || data.message || `Request failed (${res.status})`);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("Request timed out. Please check that the AfriWaid server is running and try again.");
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
   }
-  return data;
 }
 
 export function formatDate(value?: string) {

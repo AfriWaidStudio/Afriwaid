@@ -115,7 +115,7 @@ export default function AILab({ customization }: AILabProps) {
     ]);
   };
 
-  // KonsOSMCDA Simulator State
+  // KonsOS MCDA Simulator State
   const [criteria, setCriteria] = useState<Criteria[]>([
     { id: "scal", name: "Scalability", weight: 0.4, description: "Ability to handle transaction spike peaks." },
     { id: "sec", name: "Security Gateways", weight: 0.3, description: "Compliance with data isolation audits." },
@@ -281,7 +281,7 @@ export default function AILab({ customization }: AILabProps) {
           </AnimatePresence>
         </div>
 
-        {/* Right Side: KonsOSMCDA Simulator (5 cols) */}
+        {/* Right Side: KonsOS MCDA Simulator (5 cols) */}
         <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between space-y-6 shadow-xs text-left animate-fadeIn">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -289,7 +289,7 @@ export default function AILab({ customization }: AILabProps) {
                 <Cpu className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-lg font-display text-slate-900 font-extrabold">KonsOSMCDA Score Matrix</h3>
+                <h3 className="text-lg font-display text-slate-900 font-extrabold">KonsOS MCDA Score Matrix</h3>
                 <p className="text-xs text-slate-400 font-mono font-bold">COMPLIANCE CRITERIA ADJUSTER</p>
               </div>
             </div>
@@ -449,7 +449,7 @@ export default function AILab({ customization }: AILabProps) {
                       <div className="flex flex-col gap-1.5">
                         {[
                           "Tell me about WaidPulse AI Engine",
-                          "What is KonsOSDecision Matrix?",
+                          "What is KonsOS?",
                           "What elements make up AfriWaid's tech stack?"
                         ].map((promptText, idx) => (
                           <button

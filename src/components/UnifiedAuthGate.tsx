@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import ForgotPassword from "./ForgotPassword";
@@ -13,18 +14,45 @@ interface UnifiedAuthGateProps {
 }
 
 export default function UnifiedAuthGate({ onAuthSuccess, requiredRole, subTitle }: UnifiedAuthGateProps) {
-  const [mode, setMode] = useState<"login" | "register" | "forgot" | "reset" | "verify">("login");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const modeFromPath = (path: string): "login" | "register" | "forgot" | "reset" | "verify" => {
+    if (path.startsWith("/register")) return "register";
+    if (path.startsWith("/forgot-password")) return "forgot";
+    if (path.startsWith("/reset-password")) return "reset";
+    if (path.startsWith("/verify-email")) return "verify";
+    return "login";
+  };
+  const [mode, setMode] = useState<"login" | "register" | "forgot" | "reset" | "verify">(() => modeFromPath(location.pathname));
   const [resetToken, setResetToken] = useState("");
   const [verificationToken, setVerificationToken] = useState("");
 
+  React.useEffect(() => {
+    setMode(modeFromPath(location.pathname));
+  }, [location.pathname]);
+
+  const showMode = (nextMode: "login" | "register" | "forgot" | "reset" | "verify") => {
+    setMode(nextMode);
+    const route = {
+      login: "/login",
+      register: "/register",
+      forgot: "/forgot-password",
+      reset: "/reset-password",
+      verify: "/verify-email"
+    }[nextMode];
+    if (location.pathname !== route) {
+      navigate(route);
+    }
+  };
+
   const handleNavigateToReset = (token: string) => {
     setResetToken(token);
-    setMode("reset");
+    showMode("reset");
   };
 
   const handleRegisterSuccess = () => {
     setVerificationToken("");
-    setMode("verify");
+    showMode("verify");
   };
 
   return (
@@ -52,22 +80,22 @@ export default function UnifiedAuthGate({ onAuthSuccess, requiredRole, subTitle 
       <div className="w-full">
         {mode === "login" && (
           <Login
-            onNavigateToRegister={() => setMode("register")}
-            onNavigateToForgot={() => setMode("forgot")}
+            onNavigateToRegister={() => showMode("register")}
+            onNavigateToForgot={() => showMode("forgot")}
             onLoginSuccess={onAuthSuccess}
           />
         )}
 
         {mode === "register" && (
           <Register
-            onNavigateToLogin={() => setMode("login")}
+            onNavigateToLogin={() => showMode("login")}
             onRegisterSuccess={handleRegisterSuccess}
           />
         )}
 
         {mode === "forgot" && (
           <ForgotPassword
-            onNavigateToLogin={() => setMode("login")}
+            onNavigateToLogin={() => showMode("login")}
             onNavigateToReset={handleNavigateToReset}
           />
         )}
@@ -75,14 +103,14 @@ export default function UnifiedAuthGate({ onAuthSuccess, requiredRole, subTitle 
         {mode === "reset" && (
           <ResetPassword
             initialToken={resetToken}
-            onNavigateToLogin={() => setMode("login")}
+            onNavigateToLogin={() => showMode("login")}
           />
         )}
 
         {mode === "verify" && (
           <VerifyEmail
             initialToken={verificationToken}
-            onNavigateToLogin={() => setMode("login")}
+            onNavigateToLogin={() => showMode("login")}
           />
         )}
       </div>

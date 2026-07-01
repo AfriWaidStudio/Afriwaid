@@ -34,20 +34,16 @@ function isOfficialRole(role: string): role is OfficialRole {
 }
 
 function mergeOfficialRoles(existing: any[] | undefined): any[] {
-  const roles = Array.isArray(existing) ? [...existing] : [];
-  DEFAULT_ROLES.forEach((defaultRole) => {
+  const roles = Array.isArray(existing) ? existing : [];
+  return DEFAULT_ROLES.map((defaultRole) => {
     const current = roles.find((role) => role.name === defaultRole.name);
-    if (!current) {
-      roles.push(defaultRole);
-    } else {
-      current.slug = current.slug || defaultRole.slug;
-      current.description = current.description || defaultRole.description;
-      current.permissions = Array.isArray(current.permissions) && current.permissions.length > 0
+    return {
+      ...defaultRole,
+      permissions: Array.isArray(current?.permissions) && current.permissions.length > 0
         ? current.permissions
-        : defaultRole.permissions;
-    }
+        : defaultRole.permissions
+    };
   });
-  return roles.filter((role) => isOfficialRole(role.name));
 }
 
 function hashPassword(password: string): string {
@@ -153,6 +149,19 @@ const DEFAULT_USERS = [
     createdAt: new Date().toISOString()
   }
 ];
+
+const DEMO_PASSWORD = "AfriWaidDemo!2026";
+const DEMO_ACCOUNTS = [
+  { id: "u-demo-super-admin", firstName: "Demo", lastName: "Owner", username: "demo_super_admin", email: "super.admin.demo@afriwaid.test", role: "Super Admin" },
+  { id: "u-demo-admin", firstName: "Demo", lastName: "Admin", username: "demo_admin", email: "admin.demo@afriwaid.test", role: "Admin" },
+  { id: "u-demo-moderator", firstName: "Demo", lastName: "Moderator", username: "demo_moderator", email: "moderator.demo@afriwaid.test", role: "Moderator" },
+  { id: "u-demo-developer", firstName: "Demo", lastName: "Developer", username: "demo_developer", email: "developer.demo@afriwaid.test", role: "Developer" },
+  { id: "u-demo-operator", firstName: "Demo", lastName: "Operator", username: "demo_operator", email: "operator.demo@afriwaid.test", role: "Operator" },
+  { id: "u-demo-auditor", firstName: "Demo", lastName: "Auditor", username: "demo_auditor", email: "auditor.demo@afriwaid.test", role: "Auditor" },
+  { id: "u-demo-team-member", firstName: "Demo", lastName: "Team", username: "demo_team_member", email: "team.demo@afriwaid.test", role: "Team Member" },
+  { id: "u-demo-client", firstName: "Demo", lastName: "Client", username: "demo_client_partner", email: "client.demo@afriwaid.test", role: "Client" },
+  { id: "u-demo-user", firstName: "Demo", lastName: "User", username: "demo_user", email: "user.demo@afriwaid.test", role: "User" }
+] satisfies Array<{ id: string; firstName: string; lastName: string; username: string; email: string; role: OfficialRole }>;
 
 // Database Schema Extension for Stage 2 Features
 interface DatabaseSchema {
@@ -315,6 +324,83 @@ const INITIAL_TEAM_MEMBERS = [
   }
 ];
 
+function ensureDemoAccounts(db: DatabaseSchema): boolean {
+  let changed = false;
+
+  DEMO_ACCOUNTS.forEach((demo) => {
+    const existing = db.users.find((u) => u.id === demo.id || u.username === demo.username || u.email === demo.email);
+
+    if (!existing) {
+      db.users.push({
+        ...demo,
+        passwordHash: hashPassword(DEMO_PASSWORD),
+        demoPasswordVersion: 1,
+        isEmailVerified: true,
+        status: "active",
+        createdAt: new Date().toISOString()
+      });
+      changed = true;
+      return;
+    }
+
+    const needsPasswordRefresh = existing.demoPasswordVersion !== 1 || typeof existing.passwordHash !== "string" || !isPasswordBcryptHash(existing.passwordHash);
+    if (
+      existing.username !== demo.username ||
+      existing.email !== demo.email ||
+      existing.role !== demo.role ||
+      existing.status !== "active" ||
+      existing.isEmailVerified !== true ||
+      needsPasswordRefresh
+    ) {
+      Object.assign(existing, {
+        firstName: demo.firstName,
+        lastName: demo.lastName,
+        username: demo.username,
+        email: demo.email,
+        role: demo.role,
+        isEmailVerified: true,
+        status: "active"
+      });
+      if (needsPasswordRefresh) {
+        existing.passwordHash = hashPassword(DEMO_PASSWORD);
+        existing.demoPasswordVersion = 1;
+      }
+      changed = true;
+    }
+  });
+
+  const demoClient = DEMO_ACCOUNTS.find((account) => account.role === "Client");
+  if (demoClient && !db.clients.some((client) => client.userId === demoClient.id)) {
+    db.clients.push({
+      id: "cl-demo-client",
+      name: "Demo Client Partner",
+      company: "AfriWaid Demo Company",
+      email: demoClient.email,
+      userId: demoClient.id,
+      assignedProjectName: "WaidPulse AI Integrations",
+      projectProgress: 65,
+      archived: false,
+      createdAt: new Date().toISOString()
+    });
+    changed = true;
+  }
+
+  const assignableRoles = new Set(["Moderator", "Developer", "Operator", "Auditor", "Team Member", "Client", "User"]);
+  DEMO_ACCOUNTS.filter((account) => assignableRoles.has(account.role)).forEach((account) => {
+    if (!db.project_members.some((member) => member.projectId === "proj-1" && member.userId === account.id)) {
+      db.project_members.push({
+        id: "pm-demo-" + account.role.toLowerCase().replace(/\s+/g, "-"),
+        projectId: "proj-1",
+        userId: account.id,
+        role: account.role
+      });
+      changed = true;
+    }
+  });
+
+  return changed;
+}
+
 function loadDatabase(): DatabaseSchema {
   if (!fs.existsSync(DATA_FILE)) {
     const freshDb: DatabaseSchema = {
@@ -342,13 +428,14 @@ function loadDatabase(): DatabaseSchema {
       invoices: INITIAL_INVOICES,
       team_members: INITIAL_TEAM_MEMBERS
     };
+    ensureDemoAccounts(freshDb);
     fs.writeFileSync(DATA_FILE, JSON.stringify(freshDb, null, 2));
     return freshDb;
   }
   try {
     const raw = fs.readFileSync(DATA_FILE, "utf-8");
     const parsed = JSON.parse(raw);
-    return {
+    const loadedDb: DatabaseSchema = {
       users: parsed.users || DEFAULT_USERS,
       roles: mergeOfficialRoles(parsed.roles),
       permissions: parsed.permissions || DEFAULT_PERMISSIONS,
@@ -373,9 +460,15 @@ function loadDatabase(): DatabaseSchema {
       invoices: parsed.invoices || INITIAL_INVOICES,
       team_members: parsed.team_members || INITIAL_TEAM_MEMBERS
     };
+    const roleShapeChanged = JSON.stringify(parsed.roles || []) !== JSON.stringify(loadedDb.roles);
+    const demoChanged = ensureDemoAccounts(loadedDb);
+    if (roleShapeChanged || demoChanged) {
+      fs.writeFileSync(DATA_FILE, JSON.stringify(loadedDb, null, 2));
+    }
+    return loadedDb;
   } catch (e) {
     console.error("Failed to parse local database. Resetting schema...", e);
-    return {
+    const fallbackDb: DatabaseSchema = {
       users: DEFAULT_USERS,
       roles: DEFAULT_ROLES,
       permissions: DEFAULT_PERMISSIONS,
@@ -400,6 +493,8 @@ function loadDatabase(): DatabaseSchema {
       invoices: INITIAL_INVOICES,
       team_members: INITIAL_TEAM_MEMBERS
     };
+    ensureDemoAccounts(fallbackDb);
+    return fallbackDb;
   }
 }
 
@@ -429,7 +524,7 @@ function logAudit(db: DatabaseSchema, userId: string | undefined, username: stri
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT || 3000);
   const wss = new WebSocketServer({ noServer: true });
 
   app.set("trust proxy", 1);
@@ -437,18 +532,24 @@ async function startServer() {
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false
   }));
-  app.use(rateLimit({
+  const apiRateLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 300,
+    limit: 600,
     standardHeaders: "draft-8",
-    legacyHeaders: false
-  }));
-  app.use("/api/auth/login", rateLimit({
+    legacyHeaders: false,
+    skip: (req) => req.originalUrl.startsWith("/api/auth/login"),
+    message: { error: "Too many API requests. Please wait a moment and try again." }
+  });
+  const loginRateLimiter = rateLimit({
     windowMs: 2 * 60 * 1000,
-    limit: 20,
+    limit: 30,
     standardHeaders: "draft-8",
-    legacyHeaders: false
-  }));
+    legacyHeaders: false,
+    message: { error: "Too many login attempts. Please wait 2 minutes and try again." }
+  });
+
+  app.use("/api/auth/login", loginRateLimiter);
+  app.use("/api", apiRateLimiter);
   app.use((req, res, next) => {
     if (IS_PRODUCTION_RUNTIME && process.env.FORCE_HTTPS === "true" && req.headers["x-forwarded-proto"] === "http") {
       return res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
@@ -464,7 +565,7 @@ async function startServer() {
     }
     next();
   });
-  app.use(express.json());
+  app.use(express.json({ limit: "15mb" }));
 
   // Middleware to resolve Client details via Authorization Header token
   const authenticateToken = (req: any, res: any, next: any) => {
@@ -1277,12 +1378,14 @@ async function startServer() {
 
 
   // RBAC Roles & Permissions Core Edit Gate
-  app.get("/api/admin/roles", (req, res) => {
+  app.get("/api/admin/roles", (req: any, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
     const db = loadDatabase();
     res.json({ roles: db.roles });
   });
 
-  app.get("/api/admin/permissions", (req, res) => {
+  app.get("/api/admin/permissions", (req: any, res) => {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
     const db = loadDatabase();
     res.json({ permissions: db.permissions });
   });
@@ -1772,8 +1875,12 @@ async function startServer() {
     const db = loadDatabase();
     if (!req.user) return res.status(401).json({ error: "Unauthorized" });
 
-    const { name, size, category, tags, projectId } = req.body;
+    const { name, size, category, tags, projectId, mimeType, content, dataUrl } = req.body;
     if (!name || !projectId) return res.status(400).json({ error: "File name and Project destination are required" });
+    const storedContent = typeof content === "string" ? content : "";
+    if (storedContent && storedContent.length > 12 * 1024 * 1024) {
+      return res.status(413).json({ error: "File is too large. Maximum upload is 9 MB." });
+    }
 
     const existingCount = db.files.filter(f => f.projectId === projectId && f.name.toLowerCase() === name.toLowerCase()).length;
 
@@ -1785,6 +1892,9 @@ async function startServer() {
       uploadedBy: req.user.id,
       category: category || "Documents",
       tags: tags || [],
+      mimeType: mimeType || "application/octet-stream",
+      content: storedContent,
+      dataUrl: dataUrl || "",
       version: existingCount + 1,
       uploadedAt: new Date().toISOString()
     };
@@ -1803,6 +1913,38 @@ async function startServer() {
     logAudit(db, req.user.id, req.user.username, req.ip || "127.0.0.1", "FILE_UPLOAD", "files", "success", `Uploaded workspace attachment: ${newFile.name}`);
     saveDatabase(db);
     res.json({ success: true, file: newFile });
+  });
+
+  app.get("/api/files/:id/download", (req: any, res) => {
+    const db = loadDatabase();
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+
+    const file = db.files.find(f => f.id === req.params.id);
+    if (!file) return res.status(404).json({ error: "File not found" });
+
+    const userProjectIds = db.project_members
+      .filter(pm => pm.userId === req.user.id)
+      .map(pm => pm.projectId);
+    const clientProfile = db.clients.find(c => c.userId === req.user.id);
+    if (clientProfile) {
+      db.projects.filter(p => p.clientId === clientProfile.id).forEach(p => {
+        if (!userProjectIds.includes(p.id)) userProjectIds.push(p.id);
+      });
+    }
+    const canAccess = req.user.role === "Super Admin" || req.user.role === "Admin" || userProjectIds.includes(file.projectId);
+    if (!canAccess) return res.status(403).json({ error: "File access denied" });
+
+    res.json({
+      file: {
+        id: file.id,
+        name: file.name,
+        size: file.size,
+        category: file.category,
+        mimeType: file.mimeType || "application/octet-stream",
+        content: file.content || "",
+        dataUrl: file.dataUrl || ""
+      }
+    });
   });
 
   app.delete("/api/files/:id", (req: any, res) => {
@@ -2509,14 +2651,14 @@ Structure your answers with clean hierarchical sections. Give actual technical a
         const query = message.toLowerCase();
         if (query.includes("waidpulse") || query.includes("pulse")) {
           simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **WaidPulse AI Engine** is our premier autonomous orchestration middleware. It seamlessly bridges enterprise SQL databases with Gemini models. \n\n**Core technologies used:** React, Express, @google/genai, TypeScript, and D3.js. It features a stunning real-time latency visualizer.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
-        } else if (query.includes("kortex") || query.includes("decision") || query.includes("matrix") || query.includes("mcda")) {
-          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **KonsOSDecision Matrix** is our premium Multi-Criteria Decision Analysis (MCDA) risk calculation system. It combines weighted formulas with semantic vector collections.\n\n**Core technologies used:** React, Node.js, TypeScript, Recharts, and Vector databases.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
+        } else if (query.includes("konsos") || query.includes("decision") || query.includes("matrix") || query.includes("mcda")) {
+          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\n**KonsOS** is our premium Multi-Criteria Decision Analysis (MCDA) and risk-calculation system. It combines weighted formulas with semantic vector collections.\n\n**Core technologies used:** React, Node.js, TypeScript, Recharts, and Vector databases.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else if (query.includes("tech") || query.includes("stack") || query.includes("languages") || query.includes("framework")) {
           simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nAfriWaid is built on enterprise-grade software standards:\n\n- **TypeScript 5.8**: For bulletproof type contracts.\n- **React 19 & Vite**: Ultra-fast component rendering.\n- **PostgreSQL 17**: Safe relational storage.\n- **Node & Express**: High-speed REST middleware.\n- **@google/genai**: Next-gen Gemini 3.5 integrations.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else if (query.includes("brand") || query.includes("canvas") || query.includes("design") || query.includes("style")) {
           simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **AfriWaid Brand Canvas** is our flagship stylebook and motion design guideline. It establishes our iconic **Cosmic Slate Theme** with geometric alignments and micro-animations using Space Grotesk and Inter.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else {
-          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nWelcome to AfriWaid's AI Lab Assistant! I can help you with questions about our **WaidPulse AI Engine**, **KonsOSDecision Matrix**, **Brand Canvas**, or our premium **TypeScript & React 19 Tech Stack**.\n\nHow can I help you learn about our software capabilities today?\n\n*(Note: AI Chat is currently running in local offline simulation mode. Configure a \`GEMINI_API_KEY\` to enable real live chats).*`;
+          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nWelcome to AfriWaid's AI Lab Assistant! I can help you with questions about our **WaidPulse AI Engine**, **KonsOS**, **Brand Canvas**, or our premium **TypeScript & React 19 Tech Stack**.\n\nHow can I help you learn about our software capabilities today?\n\n*(Note: AI Chat is currently running in local offline simulation mode. Configure a \`GEMINI_API_KEY\` to enable real live chats).*`;
         }
         return res.json({ text: simulatedText });
       }
@@ -2542,7 +2684,7 @@ Here is the exact, unshakeable ground truth regarding our showcase projects:
    - Case Study: Solved rigid logistics pipelines by creating self-correcting logistic triggers, dropping dispatch friction from 3.5 hours to 12 minutes.
    - Key Features: Dynamic Multi-Agent Orchestration, Secure SQL filters, real-time operation latency analysis, diagnostic sandboxes, prompt injection safeguards.
 
-2. KonsOSDecision Matrix (Category: KI - Konsmik Intelligence, Status: QA)
+2. KonsOS (Category: KI - Konsmik Intelligence, Status: QA)
    - Description: A secure cognitive platform applying Multi-Criteria Decision Analysis (MCDA) algorithms paired with semantic memory indexes to evaluate risk vectors.
    - Core Concepts: Mathematically evaluates complex architectural risks, extracts intelligence from regulatory papers, maps dependencies as SVG nodes.
    - Tech Stack: TypeScript, Recharts, Node.js, Vector DB, React-Flow.
@@ -2647,7 +2789,7 @@ Associated account email: ${email || "waidsoko@gmail.com"}
 Associated Measurement ID: ${googleAnalyticsId || "G-AFRIWAID99"}
 
 The report should include:
-1. Traffic Performance Synthesis (mock realistic high-scale numbers for AfriWaid's services like the WaidPulse AI Engine and KonsOSDecision Matrix)
+1. Traffic Performance Synthesis (mock realistic high-scale numbers for AfriWaid's services like the WaidPulse AI Engine and KonsOS)
 2. Traffic channels breakdown (organic, social, direct, referral)
 3. Actionable AI Recommendations for maximizing conversion rates on inquiries and CV downloads.
 

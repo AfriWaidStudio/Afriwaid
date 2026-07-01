@@ -3,7 +3,7 @@ import { Project, JournalEntry, Article, MediaItem, ServiceOffer, CV, ClientProf
 export const INITIAL_CONSULTATION_CARDS: ConsultationCard[] = [
   {
     id: "consult-1",
-    badge: "TECHNICAL BUILD",
+    badge: "SOFTWARE",
     title: "Software, SaaS & Dashboard Builds",
     description: "Plan custom web applications, admin systems, client portals, API backends, analytics dashboards, and production-ready digital platforms.",
     ctaLabel: "Start Software Request",
@@ -11,43 +11,43 @@ export const INITIAL_CONSULTATION_CARDS: ConsultationCard[] = [
   },
   {
     id: "consult-2",
-    badge: "VIDEO EDITING",
-    title: "Video Editing, Reels & Motion Graphics",
-    description: "Request cinematic editing, short-form reels, product explainers, subtitles, color grading, motion graphics, and launch visuals.",
-    ctaLabel: "View Media Work",
-    targetTab: "Media"
+    badge: "AI",
+    title: "AI Assistants, Automation & Intelligent Systems",
+    description: "Map AI assistants, RAG knowledge bases, automation pipelines, multi-agent workflows, and intelligent decision support tools.",
+    ctaLabel: "Consult AI Lab",
+    targetTab: "AI Lab"
   },
   {
     id: "consult-3",
-    badge: "COPYWRITING",
-    title: "Copywriting, Landing Pages & Sales Copy",
-    description: "Shape persuasive website copy, service pages, product messaging, email sequences, ad copy, and conversion-focused brand language.",
-    ctaLabel: "Open Writing Hub",
-    targetTab: "Publishing"
+    badge: "KI SYSTEMS",
+    title: "Decision Intelligence & KI Systems",
+    description: "Construct mathematical decision loops, multi-criteria analysis dashboards, risk modeling, and verification control systems.",
+    ctaLabel: "Request KI Consultation",
+    targetTab: "Services"
   },
   {
     id: "consult-4",
-    badge: "BLOG WRITING",
-    title: "Blog Writing, SEO Articles & Technical Guides",
-    description: "Commission SEO blog posts, thought-leadership articles, technical documentation, news writing, research summaries, and content calendars.",
-    ctaLabel: "Plan Content",
-    targetTab: "Publishing"
-  },
-  {
-    id: "consult-5",
-    badge: "BRAND DESIGN",
+    badge: "DESIGN",
     title: "Logo Design, Brand Identity & UI Systems",
     description: "Build logo marks, visual identity systems, typography, color palettes, brand guidelines, Figma prototypes, and high-fidelity UI layouts.",
     ctaLabel: "View Design Services",
     targetTab: "Services"
   },
   {
+    id: "consult-5",
+    badge: "MEDIA",
+    title: "Video Editing, Reels & Motion Graphics",
+    description: "Request cinematic editing, short-form reels, product explainers, subtitles, color grading, motion graphics, and launch visuals.",
+    ctaLabel: "View Media Work",
+    targetTab: "Media"
+  },
+  {
     id: "consult-6",
-    badge: "AI AUTOMATION",
-    title: "AI Assistants, Automation & KI Decision Systems",
-    description: "Map AI assistants, RAG knowledge bases, automation pipelines, multi-agent workflows, MCDA dashboards, and verification controls.",
-    ctaLabel: "Consult AI Lab",
-    targetTab: "AI Lab"
+    badge: "WRITING",
+    title: "Copywriting, Content & Technical Writing",
+    description: "Shape persuasive website copy, landing pages, product messaging, SEO articles, technical documentation, and conversion-focused brand language.",
+    ctaLabel: "Open Writing Hub",
+    targetTab: "Publishing"
   },
   {
     id: "consult-7",
@@ -151,11 +151,11 @@ export const INITIAL_PROJECTS: Project[] = [
   },
   {
     id: "proj-2",
-    name: "KonsOSDecision Matrix",
+    name: "KonsOS",
     category: "KI",
     coverImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=800&auto=format&fit=crop",
     description: "A secure cognitive platform applying multi-criteria decision analysis (MCDA) algorithms paired with semantic memory indexes to evaluate risk vectors.",
-    longSummary: "KonsOSDecision Matrix delivers a highly structured, audit-defensible decision ecosystem for enterprise portfolios and technology investments. Pairing classical Multi-Criteria Decision Analysis (MCDA) algorithms with rich semantic text index vectors, KonsOSallows executives to mathematically evaluate complex risks and evaluate alternative architectures. It extracts intelligence directly from dense regulatory and safety document backlogs, maps system dependencies as dynamic SVG nodes, and aggregates scores in real-time. This dual-engine approach guarantees that tactical investment decisions remain perfectly transparent, predictable, and mathematically sound.",
+    longSummary: "KonsOS delivers a highly structured, audit-defensible decision ecosystem for enterprise portfolios and technology investments. Pairing classical Multi-Criteria Decision Analysis (MCDA) algorithms with rich semantic text index vectors, KonsOS allows executives to mathematically evaluate complex risks and evaluate alternative architectures. It extracts intelligence directly from dense regulatory and safety document backlogs, maps system dependencies as dynamic SVG nodes, and aggregates scores in real-time. This dual-engine approach guarantees that tactical investment decisions remain perfectly transparent, predictable, and mathematically sound.",
     technologiesUsed: ["TypeScript", "Recharts", "Node.js", "Vector DB", "React-Flow"],
     problemSolved: "Corporate boards and system architects require audit-proof, mathematical validation for technology investments, completely separate from conversational model guesswork.",
     features: [
@@ -308,7 +308,7 @@ Classical mobile applications fail because they demand constant, high-speed inte
 
 ### Enter Decentralized Agent Frameworks
 
-By decoupling logic into a multi-agent framework on the backend (using systems like our **KonsOSCognitive Matrix**), small queries can be processed offline. Compact SMS/USSD packets are sent to a cloud-based orchestrator, triggering a cascading system of micro-agents:
+By decoupling logic into a multi-agent framework on the backend (using systems like **KonsOS**), small queries can be processed offline. Compact SMS/USSD packets are sent to a cloud-based orchestrator, triggering a cascading system of micro-agents:
 
 1. **Procurement Agent**: Constantly monitors wholesaler pricing signals using semantic search.
 2. **Logistics Agent**: Audits local telemetry to establish route safety.
@@ -435,7 +435,7 @@ export const INITIAL_SERVICES: ServiceOffer[] = [
     estimatedTimeline: "4 to 12 weeks",
     portfolioExamples: [
       { name: "WaidPulse AI Engine", projectId: "proj-1" },
-      { name: "KonsOSDecision Matrix", projectId: "proj-2" }
+      { name: "KonsOS", projectId: "proj-2" }
     ]
   },
   {
@@ -478,7 +478,7 @@ export const INITIAL_SERVICES: ServiceOffer[] = [
     ],
     estimatedTimeline: "8 to 10 weeks",
     portfolioExamples: [
-      { name: "KonsOSDecision Matrix", projectId: "proj-2" }
+      { name: "KonsOS", projectId: "proj-2" }
     ]
   },
   {
@@ -642,7 +642,7 @@ export const INITIAL_INQUIRIES: Inquiry[] = [
     name: "Sarah Jenkins",
     email: "sjenkins@kenyatechgroup.co.ke",
     organization: "Kenya Tech Group",
-    message: "We are building an intra-day supply catalog for regional micro-vendors and want to implement an automated USSD-to-AI SMS routing scheduler using KonsOSMCDA algorithms. Please schedule an architecture review.",
+    message: "We are building an intra-day supply catalog for regional micro-vendors and want to implement an automated USSD-to-AI SMS routing scheduler using KonsOS MCDA algorithms. Please schedule an architecture review.",
     type: "service",
     serviceCategory: "Software Development",
     date: "2026-06-12",
@@ -674,7 +674,7 @@ export const INITIAL_ANALYTICS: TrackedAnalytics = {
   ],
   topProjects: [
     { name: "WaidPulse AI Engine", views: 412 },
-    { name: "KonsOSDecision Matrix", views: 310 },
+    { name: "KonsOS", views: 310 },
     { name: "AfriWaid Brand Canvas", views: 295 }
   ],
   topArticles: [
@@ -774,7 +774,7 @@ export const INITIAL_TESTIMONIALS: Testimonial[] = [
     clientCompany: "Alpha Cognitive Capital",
     clientRole: "Head of Risk Analysis",
     rating: 5,
-    text: "Implementing AfriWaid's KonsOSMCDA algorithms reduced our regulatory compliance auditing time from 20 business days to under six hours. Symmetrical, clean, and mathematically rigorous.",
+    text: "Implementing AfriWaid's KonsOS MCDA algorithms reduced our regulatory compliance auditing time from 20 business days to under six hours. Symmetrical, clean, and mathematically rigorous.",
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
     category: "AI Solutions",
     isPublished: true

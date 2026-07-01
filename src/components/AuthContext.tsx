@@ -21,6 +21,20 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}, timeoutMs = 15000): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  return fetch(input, { ...init, signal: init.signal || controller.signal })
+    .catch((error) => {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error("Request timed out. Please check that the AfriWaid server is running and try again.");
+      }
+      throw error;
+    })
+    .finally(() => window.clearTimeout(timeoutId));
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -38,8 +52,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       const [resRoles, resPerms] = await Promise.all([
-        fetch("/api/admin/roles", { headers }),
-        fetch("/api/admin/permissions", { headers })
+        fetchWithTimeout("/api/admin/roles", { headers }),
+        fetchWithTimeout("/api/admin/permissions", { headers })
       ]);
 
       if (resRoles.ok && resPerms.ok) {
@@ -59,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       if (storedToken) {
         try {
-          const res = await fetch("/api/auth/me", {
+          const res = await fetchWithTimeout("/api/auth/me", {
             headers: {
               "Authorization": `Bearer ${storedToken}`
             }
@@ -92,7 +106,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Auth Operations
   const login = async (credential: string, code: string, remember: boolean): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetchWithTimeout("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ loginCredential: credential, password: code, rememberMe: remember })
@@ -125,7 +139,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (first: string, last: string, userStr: string, mail: string, code: string, requestedRole = "User"): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetchWithTimeout("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName: first, lastName: last, username: userStr, email: mail, password: code, role: requestedRole })
@@ -144,7 +158,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", {
+      await fetchWithTimeout("/api/auth/logout", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -162,7 +176,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = async (first: string, last: string, userStr: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/profile", {
+      const res = await fetchWithTimeout("/api/auth/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -184,7 +198,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updatePassword = async (curr: string, nextPass: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/update-password", {
+      const res = await fetchWithTimeout("/api/auth/update-password", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -202,7 +216,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const forgotPassword = async (mail: string): Promise<{ success: boolean; message?: string; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/forgot-password", {
+      const res = await fetchWithTimeout("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail })
@@ -219,7 +233,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const resetPassword = async (tokenStr: string, passcode: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/reset-password", {
+      const res = await fetchWithTimeout("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: tokenStr, newPassword: passcode })
@@ -234,7 +248,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const verifyEmail = async (tokenStr: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const res = await fetch("/api/auth/verify-email", {
+      const res = await fetchWithTimeout("/api/auth/verify-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: tokenStr })

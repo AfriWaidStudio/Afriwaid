@@ -95,6 +95,123 @@
       "isEmailVerified": false,
       "status": "active",
       "createdAt": "2026-07-01T04:07:06.639Z"
+    },
+    {
+      "id": "u-demo-super-admin",
+      "firstName": "Demo",
+      "lastName": "Owner",
+      "username": "demo_super_admin",
+      "email": "super.admin.demo@afriwaid.test",
+      "role": "Super Admin",
+      "passwordHash": "$2b$12$XbNBwRdbtnZlPeUwAZ.5pujxtz6FD9GdZ6JO3A3ynrMU8yXoRK4BO",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:31.951Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-admin",
+      "firstName": "Demo",
+      "lastName": "Admin",
+      "username": "demo_admin",
+      "email": "admin.demo@afriwaid.test",
+      "role": "Admin",
+      "passwordHash": "$2b$12$yajXXbsy0c2R2keyzRw3G.XMNOlwFyiNj3HyvclZJvvyKf5kE13e6",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:32.393Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-moderator",
+      "firstName": "Demo",
+      "lastName": "Moderator",
+      "username": "demo_moderator",
+      "email": "moderator.demo@afriwaid.test",
+      "role": "Moderator",
+      "passwordHash": "$2b$12$vWz9Zti2E0SrC5hsSoNpmemCaG.yr94OH8ykcvA03hVR9OCuCLIQK",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:32.893Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-developer",
+      "firstName": "Demo",
+      "lastName": "Developer",
+      "username": "demo_developer",
+      "email": "developer.demo@afriwaid.test",
+      "role": "Developer",
+      "passwordHash": "$2b$12$AJUjgcMKUrAk.UEo9nrNOuj32SG2gz7JKE8CA0tWlvUoj2nmbSKnu",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:33.372Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-operator",
+      "firstName": "Demo",
+      "lastName": "Operator",
+      "username": "demo_operator",
+      "email": "operator.demo@afriwaid.test",
+      "role": "Operator",
+      "passwordHash": "$2b$12$F2JuZXyym.LKNeSyTnXEqO.HNf40OqNAzaoI.jU1xq5fbhlzPASqS",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:33.820Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-auditor",
+      "firstName": "Demo",
+      "lastName": "Auditor",
+      "username": "demo_auditor",
+      "email": "auditor.demo@afriwaid.test",
+      "role": "Auditor",
+      "passwordHash": "$2b$12$t8AiMwquRENZYAaZGR60yeOWwckRUabNbAY0GzMuRHzoQfbAMS1BS",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:34.256Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-team-member",
+      "firstName": "Demo",
+      "lastName": "Team",
+      "username": "demo_team_member",
+      "email": "team.demo@afriwaid.test",
+      "role": "Team Member",
+      "passwordHash": "$2b$12$3qL1ROwC9KDQu1roYC5yBObMZjMP65hUjrQeUkxvujI7zfD5qtws2",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:34.685Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-client",
+      "firstName": "Demo",
+      "lastName": "Client",
+      "username": "demo_client_partner",
+      "email": "client.demo@afriwaid.test",
+      "role": "Client",
+      "passwordHash": "$2b$12$bXU66Q2ZmRMkSLGo9n7GQO7oPxqeN0cGQamXwwlnW34BziFJ2TPZK",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:35.127Z",
+      "demoPasswordVersion": 1
+    },
+    {
+      "id": "u-demo-user",
+      "firstName": "Demo",
+      "lastName": "User",
+      "username": "demo_user",
+      "email": "user.demo@afriwaid.test",
+      "role": "User",
+      "passwordHash": "$2b$12$Ox9UOSUMWXsmog3S6UMFdeAbgQGJAAkfpIx0lhh0.19qWwJgOwdFa",
+      "isEmailVerified": true,
+      "status": "active",
+      "createdAt": "2026-07-01T10:23:35.540Z",
+      "demoPasswordVersion": 1
     }
   ],
   "roles": [
@@ -117,29 +234,6 @@
         "p-11",
         "p-12",
         "p-13"
-      ]
-    },
-    {
-      "id": "r-2",
-      "name": "Team Member",
-      "slug": "team-member",
-      "description": "Team member for client communication and project support.",
-      "permissions": [
-        "p-5",
-        "p-6",
-        "p-8",
-        "p-9",
-        "p-10"
-      ]
-    },
-    {
-      "id": "r-3",
-      "name": "User",
-      "slug": "user",
-      "description": "Client user who creates projects and communicates with team.",
-      "permissions": [
-        "p-8",
-        "p-10"
       ]
     },
     {
@@ -209,10 +303,33 @@
       ]
     },
     {
+      "id": "r-7",
+      "name": "Team Member",
+      "slug": "team-member",
+      "description": "Team member for client communication and project support.",
+      "permissions": [
+        "p-5",
+        "p-6",
+        "p-8",
+        "p-9",
+        "p-10"
+      ]
+    },
+    {
       "id": "r-8",
       "name": "Client",
       "slug": "client",
       "description": "Client partner with access to assigned workspaces.",
+      "permissions": [
+        "p-8",
+        "p-10"
+      ]
+    },
+    {
+      "id": "r-9",
+      "name": "User",
+      "slug": "user",
+      "description": "Standard portal user.",
       "permissions": [
         "p-8",
         "p-10"
@@ -379,6 +496,176 @@
       "isActive": true,
       "createdAt": "2026-07-01T04:34:45.570Z",
       "expiresAt": "2026-07-01T06:34:45.569Z"
+    },
+    {
+      "id": "s-b5a63b30-d689-414a-9aa7-215b382d202b",
+      "userId": "u-demo-super-admin",
+      "token": "token_416ef5aedf3bd64d5ea52566e707044ff4dd9063c6e80f41048a2056ef8cb5166532594f2f9556a0",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": false,
+      "createdAt": "2026-07-01T10:23:35.997Z",
+      "expiresAt": "2026-07-31T10:23:35.996Z"
+    },
+    {
+      "id": "s-df028ed2-214a-4c98-9a0c-b51f60f6638c",
+      "userId": "u-demo-admin",
+      "token": "token_3cf487c737710341366dae98c104237151154cb6ceac1747e3e053b693f6e01574618d610c96fad7",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:24:54.600Z",
+      "expiresAt": "2026-07-31T10:24:54.600Z"
+    },
+    {
+      "id": "s-38953e33-b8bd-45ac-838f-c06ee10cbb4e",
+      "userId": "u-demo-user",
+      "token": "token_29eae716fd4e46136da608f255b12d5380d79cc9a300d044d6e8f1ca21109ef5d6e4c855e6fd5d9c",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:29:45.114Z",
+      "expiresAt": "2026-07-01T12:29:45.114Z"
+    },
+    {
+      "id": "s-f4c0a4fc-80b7-498e-8a13-774a80a53dfd",
+      "userId": "u-demo-client",
+      "token": "token_fea8fb852877f105995954e97e2d8cf848a5262f4212389a43dbcc79ee0f9800fa4bd21338da10d9",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:32:59.276Z",
+      "expiresAt": "2026-07-31T10:32:59.276Z"
+    },
+    {
+      "id": "s-e0023a9b-73a8-4f46-aa3d-7b96060dc95a",
+      "userId": "u-demo-client",
+      "token": "token_448e902c62aa5520e46afa89dc9f307fdcc7be445f416d8ce5849ea6e1a9cb9485a48881a1a8d5d1",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:34:09.716Z",
+      "expiresAt": "2026-07-31T10:34:09.716Z"
+    },
+    {
+      "id": "s-9c6a2dcd-244e-445c-9521-ffaf6019f771",
+      "userId": "u-demo-super-admin",
+      "token": "token_5dd1e5bb4b3813d955d00fb642898ee1f4533964656b8f668268da7cf1efd3f04ea9df1dbbc20d3d",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:35:11.741Z",
+      "expiresAt": "2026-07-01T12:35:11.740Z"
+    },
+    {
+      "id": "s-41c755f8-fe08-40c5-a0e3-89233ca3557d",
+      "userId": "u-demo-client",
+      "token": "token_dcda2253511bb5c2734b865527f95e1d36e4bab6b931ee3db1593d5f3674de10ff4b1190fb3233d8",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:41:07.471Z",
+      "expiresAt": "2026-07-31T10:41:07.471Z"
+    },
+    {
+      "id": "s-c63b4141-00bc-4bd8-8288-f952a88ad82f",
+      "userId": "u-demo-client",
+      "token": "token_ceac5fc572b614e7a7d9ce6ccdb1520059c282d2d069e54cbda21ca83bcaa2568e24ba8bb873b45a",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:43:33.238Z",
+      "expiresAt": "2026-07-31T10:43:33.238Z"
+    },
+    {
+      "id": "s-b5627535-186a-4d21-9542-4bea7f3da416",
+      "userId": "u-demo-super-admin",
+      "token": "token_280c9323ed332df7fa51bbb501a53c7a3a03d9a17d6c874ed8177dc2620e2b30153d2790aec12dad",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:46:03.992Z",
+      "expiresAt": "2026-07-01T12:46:03.992Z"
+    },
+    {
+      "id": "s-9ae5d84f-a2fc-475c-a552-33ffd14b9852",
+      "userId": "u-demo-super-admin",
+      "token": "token_59b2ae3b4c2bc10a56647a555a344f6db2286a4cdf709859406ed2cb8eaba65af75e28e8e15f2ee9",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-01T10:53:37.412Z",
+      "expiresAt": "2026-07-01T12:53:37.412Z"
+    },
+    {
+      "id": "s-cc316abf-92c0-4c1a-8ca5-3212b727205b",
+      "userId": "u-demo-client",
+      "token": "token_1896f829865c1ee60c9ba122074aed79020fc1e2a9842f7c1f3b6fa5e6e747df6515479a610d9875",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:05:33.601Z",
+      "expiresAt": "2026-07-31T11:05:33.601Z"
+    },
+    {
+      "id": "s-517eac6f-14e3-4cb1-a079-c41bd84cd85a",
+      "userId": "u-demo-client",
+      "token": "token_080262e78e5399db6a8fdde3fd2550826471436ad6d63d8b0688e72bf4eb342a7bd62c20514271cd",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:05:56.860Z",
+      "expiresAt": "2026-07-01T13:05:56.860Z"
+    },
+    {
+      "id": "s-86b8938b-77cf-4d0e-9180-52937434af34",
+      "userId": "u-demo-client",
+      "token": "token_336c896dd432d0e09d892dc7197e48d7970f5318e48ff9674a7bf2e395d705ef049947738f71759d",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:08:17.011Z",
+      "expiresAt": "2026-07-31T11:08:17.011Z"
+    },
+    {
+      "id": "s-b18bf924-cbb7-404f-bacc-35dcd4c09f14",
+      "userId": "u-demo-client",
+      "token": "token_f4dc6b9178a6c233a879bbd2e7001b8d4bd36480af9bafc52dec6d354dd61ec1a31d440d7cebbffe",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:09:39.408Z",
+      "expiresAt": "2026-07-31T11:09:39.408Z"
+    },
+    {
+      "id": "s-2758bd00-9747-459a-95b2-7a4af84fe674",
+      "userId": "u-demo-client",
+      "token": "token_9f1b67c90f5cb598621102dfe255e2dd0f03fd294ca43534b0fe27a1f579a150951c9d9be033c4da",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:09:39.865Z",
+      "expiresAt": "2026-07-31T11:09:39.865Z"
+    },
+    {
+      "id": "s-74432c0c-4539-4194-9d7b-7b890b1f7e60",
+      "userId": "u-demo-client",
+      "token": "token_79725755a2af6967e058772c61b328175b1e2f96f3ba962e1fd201878a1cc5611cd2c9d7b11b5f15",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.26100.8655",
+      "isActive": true,
+      "createdAt": "2026-07-01T11:11:03.192Z",
+      "expiresAt": "2026-07-31T11:11:03.192Z"
+    },
+    {
+      "id": "s-f98c5077-c3cc-4a31-8bb5-56b7c59469cb",
+      "userId": "u-demo-client",
+      "token": "token_b2321514b967415f0ff0d73888ba24328244512a342ae79aeccd595ad1a5d3362e00e85a9cf9b4f9",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-07-01T11:12:01.904Z",
+      "expiresAt": "2026-07-01T13:12:01.904Z"
     }
   ],
   "password_resets": [],
@@ -406,6 +693,245 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "l-6f699011-e797-415a-8817-7105a6efb428",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-07-01T11:15:12.157Z"
+    },
+    {
+      "id": "l-50976fcf-ae42-4c8a-8087-d209a966da08",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:12:01.904Z"
+    },
+    {
+      "id": "l-0c384a34-93f7-4928-92c7-15e9b763a653",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:11:03.192Z"
+    },
+    {
+      "id": "l-e3a7ba04-aeb7-4f61-8f17-8b8435f26f35",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:09:39.865Z"
+    },
+    {
+      "id": "l-3f9c255b-e005-49d0-8093-62724ead1971",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:09:39.408Z"
+    },
+    {
+      "id": "l-aaae0c84-ee82-4e7c-80e8-ae6fb86d35fb",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:08:17.011Z"
+    },
+    {
+      "id": "l-25d906bc-b2d7-435c-9943-dd75bac821cc",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:05:56.860Z"
+    },
+    {
+      "id": "l-9737b3a1-d704-4eaf-ab45-6353239073f0",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:05:33.601Z"
+    },
+    {
+      "id": "l-08c568a4-d010-4a11-af21-7f57c9ad3861",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:53:37.413Z"
+    },
+    {
+      "id": "l-9d5bf47c-7444-49ae-9b61-fded1a977e0c",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:46:03.992Z"
+    },
+    {
+      "id": "l-a1a3ee57-e6f6-4bb3-9217-e72a811d8e94",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:43:33.239Z"
+    },
+    {
+      "id": "l-457376f4-62e5-4a38-87c3-42b660b0d7b5",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:41:07.471Z"
+    },
+    {
+      "id": "l-353d2058-7e68-46c7-a38d-d498f78b6859",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:35:11.741Z"
+    },
+    {
+      "id": "l-9ee4b99d-49f2-4331-8b26-eb859a1b3cc4",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:34:09.716Z"
+    },
+    {
+      "id": "l-19778983-d244-4372-950a-a8f1155bb04c",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:32:59.276Z"
+    },
+    {
+      "id": "l-72e4b2e3-75f0-43e5-8a73-a6484ade964c",
+      "userId": "u-demo-user",
+      "username": "demo_user",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:29:45.114Z"
+    },
+    {
+      "id": "l-a29eadca-06f5-47c2-bed7-47a4bb26ae42",
+      "username": "admin@afriwaid.com",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "failure",
+      "details": "Invalid security passcode audit check failed",
+      "timestamp": "2026-07-01T10:27:31.649Z"
+    },
+    {
+      "id": "l-b8501005-ca70-4cf9-b585-fb05c51c5e5a",
+      "username": "admin@afriwaid.com",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "failure",
+      "details": "Invalid security passcode audit check failed",
+      "timestamp": "2026-07-01T10:27:16.963Z"
+    },
+    {
+      "id": "l-8883e384-8831-44c2-a55c-52e91223c537",
+      "userId": "u-demo-admin",
+      "username": "demo_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:24:54.600Z"
+    },
+    {
+      "id": "l-3adae827-eb97-4db8-a8da-23730b6dc534",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-07-01T10:24:41.284Z"
+    },
+    {
+      "id": "l-99eb7b2d-366e-4868-88a5-b3c6ccaca81b",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T10:23:35.997Z"
+    },
+    {
+      "id": "l-01581bef-dee6-43dc-a3cf-16bdd2564538",
+      "username": "admin@afriwaid.com",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "failure",
+      "details": "Invalid security passcode audit check failed",
+      "timestamp": "2026-07-01T10:23:27.105Z"
+    },
     {
       "id": "l-59507bc2-27d9-4816-a3f9-b3af449aecdd",
       "username": "chinnikstah",
@@ -633,6 +1159,17 @@
       "projectProgress": 65,
       "archived": false,
       "createdAt": "2026-06-01T08:00:00.000Z"
+    },
+    {
+      "id": "cl-demo-client",
+      "name": "Demo Client Partner",
+      "company": "AfriWaid Demo Company",
+      "email": "client.demo@afriwaid.test",
+      "userId": "u-demo-client",
+      "assignedProjectName": "WaidPulse AI Integrations",
+      "projectProgress": 65,
+      "archived": false,
+      "createdAt": "2026-07-01T10:23:35.541Z"
     }
   ],
   "projects": [
@@ -691,6 +1228,48 @@
       "projectId": "proj-1",
       "userId": "u-7",
       "role": "Developer"
+    },
+    {
+      "id": "pm-demo-moderator",
+      "projectId": "proj-1",
+      "userId": "u-demo-moderator",
+      "role": "Moderator"
+    },
+    {
+      "id": "pm-demo-developer",
+      "projectId": "proj-1",
+      "userId": "u-demo-developer",
+      "role": "Developer"
+    },
+    {
+      "id": "pm-demo-operator",
+      "projectId": "proj-1",
+      "userId": "u-demo-operator",
+      "role": "Operator"
+    },
+    {
+      "id": "pm-demo-auditor",
+      "projectId": "proj-1",
+      "userId": "u-demo-auditor",
+      "role": "Auditor"
+    },
+    {
+      "id": "pm-demo-team-member",
+      "projectId": "proj-1",
+      "userId": "u-demo-team-member",
+      "role": "Team Member"
+    },
+    {
+      "id": "pm-demo-client",
+      "projectId": "proj-1",
+      "userId": "u-demo-client",
+      "role": "Client"
+    },
+    {
+      "id": "pm-demo-user",
+      "projectId": "proj-1",
+      "userId": "u-demo-user",
+      "role": "User"
     }
   ],
   "milestones": [

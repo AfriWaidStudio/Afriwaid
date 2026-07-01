@@ -4700,6 +4700,8 @@ export default function AdminDashboard({
                                     <option value="Build Journal">Build Journal</option>
                                     <option value="AI Lab">AI Lab</option>
                                     <option value="Client Access">Client Access</option>
+                                    <option value="Media">Media</option>
+                                    <option value="Publishing">Publishing</option>
                                     <option value="Contact">Contact</option>
                                   </select>
                                 </div>

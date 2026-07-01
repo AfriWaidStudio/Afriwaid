@@ -45,6 +45,53 @@ import FilesPage from "./pages/user/FilesPage";
 import TeamPage from "./pages/user/TeamPage";
 import ReportsPage from "./pages/user/ReportsPage";
 import SettingsPage from "./pages/user/SettingsPage";
+import { TeamWorkspaceLayout } from "./workspaces/team/TeamWorkspaceLayout";
+import TeamDashboardPage from "./pages/team/DashboardPage";
+import TeamMessagesPage from "./pages/team/MessagesPage";
+import ModeratorDashboardPage from "./pages/moderator/DashboardPage";
+import AuditorDashboardPage from "./pages/auditor/DashboardPage";
+
+type AppTab = "Home" | "Projects" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact";
+
+const TAB_ROUTES: Record<AppTab, string> = {
+  "Home": "/",
+  "Projects": "/projects",
+  "Services": "/services",
+  "Build Journal": "/build-journal",
+  "AI Lab": "/ai-lab",
+  "Publishing": "/publishing",
+  "Media": "/media",
+  "Resumé CV": "/resume-cv",
+  "Founder Profile": "/founder-profile",
+  "Company Profile": "/company-profile",
+  "Client Access": "/portal",
+  "Admin Central": "/admin",
+  "Moderator": "/team",
+  "Auditor": "/audit",
+  "Security Settings": "/security-settings",
+  "Contact": "/contact"
+};
+
+function tabFromPath(path: string): AppTab {
+  if (path.startsWith("/workspace/admin") || path.startsWith("/admin")) return "Admin Central";
+  if (path.startsWith("/workspace/moderator")) return "Moderator";
+  if (path.startsWith("/workspace/auditor") || path.startsWith("/audit")) return "Auditor";
+  if (path.startsWith("/team")) return "Moderator";
+  if (path.startsWith("/login") || path.startsWith("/register") || path.startsWith("/forgot-password") || path.startsWith("/reset-password") || path.startsWith("/verify-email")) return "Client Access";
+  if (path.startsWith("/portal") || path.startsWith("/client")) return "Client Access";
+  if (path.startsWith("/security-settings") || path.startsWith("/settings")) return "Security Settings";
+  if (path.startsWith("/projects")) return "Projects";
+  if (path.startsWith("/services")) return "Services";
+  if (path.startsWith("/build-journal") || path.startsWith("/journal")) return "Build Journal";
+  if (path.startsWith("/ai-lab")) return "AI Lab";
+  if (path.startsWith("/publishing") || path.startsWith("/writing")) return "Publishing";
+  if (path.startsWith("/media")) return "Media";
+  if (path.startsWith("/resume-cv") || path.startsWith("/cv")) return "Resumé CV";
+  if (path.startsWith("/founder-profile") || path.startsWith("/founder")) return "Founder Profile";
+  if (path.startsWith("/company-profile") || path.startsWith("/company")) return "Company Profile";
+  if (path.startsWith("/contact")) return "Contact";
+  return "Home";
+}
 
 export default function App() {
   return (
@@ -58,28 +105,20 @@ function AppContent() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const adminRoles = ["Super Admin", "Admin", "Auditor"];
+  const adminRoles = ["Super Admin", "Admin"];
   const teamRoles = ["Team Member", "Moderator", "Developer", "Operator"];
+  const auditorRoles = ["Auditor"];
   const portalRoles = ["Client", "User"];
   
-  const getInitialTabFromPath = (path: string): "Home" | "Projects" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact" => {
-    if (path.startsWith("/workspace/admin") || path.startsWith("/admin")) {
-      return "Admin Central";
-    } else if (path.startsWith("/workspace/moderator")) {
-      return "Moderator";
-    } else if (path.startsWith("/workspace/auditor")) {
-      return "Auditor";
-    } else if (path.startsWith("/portal") || path.startsWith("/client")) {
-      return "Client Access";
-    } else if (path.startsWith("/security-settings") || path.startsWith("/settings")) {
-      return "Security Settings";
-    }
-    return "Home";
-  };
+  const [activeTab, setActiveTab] = useState<AppTab>(tabFromPath(location.pathname));
 
-  const [activeTab, setActiveTab] = useState<
-    "Home" | "Projects" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact"
-  >(getInitialTabFromPath(location.pathname));
+  const navigateToTab = (tab: AppTab, options?: { replace?: boolean }) => {
+    setActiveTab(tab);
+    const route = TAB_ROUTES[tab];
+    if (location.pathname !== route) {
+      navigate(route, { replace: options?.replace });
+    }
+  };
 
   const getInitialSubTabFromPath = (path: string): "analytics" | "projects" | "articles" | "journal" | "inquiries" | "cvs" | "media" | "tech" | "stats" | "testimonials" | "team" | "services" | "users" | "roles" | "audit_logs" | "workspaces" | "clients_billing" | "support_chat" | "alert_broadcasts" | "site_customization" => {
     if (path.startsWith("/workspace/admin") || path.startsWith("/admin")) {
@@ -108,17 +147,10 @@ function AppContent() {
 
   useEffect(() => {
     const path = location.pathname;
+    const nextTab = tabFromPath(path);
+    setActiveTab(nextTab);
     if (path.startsWith("/workspace/admin") || path.startsWith("/admin")) {
-      setActiveTab("Admin Central");
       setInitialSubTab(getInitialSubTabFromPath(path));
-    } else if (path.startsWith("/workspace/moderator")) {
-      setActiveTab("Moderator");
-    } else if (path.startsWith("/workspace/auditor")) {
-      setActiveTab("Auditor");
-    } else if (path.startsWith("/portal") || path.startsWith("/client")) {
-      setActiveTab("Client Access");
-    } else if (path.startsWith("/security-settings") || path.startsWith("/settings")) {
-      setActiveTab("Security Settings");
     }
   }, [location.pathname]);
 
@@ -128,6 +160,10 @@ function AppContent() {
       if (adminRoles.includes(role)) {
         if (!location.pathname.startsWith("/workspace/admin") && !location.pathname.startsWith("/admin")) {
           navigate("/admin", { replace: true });
+        }
+      } else if (auditorRoles.includes(role)) {
+        if (!location.pathname.startsWith("/audit")) {
+          navigate("/audit", { replace: true });
         }
       } else if (teamRoles.includes(role)) {
         if (!location.pathname.startsWith("/team")) {
@@ -213,27 +249,39 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [activeTab]);
 
+  useEffect(() => {
+    const route = TAB_ROUTES[activeTab];
+    const currentPath = location.pathname;
+    const alreadyOnRoute = currentPath === route || currentPath.startsWith(`${route}/`);
+    const protectedRouteOpen =
+      (activeTab === "Client Access" && currentPath.startsWith("/portal")) ||
+      (activeTab === "Client Access" && ["/login", "/register", "/forgot-password", "/reset-password", "/verify-email"].some((path) => currentPath.startsWith(path))) ||
+      (activeTab === "Admin Central" && (currentPath.startsWith("/admin") || currentPath.startsWith("/workspace/admin"))) ||
+      (activeTab === "Moderator" && currentPath.startsWith("/team")) ||
+      (activeTab === "Auditor" && currentPath.startsWith("/audit")) ||
+      (activeTab === "Security Settings" && (currentPath.startsWith("/security-settings") || currentPath.startsWith("/settings")));
+
+    if (!alreadyOnRoute && !protectedRouteOpen) {
+      navigate(route, { replace: false });
+    }
+  }, [activeTab, location.pathname, navigate]);
+
   // Handle app-wide tab redirect event
   useEffect(() => {
     const handleGotoTab = (e: Event) => {
       const customEvent = e as CustomEvent<string>;
       if (customEvent.detail) {
         const dest = customEvent.detail;
-        if (dest === "Projects") setActiveTab("Projects");
-        else if (dest === "Services") setActiveTab("Services");
-        else if (dest === "Client Access") setActiveTab("Client Access");
-        else if (dest === "AI Lab") setActiveTab("AI Lab");
-        else if (dest === "Media") setActiveTab("Media");
-        else if (dest === "Publishing") setActiveTab("Publishing");
-        else if (dest === "Build Journal") setActiveTab("Build Journal");
-        else if (dest === "Resumé CV") setActiveTab("Resumé CV");
+        if (dest in TAB_ROUTES) {
+          navigateToTab(dest as AppTab);
+        }
         
         window.scrollTo({ top: 0, behavior: "instant" });
       }
     };
     window.addEventListener("app:goto-tab", handleGotoTab);
     return () => window.removeEventListener("app:goto-tab", handleGotoTab);
-  }, []);
+  }, [location.pathname, navigate]);
 
   // Seed / local state databases
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -740,6 +788,41 @@ function AppContent() {
         <Sparkles className="w-8 h-8 text-blue-600 animate-spin" />
         <span className="text-xs uppercase tracking-widest text-slate-500 font-mono font-bold">BOOTING AFRIWAID STUDIO ENGINE...</span>
       </div>
+    );
+  }
+
+  // Full-portal takeover if user is logged in as a portal role
+  if (user && auditorRoles.includes(user.role)) {
+    return (
+      <TeamWorkspaceLayout>
+        <AuditorDashboardPage />
+      </TeamWorkspaceLayout>
+    );
+  }
+
+  if (user && teamRoles.includes(user.role)) {
+    return (
+      <TeamWorkspaceLayout>
+        {user.role === "Moderator" && location.pathname === "/team" && <ModeratorDashboardPage />}
+        {user.role !== "Moderator" && location.pathname === "/team" && <TeamDashboardPage />}
+        {location.pathname.startsWith("/team/messages") && <TeamMessagesPage />}
+        {location.pathname.startsWith("/team/projects") && <ClientProjectsPage />}
+        {location.pathname.startsWith("/team/timeline") && <TimelinePage />}
+        {location.pathname.startsWith("/team/deliverables") && <DeliverablesPage />}
+        {location.pathname.startsWith("/team/team") && <TeamPage />}
+        {location.pathname.startsWith("/team/settings") && <SettingsPage />}
+        {![
+          "/team",
+          "/team/messages",
+          "/team/projects",
+          "/team/timeline",
+          "/team/deliverables",
+          "/team/team",
+          "/team/settings"
+        ].some((path) => location.pathname === path || (path !== "/team" && location.pathname.startsWith(path))) && (
+          user.role === "Moderator" ? <ModeratorDashboardPage /> : <TeamDashboardPage />
+        )}
+      </TeamWorkspaceLayout>
     );
   }
 

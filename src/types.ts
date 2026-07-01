@@ -187,7 +187,7 @@ export interface ConsultationCard {
   title: string;
   description: string;
   ctaLabel: string;
-  targetTab: "Services" | "Projects" | "Build Journal" | "AI Lab" | "Client Access" | "Contact" | "Media" | "Publishing";
+  targetTab: "Services" | "Projects" | "Build Journal" | "AI Lab" | "Client Access" | "Contact" | "Media" | "Publishing" | "Writing";
   systemGenerated?: boolean;
 }
 
