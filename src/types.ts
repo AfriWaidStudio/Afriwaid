@@ -1,32 +1,265 @@
-export interface CaseStudy {
-  challenge: string;
-  goal: string;
-  research: string;
-  designProcess: string;
-  developmentProcess: string;
-  results: string;
-  lessonsLearned: string;
+export interface ProjectOverview {
+  name: string;
+  subtitle: string;
+  description: string;
+  longSummary?: string;
+  status: "Planning" | "In Development" | "QA" | "Active" | "Completed" | "Maintained";
+  category: "Websites" | "SaaS" | "AI" | "KI" | "Mobile Apps" | "Design" | "Writing" | "Media" | "Research";
+  industry?: string;
+  owner?: string;
+  client?: string;
+  startedDate?: string;
+  completedDate?: string;
+  currentVersion?: string;
+  repositoryLinks?: { label: string; url: string }[];
+  website?: string;
+  demo?: string;
+  license?: string;
+  visibility: "Public" | "Private" | "Unlisted";
+  estimatedDevelopmentTime?: string;
+  difficulty?: "Beginner" | "Intermediate" | "Advanced" | "Expert";
+  projectSize?: "Small" | "Medium" | "Large" | "Enterprise";
+  projectType?: "Product" | "System" | "Research" | "Prototype" | "Open Source";
+  tags: string[];
+  technologies: string[];
+  coverImage: string;
+  logo?: string;
+  backgroundVideo?: string;
+  colorTheme?: { primary: string; secondary: string; accent: string };
+}
+
+export interface ProjectProblemTackled {
+  title: string;
+  description: string;
+  businessProblem: string;
+  technicalProblem: string;
+  targetUsers: string[];
+  painPoints: string[];
+  industryChallenges: string[];
+  beforeAfter?: { before: string; after: string };
+  impact: string;
+}
+
+export interface ProjectSolution {
+  summary: string;
+  approach: string;
+  innovation: string;
+  technicalDecisions: string;
+  architectureChoices: string;
+  expectedBenefits: string;
+}
+
+export interface ProjectFeature {
+  id: string;
+  icon?: string;
+  title: string;
+  description: string;
+  status: "Planned" | "In Development" | "Testing" | "Released" | "Deprecated";
+  versionIntroduced?: string;
+  demoLink?: string;
+  screenshot?: string;
+  video?: string;
+  category?: string;
+}
+
+export interface ProjectSystemAsset {
+  id: string;
+  title: string;
+  description: string;
+  priority: "Low" | "Medium" | "High" | "Critical";
+  category: string;
+  status: "Planned" | "In Development" | "Testing" | "Released" | "Deprecated";
+  relatedComponent?: string;
+  documentationLink?: string;
+}
+
+export interface ProjectTechnology {
+  id: string;
+  name: string;
+  version: string;
+  purpose: string;
+  category: "Frontend" | "Backend" | "Database" | "Infrastructure" | "AI" | "DevOps" | "Testing" | "Other";
+  documentationLink?: string;
+  website?: string;
+  logo?: string;
+  status: "Active" | "Deprecated" | "Experimental";
+}
+
+export interface ProjectArchitecture {
+  diagram?: string;
+  modules: string[];
+  services: string[];
+  components: string[];
+  dataFlow?: string;
+  apiFlow?: string;
+  authenticationFlow?: string;
+  databaseDesign?: string;
+  caching?: string;
+  queueSystem?: string;
+  aiLayer?: string;
+  microservices: string[];
+  dependencies: string[];
+  deploymentDiagram?: string;
+}
+
+export interface ProjectGalleryItem {
+  id: string;
+  type: "image" | "video" | "gif" | "pdf";
+  url: string;
+  title: string;
+  description?: string;
+  category?: string;
+  thumbnail?: string;
+}
+
+export interface ProjectTimelineEvent {
+  id: string;
+  date: string;
+  title: string;
+  description: string;
+  status: "Planned" | "In Progress" | "Completed" | "Blocked";
+}
+
+export interface ProjectChallenge {
+  id: string;
+  title: string;
+  description: string;
+  severity: "Low" | "Medium" | "High" | "Critical";
+  status: "Open" | "In Progress" | "Resolved" | "Won't Fix";
+}
+
+export interface ProjectSecurity {
+  authentication?: string;
+  authorization?: string;
+  encryption?: string;
+  auditLogs?: string;
+  rbac?: string;
+  apiSecurity?: string;
+  inputValidation?: string;
+  rateLimiting?: string;
+  backups?: string;
+  compliance?: string[];
+}
+
+export interface ProjectIntegration {
+  id: string;
+  provider: string;
+  description: string;
+  status: "Active" | "Inactive" | "Deprecated";
+  apiVersion?: string;
+  documentation?: string;
+  webhook?: string;
+  authMethod?: string;
+}
+
+export interface ProjectDownload {
+  id: string;
+  name: string;
+  type: "PDF" | "ZIP" | "PNG" | "SVG" | "DOC" | "Other";
+  url: string;
+  description?: string;
+  size?: string;
+}
+
+export interface ProjectRoadmapItem {
+  id: string;
+  title: string;
+  description: string;
+  status: "Planned" | "Research" | "In Development" | "Testing" | "Released" | "Deprecated" | "Cancelled";
+  targetDate?: string;
+  priority: "Low" | "Medium" | "High" | "Critical";
+}
+
+export interface ProjectPerformanceMetric {
+  label: string;
+  value: number;
+  unit?: string;
+  target?: number;
+}
+
+export interface ProjectCaseStudy {
+  executiveSummary?: string;
+  background?: string;
+  businessProblem?: string;
+  research?: string;
+  discovery?: string;
+  requirements?: string;
+  planning?: string;
+  wireframes?: string;
+  architecture?: string;
+  development?: string;
+  challenges?: string;
+  solutions?: string;
+  testing?: string;
+  deployment?: string;
+  performance?: string;
+  lessonsLearned?: string;
+  futureImprovements?: string;
+  results?: string;
+  kpis?: string;
+  downloads?: string;
+  readingTime?: string;
+  tableOfContents?: string[];
+  bookmarks?: string[];
+}
+
+export interface ProjectSettings {
+  general: {
+    slug: string;
+    isPublished: boolean;
+    allowComments: boolean;
+    enableAnalytics: boolean;
+  };
+  seo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string[];
+    canonicalUrl?: string;
+  };
+  theme: {
+    primaryColor?: string;
+    secondaryColor?: string;
+    darkMode?: boolean;
+  };
+  media: {
+    defaultGalleryView?: "grid" | "carousel";
+    lazyLoading?: boolean;
+  };
+  publishing: {
+    publishDate?: string;
+    unpublishDate?: string;
+    scheduledPosts?: string[];
+  };
+  permissions: {
+    whoCanEdit?: ("admin" | "author" | "team")[];
+    whoCanView?: ("public" | "authenticated" | "private");
+  };
 }
 
 export interface Project {
   id: string;
-  name: string;
-  category: "Websites" | "SaaS" | "AI" | "KI" | "Mobile Apps" | "Design" | "Writing" | "Media" | "Research";
-  coverImage: string;
-  description: string;
-  longSummary?: string;
-  technologiesUsed: string[];
-  problemSolved: string;
-  features: string[];
-  screenshots?: string[];
-  videoDemo?: string; // Embed link or placeholder
-  liveUrl?: string;
-  gitHubUrl?: string;
-  projectStatus: "Planning" | "In Development" | "QA" | "Active" | "Completed" | "Maintained";
-  completionDate: string;
-  tags: string[];
-  caseStudy?: CaseStudy;
+  overview: ProjectOverview;
+  problemTackled?: ProjectProblemTackled;
+  solution?: ProjectSolution;
+  features: ProjectFeature[];
+  systemAssets: ProjectSystemAsset[];
+  technologies: ProjectTechnology[];
+  architecture?: ProjectArchitecture;
+  screenshots: ProjectGalleryItem[];
+  timeline: ProjectTimelineEvent[];
+  developmentProcess?: string;
+  challenges: ProjectChallenge[];
+  results?: string;
+  performanceMetrics: ProjectPerformanceMetric[];
+  security?: ProjectSecurity;
+  integrations: ProjectIntegration[];
+  downloads: ProjectDownload[];
+  roadmap: ProjectRoadmapItem[];
+  caseStudy?: ProjectCaseStudy;
+  settings: ProjectSettings;
   views: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface JournalEntry {

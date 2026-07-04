@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { loadInitialData, saveInitialData, INITIAL_CUSTOMIZATION, INITIAL_CONSULTATION_CARDS } from "./data";
-import { Project, Article, JournalEntry, CV, ClientProfile, Inquiry, TrackedAnalytics, ServiceOffer, MediaItem, HomepageStats, TechStackItem, Testimonial, TeamMember, CustomizationSettings, ConsultationCard } from "./types";
+import { Project, Article, JournalEntry, CV, ClientProfile, Inquiry, TrackedAnalytics, ServiceOffer, MediaItem, HomepageStats, TechStackItem, Testimonial, TeamMember, CustomizationSettings, ConsultationCard, Project as ProjectType } from "./types";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const formatStat = (val: string | number | undefined, defaultVal: string | number, suffix: string) => {
@@ -24,6 +24,7 @@ import AILab from "./components/AILab";
 import CVCenter from "./components/CVCenter";
 import MediaHub from "./components/MediaHub";
 import ProjectsPage from "./components/ProjectsPage";
+import ProjectDetailPage from "./components/ProjectDetailPage";
 import ServicesPage from "./components/ServicesPage";
 import WritingHub from "./components/WritingHub";
 import BuildJournal from "./components/BuildJournal";
@@ -51,7 +52,7 @@ import TeamMessagesPage from "./pages/team/MessagesPage";
 import ModeratorDashboardPage from "./pages/moderator/DashboardPage";
 import AuditorDashboardPage from "./pages/auditor/DashboardPage";
 
-type AppTab = "Home" | "Projects" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact";
+type AppTab = "Home" | "Projects" | "Project Detail" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact";
 
 const TAB_ROUTES: Record<AppTab, string> = {
   "Home": "/",
@@ -80,6 +81,7 @@ function tabFromPath(path: string): AppTab {
   if (path.startsWith("/login") || path.startsWith("/register") || path.startsWith("/forgot-password") || path.startsWith("/reset-password") || path.startsWith("/verify-email")) return "Client Access";
   if (path.startsWith("/portal") || path.startsWith("/client")) return "Client Access";
   if (path.startsWith("/security-settings") || path.startsWith("/settings")) return "Security Settings";
+  if (path.startsWith("/project/")) return "Project Detail";
   if (path.startsWith("/projects")) return "Projects";
   if (path.startsWith("/services")) return "Services";
   if (path.startsWith("/build-journal") || path.startsWith("/journal")) return "Build Journal";
@@ -181,6 +183,7 @@ function AppContent() {
   const [globalSearchOpen, setGlobalSearchOpen] = useState(false);
   const [globalSearchQuery, setGlobalSearchQuery] = useState("");
   const [selectedRecentImage, setSelectedRecentImage] = useState<string | null>(null);
+  const [selectedProjectDetail, setSelectedProjectDetail] = useState<ProjectType | null>(null);
   const [recentSearches, setRecentSearches] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem("afriwaid_recent_searches");
@@ -238,11 +241,14 @@ function AppContent() {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSelectedRecentImage(null);
+        if (location.pathname.startsWith("/project/")) {
+          navigate("/projects", { replace: true });
+        }
       }
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [location.pathname, navigate]);
 
   // Scroll to top automatically when changing tabs (User Request: Fix globally so page shows from top)
   useEffect(() => {
@@ -391,7 +397,6 @@ function AppContent() {
     }
     setDataLoaded(true);
 
-    // Increment home page view tracking count
     if (db.analytics) {
       const copy = { ...db.analytics };
       const homePv = copy.pageViews.find(pv => pv.path === "/");
@@ -401,6 +406,14 @@ function AppContent() {
       saveInitialData({ ...db, analytics: copy });
     }
   }, []);
+
+  useEffect(() => {
+    const projectId = location.pathname.split("/")[2];
+    if (projectId && activeTab === "Project Detail") {
+      const project = projects.find(p => p.id === projectId);
+      setSelectedProjectDetail(project || null);
+    }
+  }, [location.pathname, projects, activeTab]);
 
   // Sync Favicon dynamically whenever it changes in customization settings
   useEffect(() => {
@@ -1479,7 +1492,31 @@ function AppContent() {
 
         {/* Render: 2. Projects */}
         {activeTab === "Projects" && (
-          <ProjectsPage projects={projects} onViewIncrement={handleViewIncrement} customization={customization} />
+          <ProjectsPage 
+            projects={projects} 
+            onViewIncrement={handleViewIncrement} 
+            customization={customization}
+            onEditProject={(p) => {
+              console.log("Edit project:", p.id);
+            }}
+          />
+        )}
+
+        {/* Render: 2b. Project Detail Page */}
+        {activeTab === "Project Detail" && selectedProjectDetail && (
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+            <ProjectDetailPage
+              project={selectedProjectDetail}
+              onClose={() => {
+                setActiveTab("Projects");
+                setSelectedProjectDetail(null);
+              }}
+              onEdit={() => {
+                setActiveTab("Projects");
+                setSelectedProjectDetail(null);
+              }}
+            />
+          </div>
         )}
 
         {/* Render: 3. Services */}

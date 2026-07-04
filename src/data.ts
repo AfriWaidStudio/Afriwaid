@@ -115,134 +115,473 @@ export const INITIAL_CUSTOMIZATION: CustomizationSettings = {
 export const INITIAL_PROJECTS: Project[] = [
   {
     id: "proj-1",
-    name: "WaidPulse AI Engine",
-    category: "AI",
-    coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop",
-    description: "An advanced orchestration middleware that connects enterprise databases with autonomous LLM agents to automate cross-departmental operations.",
-    longSummary: "WaidPulse AI Engine represents a landmark in enterprise agentic process automation. Operating as a secure pipeline conductor, it bridges high-capacity Google Gemini models with SQL metadata nodes and dynamic internal network streams. By mapping natural language actions into highly serialized executable jobs, the WaidPulse AI engine allows automated systems to securely query data lakes, resolve logistic mismatches, and compile real-time latency diagnostics. Designed with a custom node graph visualizer in D3, supervisors retain continuous human-in-the-loop oversight to ensure absolute deterministic output and zero-trust security alignments.",
-    technologiesUsed: ["React", "Express", "@google/genai", "TypeScript", "Tailwind CSS", "D3.js"],
-    problemSolved: "Enterprise companies struggle to allow AI agents to safely access, process, and perform actions across disparate database engines without custom, fragile API bridges.",
-    features: [
-      "Dynamic Multi-Agent Orchestration",
-      "Secure SQL and vector database proxy filters",
-      "Real-time operation latency dashboard built in D3",
-      "Auto-generating diagnostic code sandboxes",
-      "Custom system prompt injection safeguards"
-    ],
-    projectStatus: "Active",
-    completionDate: "2026-04-18",
-    tags: ["Agentic AI", "Enterprise", "Automation", "D3 Visualizer"],
+    createdAt: "2026-04-18",
+    updatedAt: "2026-06-15",
     views: 412,
-    screenshots: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+    overview: {
+      id: "proj-1",
+      name: "WaidPulse AI Engine",
+      subtitle: "Enterprise Agentic Process Automation Middleware",
+      description: "An advanced orchestration middleware that connects enterprise databases with autonomous LLM agents to automate cross-departmental operations.",
+      longSummary: "WaidPulse AI Engine represents a landmark in enterprise agentic process automation. Operating as a secure pipeline conductor, it bridges high-capacity Google Gemini models with SQL metadata nodes and dynamic internal network streams. By mapping natural language actions into highly serialized executable jobs, the WaidPulse AI engine allows automated systems to securely query data lakes, resolve logistic mismatches, and compile real-time latency diagnostics. Designed with a custom node graph visualizer in D3, supervisors retain continuous human-in-the-loop oversight to ensure absolute deterministic output and zero-trust security alignments.",
+      status: "Active",
+      category: "AI",
+      industry: "Logistics & Supply Chain",
+      owner: "Waid Soko",
+      client: "AeroGlobal Logistics",
+      startedDate: "2026-03-01",
+      completedDate: "2026-04-18",
+      currentVersion: "1.2.0",
+      repositoryLinks: [
+        { label: "GitHub", url: "https://github.com/afriwaid/waidpulse" },
+        { label: "Documentation", url: "https://docs.afriwaid.com/waidpulse" }
+      ],
+      website: "https://waidpulse.afriwaid.com",
+      license: "MIT",
+      visibility: "Public",
+      estimatedDevelopmentTime: "8 weeks",
+      difficulty: "Advanced",
+      projectSize: "Large",
+      projectType: "Product",
+      tags: ["Agentic AI", "Enterprise", "Automation", "D3 Visualizer"],
+      technologies: ["React", "Express", "@google/genai", "TypeScript", "Tailwind CSS", "D3.js"],
+      coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop",
+      logo: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=400&auto=format&fit=crop",
+      colorTheme: { primary: "#0891b2", secondary: "#0e7490", accent: "#06b6d4" }
+    },
+    problemTackled: {
+      title: "Enterprise Database Integration Challenge",
+      description: "Enterprise companies struggle to allow AI agents to safely access, process, and perform actions across disparate database engines without custom, fragile API bridges.",
+      businessProblem: "Legacy systems operate in silos with no unified communication layer, requiring manual intervention for cross-system operations.",
+      technicalProblem: "No standardized middleware exists to securely connect LLMs with diverse database engines while maintaining audit trails.",
+      targetUsers: ["Operations Managers", "Data Engineers", "System Administrators"],
+      painPoints: ["Manual data reconciliation", "Security vulnerabilities", "Slow response times"],
+      industryChallenges: ["Data governance", "Compliance requirements", "System integration"],
+      beforeAfter: {
+        before: "Manual reconciliation of 3.5 hours per shipping reschedule",
+        after: "Automated rescheduling in 12 minutes"
+      },
+      impact: "45% reduction in manual shipping rescheduling tasks"
+    },
+    solution: {
+      summary: "WaidPulse AI Engine is a secure orchestration middleware that bridges enterprise databases with autonomous LLM agents.",
+      approach: "Server-side Express controller integrating Google Gemini models with SQL metadata nodes and dynamic network streams.",
+      innovation: "Custom node graph visualizer in D3 for human-in-the-loop oversight and deterministic output.",
+      technicalDecisions: "Strict JSON output schemas to prevent edge-case failures and ensure system reliability.",
+      architectureChoices: "Node-based tracking interface with glassmorphism styles and animated indicator states.",
+      expectedBenefits: "Automated cross-departmental operations with zero-trust security alignments."
+    },
+    features: [
+      {
+        id: "feat-1",
+        title: "Dynamic Multi-Agent Orchestration",
+        description: "Secure pipeline conductor for autonomous LLM agents",
+        status: "Released",
+        category: "Core"
+      },
+      {
+        id: "feat-2",
+        title: "Secure SQL and Vector Database Proxy Filters",
+        description: "Database access layer with built-in security filters",
+        status: "Released",
+        category: "Security"
+      },
+      {
+        id: "feat-3",
+        title: "Real-time Operation Latency Dashboard",
+        description: "D3-based visualization of system performance",
+        status: "Released",
+        category: "Monitoring"
+      },
+      {
+        id: "feat-4",
+        title: "Auto-generating Diagnostic Code Sandboxes",
+        description: "Dynamic code generation for system debugging",
+        status: "Released",
+        category: "Development"
+      },
+      {
+        id: "feat-5",
+        title: "Custom System Prompt Injection Safeguards",
+        description: "Controlled prompt injection with validation layers",
+        status: "Released",
+        category: "Security"
+      }
     ],
-    videoDemo: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    systemAssets: [
+      {
+        id: "asset-1",
+        title: "Database Adapter Layer",
+        description: "Core module for connecting to various database engines",
+        priority: "Critical",
+        category: "Backend",
+        status: "Released"
+      },
+      {
+        id: "asset-2",
+        title: "Agent Orchestrator",
+        description: "Manages multi-agent workflows and task distribution",
+        priority: "Critical",
+        category: "AI",
+        status: "Released"
+      }
+    ],
+    technologies: [
+      {
+        id: "tech-1",
+        name: "TypeScript",
+        version: "5.8",
+        purpose: "Type-safe development across the stack",
+        category: "Frontend",
+        status: "Active"
+      },
+      {
+        id: "tech-2",
+        name: "React",
+        version: "19",
+        purpose: "UI component library",
+        category: "Frontend",
+        status: "Active"
+      },
+      {
+        id: "tech-3",
+        name: "Express",
+        version: "4.18",
+        purpose: "Backend server framework",
+        category: "Backend",
+        status: "Active"
+      },
+      {
+        id: "tech-4",
+        name: "@google/genai",
+        version: "1.0",
+        purpose: "Google Gemini AI integration",
+        category: "AI",
+        status: "Active"
+      }
+    ],
+    architecture: {
+      modules: ["Agent Orchestrator", "Database Proxy", "Security Layer", "Analytics"],
+      services: ["Auth Service", "Data Sync Service", "Notification Service"],
+      components: ["Node Graph Visualizer", "Latency Monitor", "Diagnostic Sandbox"],
+      dataFlow: "Client Request -> Auth -> Agent Orchestrator -> Database Proxy -> AI Model -> Response",
+      microservices: ["User Service", "Project Service", "Analytics Service"],
+      dependencies: ["@google/genai", "pg", "redis", "d3"]
+    },
+    screenshots: [
+      {
+        id: "scr-1",
+        type: "image",
+        url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+        title: "Agent Dashboard Overview",
+        category: "UI"
+      },
+      {
+        id: "scr-2",
+        type: "image",
+        url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+        title: "Node Graph Visualization",
+        category: "Architecture"
+      },
+      {
+        id: "scr-3",
+        type: "image",
+        url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+        title: "Latency Diagnostics Panel",
+        category: "Monitoring"
+      }
+    ],
+    timeline: [
+      {
+        id: "tl-1",
+        date: "2026-03-01",
+        title: "Project Kickoff",
+        description: "Initial requirements gathering and team allocation",
+        status: "Completed"
+      },
+      {
+        id: "tl-2",
+        date: "2026-03-15",
+        title: "Architecture Design",
+        description: "System architecture blueprint finalized",
+        status: "Completed"
+      },
+      {
+        id: "tl-3",
+        date: "2026-04-18",
+        title: "Beta Release",
+        description: "Private beta with 3 early-adopter clients",
+        status: "Completed"
+      }
+    ],
+    developmentProcess: "Agile development with weekly sprints and continuous integration.",
+    challenges: [
+      {
+        id: "ch-1",
+        title: "Database Connection Pooling",
+        description: "Managing concurrent connections across multiple database engines",
+        severity: "High",
+        status: "Resolved"
+      }
+    ],
+    results: "Launched as a private beta with 3 early-adopter retail-logistics groups, WaidPulse automated 45% of manual shipping rescheduling tasks, dropping dispatch friction times from 3.5 hours to 12 minutes.",
+    performanceMetrics: [
+      { label: "Response Time", value: 120, unit: "ms", target: 100 },
+      { label: "Uptime", value: 99.9, unit: "%" },
+      { label: "Tasks Automated", value: 45, unit: "%" }
+    ],
+    security: {
+      authentication: "JWT-based with multi-factor support",
+      authorization: "Role-based access control",
+      encryption: "AES-256 for data at rest, TLS 1.3 for transit",
+      auditLogs: "Comprehensive operation logging",
+      inputValidation: "Zod schema validation on all inputs"
+    },
+    integrations: [
+      {
+        id: "int-1",
+        provider: "Google Gemini",
+        description: "LLM API for natural language processing",
+        status: "Active",
+        apiVersion: "v1",
+        authMethod: "API Key"
+      }
+    ],
+    downloads: [
+      {
+        id: "dl-1",
+        name: "WaidPulse API Documentation",
+        type: "PDF",
+        url: "/docs/waidpulse-api.pdf",
+        description: "Complete API reference guide"
+      }
+    ],
+    roadmap: [
+      {
+        id: "r-1",
+        title: "Public Beta Release",
+        description: "General availability with expanded feature set",
+        status: "Planned",
+        targetDate: "2026-07-15",
+        priority: "High"
+      }
+    ],
     caseStudy: {
-      challenge: "Enterprise logistic pipelines are notoriously rigid. Standard automation solutions fail because exceptional conditions (such as severe weather, border delays, or dynamic price adjustments) require human-like adaptable reasoning and multi-point coordination. This results in heavy operational overhead.",
-      goal: "Design and implement an autonomous decision engine called WaidPulse AI to safely integrate internal operational data and allow self-correcting logistic triggers.",
-      research: "We analyzed 15,000 operational delay logs. Over 78% of bottlenecks were resolved through simple cross-checking of inventory databases, email responses, and booking systems. We built an intent classifier utilizing server-side Gemini intelligence models to safely route actions.",
-      designProcess: "To make the system trustworthy, we created visual execution graphs. We designed and built a node-based tracking interface utilizing glassmorphism styles, dark gridlines, and animated indicator states so human supervisors can audit agent thoughts.",
-      developmentProcess: "The core system is implemented as an Express server-side controller integrating Gemini 3.5 models. We utilized standard tools and function calling to query external databases, returning structured JSON variables mapped directly to the interactive React interface.",
-      results: "Launched as a private beta with 3 early-adopter retail-logistics groups, WaidPulse automated 45% of manual shipping rescheduling tasks, dropping dispatch friction times from 3.5 hours to 12 minutes.",
-      lessonsLearned: "System reliability relies heavily on highly constrained output schemas. Unstructured model text triggers system errors; forcing robust strict JSON typing solves edge-case failures."
+      executiveSummary: "WaidPulse AI Engine reduced manual shipping rescheduling by 45% through autonomous multi-agent orchestration.",
+      background: "Enterprise logistics pipelines require real-time coordination across multiple systems.",
+      businessProblem: "Standard automation solutions fail due to exceptional conditions requiring adaptable reasoning.",
+      research: "Analyzed 15,000 operational delay logs. 78% of bottlenecks resolved through cross-checking inventory databases.",
+      development: "Express server-side controller integrating Gemini 3.5 models with structured JSON output schemas.",
+      results: "45% automation of manual tasks, dispatch friction reduced from 3.5 hours to 12 minutes.",
+      lessonsLearned: "Strict JSON output schemas prevent edge-case failures."
+    },
+    settings: {
+      general: {
+        slug: "waidpulse-ai-engine",
+        isPublished: true,
+        allowComments: true,
+        enableAnalytics: true
+      },
+      seo: {
+        metaTitle: "WaidPulse AI Engine - Enterprise Agentic Automation",
+        metaDescription: "Secure orchestration middleware connecting enterprise databases with autonomous LLM agents.",
+        keywords: ["AI", "automation", "logistics", "enterprise"]
+      },
+      publishing: {
+        publishDate: "2026-04-18"
+      },
+      permissions: {
+        whoCanView: "public"
+      }
     }
   },
   {
     id: "proj-2",
-    name: "KonsOS",
-    category: "KI",
-    coverImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=800&auto=format&fit=crop",
-    description: "A secure cognitive platform applying multi-criteria decision analysis (MCDA) algorithms paired with semantic memory indexes to evaluate risk vectors.",
-    longSummary: "KonsOS delivers a highly structured, audit-defensible decision ecosystem for enterprise portfolios and technology investments. Pairing classical Multi-Criteria Decision Analysis (MCDA) algorithms with rich semantic text index vectors, KonsOS allows executives to mathematically evaluate complex risks and evaluate alternative architectures. It extracts intelligence directly from dense regulatory and safety document backlogs, maps system dependencies as dynamic SVG nodes, and aggregates scores in real-time. This dual-engine approach guarantees that tactical investment decisions remain perfectly transparent, predictable, and mathematically sound.",
-    technologiesUsed: ["TypeScript", "Recharts", "Node.js", "Vector DB", "React-Flow"],
-    problemSolved: "Corporate boards and system architects require audit-proof, mathematical validation for technology investments, completely separate from conversational model guesswork.",
-    features: [
-      "Interactive Matrix scoring with real-time weights",
-      "Semantic memory retrieval across legacy PDF reports",
-      "Audit logs with dynamic SVG dependency graphs",
-      "Exportable regulatory compliance checklists"
-    ],
-    projectStatus: "QA",
-    completionDate: "2026-05-12",
-    tags: ["Decision Science", "Risk Analytics", "KI Architecture"],
+    createdAt: "2026-05-12",
+    updatedAt: "2026-06-15",
     views: 310,
-    screenshots: [
-      "https://images.unsplash.com/photo-1543286386-7a38167f334c?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
-    ],
-    videoDemo: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    caseStudy: {
-      challenge: "A leading investment fund had to run 120-item regulatory and safety checks for spatial computing products, taking analysts up to a month per product.",
-      goal: "Automate the preliminary screening and dependency tracing down to 24 hours while maintaining total legal consensus.",
-      research: "We mapped risk compliance down to direct dependency models, building weighted decision loops backed by cognitive retrieval vectors.",
-      designProcess: "Applied a high-contrast mono tech interface using JetBrains Mono typography, custom SVG dashboards, and precise risk dial controls.",
-      developmentProcess: "Built using a highly optimized, state-first React architecture that updates weighted graphs in real time. Backed by an express endpoint mapping risk metrics.",
-      results: "Reduced screening duration by 92% and flagged 14 hidden regulatory contradictions that would have otherwise triggered downstream license denials.",
-      lessonsLearned: "Combining AI with classical MCDA algorithms provides the deterministic rigor that enterprises demand, where LLMs fail on pure math constraints."
-    }
-  },
-  {
-    id: "proj-3",
-    name: "AfriWaid Brand Canvas",
-    category: "Design",
-    coverImage: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
-    description: "The complete visual identity, interactive guidelines, and premium motion system created for our own enterprise positioning and digital footprint.",
-    longSummary: "The AfriWaid Brand Canvas represents the convergence of software engineering precision and digital cinematic art direction. As our flagship visual experience, it defines the premium design coordinates for the entire AfriWaid digital footprint. It establishes an absolute 'Cosmic Slate' aesthetic combining deep off-black backdrops with geometric gridlines, responsive micro-interactions, and typographic hierarchy utilizing Space Grotesk. Built for optimal cross-platform performance, the Brand Canvas serves as a responsive, interactive style guide showcasing the meticulous visual craftsmanship and UX design principles we deliver to our enterprise partners.",
-    technologiesUsed: ["Figma", "Motion", "Tailwind CSS", "SVG Animation", "Blender"],
-    problemSolved: "Tech firms struggle to bridge raw engineering precision with cinematic storytelling, resulting in generic SaaS templates or dry web experiences.",
+    overview: {
+      id: "proj-2",
+      name: "KonsOS",
+      subtitle: "Multi-Criteria Decision Analysis Platform",
+      description: "A secure cognitive platform applying multi-criteria decision analysis (MCDA) algorithms paired with semantic memory indexes to evaluate risk vectors.",
+      longSummary: "KonsOS delivers a highly structured, audit-defensible decision ecosystem for enterprise portfolios and technology investments. Pairing classical Multi-Criteria Decision Analysis (MCDA) algorithms with rich semantic text index vectors, KonsOS allows executives to mathematically evaluate complex risks and evaluate alternative architectures.",
+      status: "QA",
+      category: "KI",
+      industry: "Investment & Risk Management",
+      owner: "Dr. Kenji Tanaka",
+      startedDate: "2026-04-01",
+      completedDate: "2026-05-12",
+      currentVersion: "2.0.0-beta",
+      license: "Proprietary",
+      visibility: "Private",
+      estimatedDevelopmentTime: "10 weeks",
+      difficulty: "Expert",
+      projectSize: "Enterprise",
+      projectType: "System",
+      tags: ["Decision Science", "Risk Analytics", "KI Architecture"],
+      technologies: ["TypeScript", "Recharts", "Node.js", "Vector DB", "React-Flow"],
+      coverImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=800&auto=format&fit=crop",
+      logo: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=400&auto=format&fit=crop"
+    },
+    problemTackled: {
+      title: "Investment Decision Complexity",
+      description: "Corporate boards require audit-proof, mathematical validation for technology investments.",
+      businessProblem: "Traditional investment evaluation lacks mathematical rigor and transparency.",
+      technicalProblem: "No system combines AI with classical MCDA algorithms for deterministic risk evaluation.",
+      targetUsers: ["Investment Committees", "Risk Managers", "Board Members"],
+      painPoints: ["Subjective evaluations", "Poor traceability", "Inconsistent scoring"],
+      industryChallenges: ["Regulatory compliance", "Audit requirements", "Complex dependencies"],
+      impact: "Reduced screening duration by 92%"
+    },
+    solution: {
+      summary: "KonsOS combines classical MCDA algorithms with semantic memory indexes for audit-defensible decisions.",
+      approach: "Weighted decision loops backed by cognitive retrieval vectors.",
+      innovation: "Interactive SVG dependency graphs with real-time scoring.",
+      technicalDecisions: "State-first React architecture with Express endpoint for risk metrics.",
+      architectureChoices: "Dual-engine approach guaranteeing mathematical transparency.",
+      expectedBenefits: "Deterministic rigor for enterprise investment decisions."
+    },
     features: [
-      "Custom generative vector particle background",
-      "Dynamic typography pairing systems (Inter & Space Grotesk)",
-      "High-fidelity motion transitions & premium micro-interactions",
-      "Fully responsive corporate stylebook inspector"
+      {
+        id: "feat-1",
+        title: "Interactive Matrix Scoring",
+        description: "Real-time weighted scoring with visual feedback",
+        status: "Released",
+        category: "Analysis"
+      },
+      {
+        id: "feat-2",
+        title: "Semantic Memory Retrieval",
+        description: "Search across legacy PDF reports and documents",
+        status: "Released",
+        category: "Search"
+      },
+      {
+        id: "feat-3",
+        title: "Audit Logs with SVG Graphs",
+        description: "Dynamic dependency visualization for compliance",
+        status: "Released",
+        category: "Compliance"
+      }
     ],
-    projectStatus: "In Development",
-    completionDate: "2026-03-30",
-    tags: ["Brand Identity", "Design System", "Art Direction"],
-    views: 295,
+    systemAssets: [
+      {
+        id: "asset-1",
+        title: "MCDA Engine",
+        description: "Core decision analysis algorithms",
+        priority: "Critical",
+        category: "Backend",
+        status: "Released"
+      }
+    ],
+    technologies: [
+      {
+        id: "tech-1",
+        name: "TypeScript",
+        version: "5.8",
+        purpose: "Type-safe development",
+        category: "Frontend",
+        status: "Active"
+      },
+      {
+        id: "tech-2",
+        name: "React Flow",
+        version: "11.x",
+        purpose: "Interactive node graphs",
+        category: "Frontend",
+        status: "Active"
+      }
+    ],
+    architecture: {
+      modules: ["Decision Engine", "Vector Store", "Audit Logger"],
+      services: ["Auth Service", "Analysis Service"],
+      components: ["Risk Matrix", "Dependency Graph", "Report Generator"],
+      microservices: ["User Service", "Decision Service"],
+      dependencies: ["langchain", "pgvector", "express"]
+    },
     screenshots: [
-      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1561070791-26c113006238?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop"
+      {
+        id: "scr-1",
+        type: "image",
+        url: "https://images.unsplash.com/photo-1543286386-7a38167f334c?q=80&w=800&auto=format&fit=crop",
+        title: "Risk Matrix Dashboard",
+        category: "UI"
+      }
     ],
-    videoDemo: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    timeline: [
+      {
+        id: "tl-1",
+        date: "2026-04-01",
+        title: "Project Initiation",
+        description: "Requirements and scope definition",
+        status: "Completed"
+      },
+      {
+        id: "tl-2",
+        date: "2026-05-12",
+        title: "QA Phase",
+        description: "User acceptance testing with pilot clients",
+        status: "Completed"
+      }
+    ],
+    developmentProcess: "State-first React architecture with real-time graph updates.",
+    challenges: [
+      {
+        id: "ch-1",
+        title: "Vector Similarity Search",
+        description: "Optimizing semantic search performance",
+        severity: "High",
+        status: "Resolved"
+      }
+    ],
+    results: "Reduced regulatory compliance auditing time from 20 business days to under six hours.",
+    performanceMetrics: [
+      { label: "Screening Speed", value: 92, unit: "%", target: 95 },
+      { label: "Hidden Risks Found", value: 14, unit: "risks" }
+    ],
+    security: {
+      authentication: "OAuth 2.0 with SSO support",
+      authorization: "Granular role-based permissions",
+      encryption: "AES-256 for sensitive data",
+      auditLogs: "Complete decision trail logging",
+      compliance: ["SOX", "GDPR"]
+    },
+    integrations: [
+      {
+        id: "int-1",
+        provider: "Internal Analytics DB",
+        description: "Data source for risk metrics",
+        status: "Active",
+        authMethod: "API Key"
+      }
+    ],
+    downloads: [],
+    roadmap: [],
     caseStudy: {
-      challenge: "Our agency needed to expand from local development assignments to high-value global enterprise consulting. Our old visual presentation felt average and freelance-focused.",
-      goal: "Build a futuristic, highly polished cinematic design language expressing deep technological knowledge and institutional-grade engineering capability.",
-      research: "We audited top technology organizations (Stripe, Vercel, Linear) which pair hyper-clean fonts, microscopic details, and absolute grid control.",
-      designProcess: "We established the 'Cosmic Slate' color theme: absolute off-blacks, deep cosmic slate backdrops, sharp geometric lines, and warm soft amber glows.",
-      developmentProcess: "Coded custom CSS grid lines directly into standard Tailwind layouts, coupled with modular react animation components powered by motion to simulate immersive physical panels.",
-      results: "Resulted in immediate visual elevation, driving inbound client size from modest five-figure projects to global technology transformation inquiries.",
-      lessonsLearned: "Design is a direct indicator of product rigor. If your own digital footprint contains alignment issues, clients assume your enterprise software code has bugs too."
+      executiveSummary: "KonsOS reduced regulatory compliance auditing from 20 days to 6 hours.",
+      background: "Investment funds require mathematical validation for technology investments.",
+      businessProblem: "Traditional evaluation lacks rigor and transparency for audit purposes.",
+      research: "Mapped risk compliance to dependency models with weighted decision loops.",
+      results: "92% reduction in screening duration, 14 hidden regulatory contradictions identified.",
+      lessonsLearned: "AI + MCDA algorithms provide deterministic rigor enterprises demand."
+    },
+    settings: {
+      general: {
+        slug: "konsos",
+        isPublished: true,
+        allowComments: false,
+        enableAnalytics: true
+      },
+      seo: {
+        metaTitle: "KonsOS - Decision Intelligence Platform",
+        metaDescription: "Multi-criteria decision analysis platform for enterprise risk evaluation.",
+        keywords: ["MCDA", "risk", "decision science", "KI"]
+      },
+      permissions: {
+        whoCanView: "authenticated"
+      }
     }
-  },
-  {
-    id: "proj-4",
-    name: "Lumina Research Matrix",
-    category: "Research",
-    coverImage: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=800&auto=format&fit=crop",
-    description: "An open, searchable index containing peer-reviewed methodologies and dynamic architectural canvases mapping out multi-agent safety systems.",
-    longSummary: "Lumina Research Matrix acts as an interactive, open-access repository of peer-reviewed safety frameworks and structured schemas. Aimed at providing developers and safety researchers with clear, operational structures, Lumina bridges the gap between high-level academic theory and actual production environments. It houses a searchable library of markdown research articles accompanied by an interactive network graph of conceptual dependencies built with D3. By translating dense scientific safety methodologies into downloadable deployment templates, Lumina empowers engineers to establish certifiable system boundaries around complex multi-agent models.",
-    technologiesUsed: ["React-Markdown", "Tailwind", "D3 Hierarchy", "Express"],
-    problemSolved: "Disseminated academic research on AI safety is highly fragmented and difficult for product developers to implement inside daily workflows.",
-    features: [
-      "Highly interactive semantic knowledge ontology using D3 force graphs",
-      "Fully searchable markdown academic articles",
-      "Direct code blueprint generators for safe framework setups"
-    ],
-    projectStatus: "Planning",
-    completionDate: "2026-06-01",
-    tags: ["AI Safety", "Academic", "Knowledge Base"],
-    views: 184,
-    screenshots: [
-      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop"
-    ],
-    videoDemo: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   }
 ];
 

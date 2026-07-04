@@ -726,6 +726,26 @@
       "isActive": true,
       "createdAt": "2026-07-01T11:25:15.863Z",
       "expiresAt": "2026-07-31T11:25:15.863Z"
+    },
+    {
+      "id": "s-fa5b3a5f-68a8-40e2-a63f-c1b1b3a3fef7",
+      "userId": "u-demo-client",
+      "token": "token_917684578557846db5cb644945d1a279bed6cbe2ab4b942108db8eed8f8375fd0b5b7433ed65d11a",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-07-01T11:39:30.395Z",
+      "expiresAt": "2026-07-01T13:39:30.395Z"
+    },
+    {
+      "id": "s-6b69d2dd-a469-45a5-a5ea-af9d51fc5dd4",
+      "userId": "u-demo-super-admin",
+      "token": "token_6c6e78d819518e09edf2ed4d1a2b9d53fd3cfb47bed085385d4761533cd2e7b4fbff89a84cd0ae4e",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-07-01T11:42:36.199Z",
+      "expiresAt": "2026-07-01T13:42:36.199Z"
     }
   ],
   "password_resets": [],
@@ -753,6 +773,50 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "l-2263968b-d27c-4482-8111-582fb9935e09",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-07-01T11:54:06.085Z"
+    },
+    {
+      "id": "l-c8c498eb-28f8-4742-a8c4-166e06f170aa",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:42:36.199Z"
+    },
+    {
+      "id": "l-12c50248-daa9-4c19-a7f3-5bf7af483c56",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-07-01T11:40:06.305Z"
+    },
+    {
+      "id": "l-71834145-fbb1-4bc7-b39a-cf8ee88a3764",
+      "userId": "u-demo-client",
+      "username": "demo_client_partner",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-01T11:39:30.395Z"
+    },
     {
       "id": "l-c70e8f9d-f317-4cca-87aa-5daa9e70420b",
       "userId": "u-demo-client",
