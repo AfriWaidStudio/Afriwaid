@@ -8,6 +8,8 @@ interface ImageUploadDropzoneProps {
   label?: string;
   placeholderText?: string;
   maxSizeMB?: number;
+  maxDimension?: number;
+  compressionQuality?: number;
 }
 
 export default function ImageUploadDropzone({
@@ -17,6 +19,8 @@ export default function ImageUploadDropzone({
   label = "Upload Images",
   placeholderText = "Drag & drop images here or click to browse",
   maxSizeMB = 4,
+  maxDimension = 1200,
+  compressionQuality = 0.82,
 }: ImageUploadDropzoneProps) {
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +38,42 @@ export default function ImageUploadDropzone({
 
   const images = getImagesArray();
 
-  const handleFiles = (files: FileList) => {
+  const fileToDataUrl = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") resolve(reader.result);
+        else reject(new Error("Could not read image file."));
+      };
+      reader.onerror = () => reject(new Error("Could not read image file."));
+      reader.readAsDataURL(file);
+    });
+
+  const compressImageFile = async (file: File): Promise<string> => {
+    const originalDataUrl = await fileToDataUrl(file);
+    const image = new Image();
+    image.src = originalDataUrl;
+
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error("Could not load image for optimization."));
+    });
+
+    const scale = Math.min(1, maxDimension / Math.max(image.width, image.height));
+    const width = Math.max(1, Math.round(image.width * scale));
+    const height = Math.max(1, Math.round(image.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) return originalDataUrl;
+
+    context.drawImage(image, 0, 0, width, height);
+    const optimized = canvas.toDataURL("image/webp", compressionQuality);
+    return optimized.length < originalDataUrl.length ? optimized : originalDataUrl;
+  };
+
+  const handleFiles = async (files: FileList) => {
     setError(null);
     const validFiles: File[] = [];
     
@@ -53,24 +92,17 @@ export default function ImageUploadDropzone({
 
     if (validFiles.length === 0) return;
 
-    // Convert to Base64
-    validFiles.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          const resultUrl = reader.result;
-          if (multiple) {
-            const current = getImagesArray();
-            if (!current.includes(resultUrl)) {
-              onChange([...current, resultUrl].join(", "));
-            }
-          } else {
-            onChange(resultUrl);
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      const optimizedUrls = await Promise.all(validFiles.map((file) => compressImageFile(file)));
+      if (multiple) {
+        const current = getImagesArray();
+        onChange([...current, ...optimizedUrls.filter((url) => !current.includes(url))].join(", "));
+      } else {
+        onChange(optimizedUrls[0]);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Image optimization failed.");
+    }
   };
 
   const handleDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -109,8 +141,7 @@ export default function ImageUploadDropzone({
     onChange(updated.join(", "));
   };
 
-  const handleAddManualUrl = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddManualUrl = () => {
     const cleanUrl = manualUrl.trim();
     if (!cleanUrl) return;
     
@@ -166,25 +197,32 @@ export default function ImageUploadDropzone({
       </div>
 
       {/* Optional: Add manual image link input */}
-      <form onSubmit={handleAddManualUrl} className="flex gap-1">
+      <div className="flex gap-1">
         <div className="relative flex-1">
           <LinkIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-505" />
           <input
             type="url"
             value={manualUrl}
             onChange={(e) => setManualUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddManualUrl();
+              }
+            }}
             className="w-full pl-8 pr-3 py-1.5 bg-neutral-950 border border-white/10 rounded-sm text-white placeholder-neutral-700 focus:border-cyan-500 focus:outline-none text-[11px]"
             placeholder="Or enter complete image URL manually..."
           />
         </div>
         <button
-          type="submit"
+          type="button"
+          onClick={handleAddManualUrl}
           disabled={!manualUrl.trim()}
           className="px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-300 rounded-sm transition text-[10px] uppercase font-bold disabled:opacity-50"
         >
           Add URL
         </button>
-      </form>
+      </div>
 
       {/* Error display */}
       {error && (

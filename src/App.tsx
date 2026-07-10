@@ -31,6 +31,7 @@ import BuildJournal from "./components/BuildJournal";
 import ContactForm from "./components/ContactForm";
 import AdminDashboard from "./components/AdminDashboard";
 import { AuthProvider, useAuth } from "./components/AuthContext";
+import AdminRouteGuard from "./components/AdminRouteGuard";
 import UnifiedAuthGate from "./components/UnifiedAuthGate";
 import SecuritySettings from "./components/SecuritySettings";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
@@ -51,12 +52,14 @@ import TeamDashboardPage from "./pages/team/DashboardPage";
 import TeamMessagesPage from "./pages/team/MessagesPage";
 import ModeratorDashboardPage from "./pages/moderator/DashboardPage";
 import AuditorDashboardPage from "./pages/auditor/DashboardPage";
+import AdminLoginPage from "./pages/admin/login";
 
 type AppTab = "Home" | "Projects" | "Project Detail" | "Services" | "Build Journal" | "AI Lab" | "Publishing" | "Media" | "Resumé CV" | "Founder Profile" | "Company Profile" | "Client Access" | "Admin Central" | "Moderator" | "Auditor" | "Security Settings" | "Contact";
 
 const TAB_ROUTES: Record<AppTab, string> = {
   "Home": "/",
   "Projects": "/projects",
+  "Project Detail": "/projects",
   "Services": "/services",
   "Build Journal": "/build-journal",
   "AI Lab": "/ai-lab",
@@ -104,7 +107,7 @@ export default function App() {
 }
 
 function AppContent() {
-  const { user, logout } = useAuth();
+  const { user, logout, token, isLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const adminRoles = ["Super Admin", "Admin"];
@@ -139,6 +142,7 @@ function AppContent() {
       if (path.includes("/team")) return "team";
       if (path.includes("/services")) return "services";
       if (path.includes("/roles")) return "roles";
+      if (path.includes("/permissions")) return "roles";
       if (path.includes("/audit")) return "audit_logs";
       if (path.includes("/workspaces")) return "workspaces";
     }
@@ -157,11 +161,13 @@ function AppContent() {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (isLoading) return;
+    if (location.pathname === "/admin/login" || location.pathname === "/unauthorized") return;
       if (user) {
       const role = user.role;
       if (adminRoles.includes(role)) {
         if (!location.pathname.startsWith("/workspace/admin") && !location.pathname.startsWith("/admin")) {
-          navigate("/admin", { replace: true });
+          navigate("/admin/dashboard", { replace: true });
         }
       } else if (auditorRoles.includes(role)) {
         if (!location.pathname.startsWith("/audit")) {
@@ -177,7 +183,7 @@ function AppContent() {
         }
       }
     }
-    }, [user, location.pathname, navigate]);
+    }, [isLoading, user, location.pathname, navigate]);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [globalSearchOpen, setGlobalSearchOpen] = useState(false);
@@ -315,8 +321,7 @@ function AppContent() {
   const [wsSocket, setWsSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token") || "";
-    if (!token) {
+    if (isLoading || !token) {
       if (wsSocket) {
         wsSocket.close();
         setWsSocket(null);
@@ -374,7 +379,7 @@ function AppContent() {
     return () => {
       socket.close();
     };
-  }, [user]);
+  }, [isLoading, token]);
 
   // Load initially
   useEffect(() => {
@@ -431,7 +436,7 @@ function AppContent() {
   }, [customization?.faviconUrl]);
 
   // Save changes wrapper
-  const syncChanges = (updatedDB: Partial<ReturnType<typeof loadInitialData>>) => {
+  const syncChanges = (updatedDB: Partial<ReturnType<typeof loadInitialData>>): boolean => {
     const current = loadInitialData();
     const finalDir = {
       projects: updatedDB.projects !== undefined ? updatedDB.projects : current.projects,
@@ -449,12 +454,15 @@ function AppContent() {
       teamMembers: updatedDB.teamMembers !== undefined ? updatedDB.teamMembers : current.teamMembers,
       customization: updatedDB.customization !== undefined ? updatedDB.customization : current.customization,
     };
-    saveInitialData(finalDir);
+    return saveInitialData(finalDir);
   };
 
   const handleUpdateCustomization = (updated: CustomizationSettings) => {
-    setCustomization(updated);
-    syncChanges({ customization: updated });
+    const saved = syncChanges({ customization: updated });
+    if (saved) {
+      setCustomization(updated);
+    }
+    return saved;
   };
 
   const handleUpdateHomepageStats = (stats: HomepageStats) => {
@@ -794,6 +802,61 @@ function AppContent() {
     } : INITIAL_CONSULTATION_CARDS[2]
   ];
   const consultationCards = customization?.consultationCards?.length ? customization.consultationCards : systemConsultationCards;
+  const renderAdminDashboard = () => (
+    <AdminDashboard
+      projects={projects}
+      articles={articles}
+      journal={journal}
+      cvs={cvs}
+      clients={clients}
+      inquiries={inquiries}
+      analytics={analytics || { visitorsLast30Days: 250, projectDownloads: 45, pageViews: [] }}
+      services={services}
+      media={media}
+      techStack={techStack}
+      testimonials={testimonials}
+      teamMembers={teamMembers}
+      customization={customization}
+      onUpdateCustomization={handleUpdateCustomization}
+      homepageStats={homepageStats || {
+        projectsCompleted: 24,
+        applicationsBuilt: 18,
+        aiSystemsDeveloped: 12,
+        articlesPublished: 8,
+        brandsCreated: 6,
+        videosProduced: 15,
+        clientsServed: 30
+      }}
+      onAddProject={handleAddProject}
+      onUpdateProject={handleUpdateProject}
+      onDeleteProject={handleDeleteProject}
+      onAddArticle={handleAddArticle}
+      onDeleteArticle={handleDeleteArticle}
+      onAddJournal={handleAddJournal}
+      onToggleCV={handleToggleCV}
+      onUpdateCV={handleUpdateCV}
+      onAddCV={handleAddCV}
+      onDeleteCV={handleDeleteCV}
+      onAddMedia={handleAddMedia}
+      onDeleteMedia={handleDeleteMedia}
+      onUpdateTechStack={handleUpdateTechStack}
+      onAddTestimonial={handleAddTestimonial}
+      onDeleteTestimonial={handleDeleteTestimonial}
+      onUpdateTestimonial={handleUpdateTestimonial}
+      onAddTeamMember={handleAddTeamMember}
+      onDeleteTeamMember={handleDeleteTeamMember}
+      onUpdateTeamMember={handleUpdateTeamMember}
+      onAddService={handleAddService}
+      onUpdateService={handleUpdateService}
+      onDeleteService={handleDeleteService}
+      onUpdateArticle={handleUpdateArticle}
+      onUpdateJournal={handleUpdateJournal}
+      onDeleteJournal={handleDeleteJournal}
+      onUpdateInquiryStatus={handleUpdateInquiryStatus}
+      onUpdateHomepageStats={handleUpdateHomepageStats}
+      initialSubTab={initialSubTab}
+    />
+  );
 
   if (!dataLoaded) {
     return (
@@ -836,6 +899,30 @@ function AppContent() {
           user.role === "Moderator" ? <ModeratorDashboardPage /> : <TeamDashboardPage />
         )}
       </TeamWorkspaceLayout>
+    );
+  }
+
+  if (location.pathname === "/admin/login") {
+    return <AdminLoginPage />;
+  }
+
+  if (location.pathname === "/unauthorized") {
+    return (
+      <main className="min-h-screen bg-neutral-950 text-white flex items-center justify-center px-4">
+        <section className="max-w-md rounded-lg border border-red-400/20 bg-red-500/10 p-8 text-center">
+          <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-red-300" />
+          <h1 className="text-xl font-black">Unauthorized</h1>
+          <p className="mt-2 text-sm text-neutral-300">Your current role cannot access this protected admin area.</p>
+        </section>
+      </main>
+    );
+  }
+
+  if (location.pathname.startsWith("/admin")) {
+    return (
+      <AdminRouteGuard>
+        {renderAdminDashboard()}
+      </AdminRouteGuard>
     );
   }
 
@@ -1025,8 +1112,8 @@ function AppContent() {
                 <div className="relative group">
                   <button
                     onClick={async () => {
+                      if (!token) return;
                       try {
-                        const token = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token") || "";
                         await fetch("/api/notifications/read-all", {
                           method: "PUT",
                           headers: { "Authorization": `Bearer ${token}` }
@@ -1593,59 +1680,7 @@ function AppContent() {
 {/* Render: 11. Admin Central */}
         {activeTab === "Admin Central" && (
           user && (user.role === "Super Admin" || user.role === "Admin") ? (
-            <AdminDashboard
-              projects={projects}
-              articles={articles}
-              journal={journal}
-              cvs={cvs}
-              clients={clients}
-              inquiries={inquiries}
-              analytics={analytics || { visitorsLast30Days: 250, projectDownloads: 45, pageViews: [] }}
-              services={services}
-              media={media}
-              techStack={techStack}
-              testimonials={testimonials}
-              teamMembers={teamMembers}
-              customization={customization}
-              onUpdateCustomization={handleUpdateCustomization}
-              homepageStats={homepageStats || {
-                projectsCompleted: 24,
-                applicationsBuilt: 18,
-                aiSystemsDeveloped: 12,
-                articlesPublished: 8,
-                brandsCreated: 6,
-                videosProduced: 15,
-                clientsServed: 30
-              }}
-              onAddProject={handleAddProject}
-              onUpdateProject={handleUpdateProject}
-              onDeleteProject={handleDeleteProject}
-              onAddArticle={handleAddArticle}
-              onDeleteArticle={handleDeleteArticle}
-              onAddJournal={handleAddJournal}
-              onToggleCV={handleToggleCV}
-              onUpdateCV={handleUpdateCV}
-              onAddCV={handleAddCV}
-              onDeleteCV={handleDeleteCV}
-              onAddMedia={handleAddMedia}
-              onDeleteMedia={handleDeleteMedia}
-              onUpdateTechStack={handleUpdateTechStack}
-              onAddTestimonial={handleAddTestimonial}
-              onDeleteTestimonial={handleDeleteTestimonial}
-              onUpdateTestimonial={handleUpdateTestimonial}
-              onAddTeamMember={handleAddTeamMember}
-              onDeleteTeamMember={handleDeleteTeamMember}
-              onUpdateTeamMember={handleUpdateTeamMember}
-              onAddService={handleAddService}
-              onUpdateService={handleUpdateService}
-              onDeleteService={handleDeleteService}
-              onUpdateArticle={handleUpdateArticle}
-              onUpdateJournal={handleUpdateJournal}
-              onDeleteJournal={handleDeleteJournal}
-              onUpdateInquiryStatus={handleUpdateInquiryStatus}
-              onUpdateHomepageStats={handleUpdateHomepageStats}
-              initialSubTab={initialSubTab}
-            />
+            <AdminRouteGuard>{renderAdminDashboard()}</AdminRouteGuard>
           ) : (
             <UnifiedAuthGate
               onAuthSuccess={() => setActiveTab("Admin Central")}

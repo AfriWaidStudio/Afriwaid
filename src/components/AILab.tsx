@@ -448,7 +448,7 @@ export default function AILab({ customization }: AILabProps) {
                       <span className="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block">// INITIALIZE DIAGNOSTICS</span>
                       <div className="flex flex-col gap-1.5">
                         {[
-                          "Tell me about WaidPulse AI Engine",
+                          "Tell me about KonsAi Engine",
                           "What is KonsOS?",
                           "What elements make up AfriWaid's tech stack?"
                         ].map((promptText, idx) => (

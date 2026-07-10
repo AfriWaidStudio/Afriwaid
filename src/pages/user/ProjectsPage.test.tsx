@@ -13,7 +13,7 @@ describe("ProjectsPage", () => {
         return new Response(JSON.stringify({
           projects: [{
             id: "proj-1",
-            name: "WaidPulse AI Integrations",
+            name: "KonsAi Integrations",
             category: "AI Middleware",
             projectStatus: "In Development",
             clientProgPercent: 65,
@@ -23,7 +23,7 @@ describe("ProjectsPage", () => {
       }
       if (url === "/api/projects/proj-1/workspace") {
         return new Response(JSON.stringify({
-          project: { id: "proj-1", name: "WaidPulse AI Integrations", completionDate: "2026-07-05" },
+          project: { id: "proj-1", name: "KonsAi Integrations", completionDate: "2026-07-05" },
           milestones: [{ id: "m-1", title: "Discovery" }],
           tasks: [{ id: "t-1", title: "Configure Gemini tool specs", desc: "Build constraints", status: "active" }],
           files: [{ id: "f-1", name: "Requirements.pdf" }],
@@ -42,7 +42,7 @@ describe("ProjectsPage", () => {
     );
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/projects", expect.any(Object)));
-    expect(await screen.findAllByText("WaidPulse AI Integrations")).toHaveLength(2);
+    expect(await screen.findAllByText("KonsAi Integrations")).toHaveLength(2);
     expect(screen.getByText("Configure Gemini tool specs")).toBeInTheDocument();
     expect(screen.getByText("Project Initiated")).toBeInTheDocument();
   });

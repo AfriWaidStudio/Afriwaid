@@ -3,10 +3,9 @@ import { BarChart3, FileText, Layers, Users, Calendar, Activity, MessageSquare }
 import { useAuth } from "../../components/AuthContext";
 import { Card } from "../../components/ui";
 import { PortalMetricCard } from "../user/PortalMetricCard";
-import { getPortalAuthToken } from "../user/auth";
 
 export default function TeamDashboardPage() {
-  const { user } = useAuth();
+  const { user, token, isLoading } = useAuth();
   const [stats, setStats] = useState({
     progress: 0,
     projects: 0,
@@ -19,8 +18,7 @@ export default function TeamDashboardPage() {
   ]);
 
   useEffect(() => {
-    const token = getPortalAuthToken();
-    if (!token) return;
+    if (isLoading || !token) return;
 
     Promise.all([
       fetch("/api/projects", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.ok ? r.json() : null),
@@ -48,7 +46,7 @@ export default function TeamDashboardPage() {
     }).catch(() => {
       setActivity([{ title: "Dashboard data could not be refreshed", time: "Retry" }]);
     });
-  }, []);
+  }, [isLoading, token]);
 
   return (
     <div className="space-y-8">

@@ -746,6 +746,76 @@
       "isActive": false,
       "createdAt": "2026-07-01T11:42:36.199Z",
       "expiresAt": "2026-07-01T13:42:36.199Z"
+    },
+    {
+      "id": "s-a0bd3d64-5261-4732-9061-4e15944862ad",
+      "userId": "u-demo-super-admin",
+      "token": "token_849ce29e8eabce7659053b1acec9163941755eaaea72c692f451dd45ff439d174b2f0f8c3b2f1aa4",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-04T08:48:19.123Z",
+      "expiresAt": "2026-07-04T10:48:19.122Z"
+    },
+    {
+      "id": "s-e47c97b1-bcd2-4402-a02e-520a245b89f9",
+      "userId": "u-demo-super-admin",
+      "token": "token_6ed5533d9201620ec7e960e4ac74e2615fecda30dc1df0efd4f4b9b47636409d66e56d4ee5cae93d",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-04T09:19:49.576Z",
+      "expiresAt": "2026-07-04T11:19:49.576Z"
+    },
+    {
+      "id": "s-56a3d7b6-3b7a-4ef5-b40c-4e2b20498795",
+      "userId": "u-demo-super-admin",
+      "token": "token_d9032b6360f45e6665ea586c1e5cb46a90e82c7316f094ea99be9c42c523ac03956e5c5b5a4cff92",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-04T10:24:42.673Z",
+      "expiresAt": "2026-07-04T12:24:42.673Z"
+    },
+    {
+      "id": "s-b7d7d110-d6b8-4999-b237-0de72cbc0640",
+      "userId": "u-demo-super-admin",
+      "token": "token_e3143df02cf4d31e1194ab7f5d7fd945f932c97ee7b0563daeca21557c1e49879776b6968ccf11df",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-07-04T10:24:50.401Z",
+      "expiresAt": "2026-07-04T12:24:50.400Z"
+    },
+    {
+      "id": "s-1d55c0b8-34ef-4f2b-929d-8cb519efdbff",
+      "userId": "u-demo-super-admin",
+      "token": "token_4220a56ee1b74ebf35408b0579828ac0d66b885b61c9bf4a4e67fc02ba388e4213c29a21f8042de7",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-04T12:25:22.503Z",
+      "expiresAt": "2026-07-04T14:25:22.503Z"
+    },
+    {
+      "id": "s-ec084946-efd8-441c-ae5b-ab635f33401e",
+      "userId": "u-demo-super-admin",
+      "token": "token_070490661e1c6eb038be0dffcd5b509f5e27413d4103a26d6ef06c54f60475e1c212b473c16f04a7",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": true,
+      "createdAt": "2026-07-04T12:25:27.850Z",
+      "expiresAt": "2026-07-04T14:25:27.850Z"
+    },
+    {
+      "id": "s-7af8cb0f-6508-4f5e-a3ec-5df4b6addca6",
+      "userId": "u-demo-super-admin",
+      "token": "token_db4a5a39803e989fe9de6bc581f59995f0e25b30ce6c9e7c702e011c906c51055059ec0a4bac3339",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "isActive": false,
+      "createdAt": "2026-07-04T12:25:32.714Z",
+      "expiresAt": "2026-07-04T14:25:32.714Z"
     }
   ],
   "password_resets": [],
@@ -773,6 +843,94 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "l-133359b4-9e96-449f-9d3a-c434a47af8db",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGOUT",
+      "module": "auth",
+      "status": "success",
+      "details": "Terminated login session client request",
+      "timestamp": "2026-07-04T12:33:04.824Z"
+    },
+    {
+      "id": "l-08fc7fe8-8c14-4c95-8852-c64607c0e0ef",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T12:25:32.714Z"
+    },
+    {
+      "id": "l-814d0d9e-fdbb-49c8-8a37-b243163e2df5",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T12:25:27.850Z"
+    },
+    {
+      "id": "l-6eb26ff2-5df7-4194-8219-068f94a41519",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T12:25:22.503Z"
+    },
+    {
+      "id": "l-c042a30a-1d7e-4615-b6ba-fc85790b41b4",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T10:24:50.401Z"
+    },
+    {
+      "id": "l-668cde26-8e5f-4613-8ade-328b8143aafb",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T10:24:42.673Z"
+    },
+    {
+      "id": "l-64789abe-a465-4004-a2cc-fb18f38f0fa3",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T09:19:49.577Z"
+    },
+    {
+      "id": "l-437cfc42-9573-40c7-bfa7-610e424d4bce",
+      "userId": "u-demo-super-admin",
+      "username": "demo_super_admin",
+      "ipAddress": "127.0.0.1",
+      "action": "LOGIN",
+      "module": "auth",
+      "status": "success",
+      "details": "Authorized secure logins session token. Current IP: 127.0.0.1",
+      "timestamp": "2026-07-04T08:48:19.123Z"
+    },
     {
       "id": "l-2263968b-d27c-4482-8111-582fb9935e09",
       "userId": "u-demo-super-admin",
@@ -1356,7 +1514,7 @@
       "company": "AeroGlobal Inc.",
       "email": "logistics@aeroglobal.com",
       "userId": "u-2",
-      "assignedProjectName": "WaidPulse AI Integrations",
+      "assignedProjectName": "KonsAi Integrations",
       "projectProgress": 65,
       "archived": false,
       "createdAt": "2026-06-01T08:00:00.000Z"
@@ -1367,7 +1525,7 @@
       "company": "AfriWaid Demo Company",
       "email": "client.demo@afriwaid.test",
       "userId": "u-demo-client",
-      "assignedProjectName": "WaidPulse AI Integrations",
+      "assignedProjectName": "KonsAi Integrations",
       "projectProgress": 65,
       "archived": false,
       "createdAt": "2026-07-01T10:23:35.541Z"
@@ -1376,7 +1534,7 @@
   "projects": [
     {
       "id": "proj-1",
-      "name": "WaidPulse AI Integrations",
+      "name": "KonsAi Integrations",
       "category": "AI Middleware",
       "coverImage": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop",
       "description": "An advanced orchestration middleware that connects enterprise databases with autonomous LLM agents to automate cross-departmental operations.",
@@ -1774,7 +1932,8 @@
       "timestamp": "2026-06-12T10:00:00.000Z",
       "readBy": [
         "u-2",
-        "u-demo-client"
+        "u-demo-client",
+        "u-demo-super-admin"
       ],
       "pinned": true,
       "reactions": []
@@ -1787,7 +1946,8 @@
       "timestamp": "2026-06-12T10:05:00.000Z",
       "readBy": [
         "u-1",
-        "u-demo-client"
+        "u-demo-client",
+        "u-demo-super-admin"
       ],
       "reactions": [
         {
@@ -1804,7 +1964,8 @@
       "timestamp": "2026-06-12T10:10:00.000Z",
       "readBy": [
         "u-2",
-        "u-demo-client"
+        "u-demo-client",
+        "u-demo-super-admin"
       ],
       "reactions": []
     },
@@ -1815,7 +1976,8 @@
       "body": "Audit probe 1782878556",
       "timestamp": "2026-07-01T04:02:44.399Z",
       "readBy": [
-        "u-demo-client"
+        "u-demo-client",
+        "u-demo-super-admin"
       ],
       "pinned": false,
       "reactions": []
@@ -1826,7 +1988,9 @@
       "senderId": "u-demo-client",
       "body": "Verification chat message with attachment",
       "timestamp": "2026-07-01T11:25:17.592Z",
-      "readBy": [],
+      "readBy": [
+        "u-demo-super-admin"
+      ],
       "pinned": false,
       "reactions": [],
       "attachment": {
@@ -1978,7 +2142,7 @@
       "id": "act-1",
       "projectId": "proj-1",
       "title": "Project Initiated",
-      "details": "WaidPulse AI Integrations workspace created with AeroGlobal client allocation.",
+      "details": "KonsAi Integrations workspace created with AeroGlobal client allocation.",
       "timestamp": "2026-06-01T09:00:00.000Z",
       "userId": "u-1"
     },

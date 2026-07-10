@@ -4,7 +4,7 @@ import { User, UserRole } from "../../types";
 import { Users, Search, UserPlus, ShieldAlert, Award, UserMinus, ToggleLeft, ToggleRight, Check, X, Loader2 } from "lucide-react";
 
 export default function UsersListManager() {
-  const { token, user: activeUser } = useAuth();
+  const { token, isLoading: authLoading, user: activeUser } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,7 @@ export default function UsersListManager() {
   const [editingStatus, setEditingStatus] = useState<"active" | "suspended" | "pending">("active");
 
   const fetchUsersList = async () => {
+    if (authLoading || !token) return;
     setLoading(true);
     setErrorMsg("");
     try {
@@ -53,8 +54,9 @@ export default function UsersListManager() {
   };
 
   useEffect(() => {
+    if (authLoading || !token) return;
     fetchUsersList();
-  }, [token]);
+  }, [authLoading, token]);
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();

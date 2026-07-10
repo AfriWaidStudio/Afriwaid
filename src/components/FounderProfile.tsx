@@ -28,7 +28,22 @@ import {
   ExternalLink,
   Users,
   Search,
-  MessageSquare
+  MessageSquare,
+  Plug,
+  RefreshCw,
+  BadgeCheck,
+  Link,
+  MessageCircle,
+  Megaphone,
+  Radio,
+  Code2,
+  GraduationCap,
+  ShoppingCart,
+  Trophy,
+  ArrowLeftRight,
+  Target,
+  Boxes,
+  BrainCircuit
 } from "lucide-react";
 import { CV, CustomizationSettings } from "../types";
 
@@ -59,14 +74,14 @@ const IDENTITY_DIMENSIONS: IdentityDimension[] = [
   {
     id: "founder",
     name: "Founder Identity",
-    expressionName: "Nwogha Chigozie",
+    expressionName: "Nwaora Chigozie",
     role: "Leadership, Execution & Vision Architect",
     motto: "Designing the systems that empower generations.",
     icon: Compass,
     colorClass: "from-cyan-500/10 to-blue-600/10 border-cyan-500/30",
     textColor: "text-cyan-400",
     glowColor: "shadow-cyan-500/10",
-    description: "The primary leadership identity and coordinate anchor. Responsible for founding AfriWaid Studio, building operational organizations, and drafting the long-term master architecture of the Konsmia ecosystem.",
+    description: "The primary leadership identity and coordinate anchor. Responsible for founding AfriWaid Studio, building operational organizations, and drafting the long-term master architecture of the Konsmik ecosystem.",
     backgroundStory: "Representing real-world leadership, responsibility, and system deployment. This identity translates high-level philosophical guidance, creative storytelling, and builder blueprints into institutional structures, legally compliant systems, and commercial networks designed to endure across generations.",
     philosophies: [
       "Technology is an empty vessel without human empathy and responsibility.",
@@ -77,7 +92,7 @@ const IDENTITY_DIMENSIONS: IdentityDimension[] = [
   {
     id: "heritage",
     name: "Heritage Identity",
-    expressionName: "Nwaora Gabriel Chigozie",
+    expressionName: "Nwogha Gabriel Chigozie",
     role: "Cultural Foundation, Lineage & Personal Origin",
     motto: "Remembering where the stream began to guide where it flows.",
     icon: History,
@@ -163,126 +178,486 @@ interface KiSystem {
 }
 
 const KI_SYSTEMS: KiSystem[] = [
+{
+  id: "konsos",
+  name: "KonsOS",
+  tagline: "The Operating Sovereign",
+  role: "Sovereign Operating Intelligence",
+  metaphor: "The brain that coordinates the entire Konsmik ecosystem.",
+  description: "The sovereign operating system of the Konsmik ecosystem. It coordinates logic, governance, orchestration, identities, KI systems, applications, infrastructure, and workflows, enabling every connected entity to function as one intelligent ecosystem.",
+  purpose: "Provides the unified operating environment that governs, coordinates, and orchestrates every connected entity, ensuring consistency, interoperability, security, and intelligent system-wide operations.",
+  connectedTo: [
+    "womblayer",
+    "konsgate",
+    "konsnet",
+    "konsmesh",
+    "konsnod"
+  ],
+  icon: Layers,
+  tier: "Foundational"
+},
   {
-    id: "konsos",
-    name: "KonsOS",
-    tagline: "Foundational Ecosystem Sandbox Environment",
-    role: "Ecosystem Home Environment",
-    metaphor: "The digital 'home system' framework.",
-    description: "The foundational operating database and layout sandbox. It provides the central workspace, coordinate files, and system dashboards where users navigate their tools and collaborative pipelines smoothly.",
-    purpose: "Provides a stable, high-fidelity browser and host infrastructure for consistent application states, acting as the primary launching pad for user workflows.",
-    connectedTo: ["konsnod", "womblayer", "konsnet"],
-    icon: Layers,
-    tier: "Foundational"
-  },
-  {
-    id: "womblayer",
-    name: "WombLayer",
-    tagline: "Incubation, Prototyping & System Formation Node",
-    role: "Ecosystem Incubation Layer",
-    metaphor: "The 'birth stage' of ideas and frameworks.",
-    description: "A secure sandboxed laboratory where early-stage files, ideas, schemas, and media assets are analyzed, processed, and stress-tested before being pushed live.",
-    purpose: "Ensures that products undergo deep architectural analysis, preventing technical decay and system vulnerabilities from entering the broader ecosystem.",
-    connectedTo: ["konsos", "waides_ki"],
-    icon: Database,
-    tier: "Foundational"
-  },
-  {
-    id: "konsnet",
-    name: "KonsNet",
-    tagline: "High-Bandwidth Connection Infrastructure",
-    role: "Connection Infrastructure Backbone",
-    metaphor: "The communication network cable network.",
-    description: "The underlying high-speed network protocols linking database servers, user devices, file catalogs, and APIs securely across countries, even in low-bandwidth regions.",
-    purpose: "Establishes secure data tunnels, offline synchronization databases, and global access routes with low latency.",
-    connectedTo: ["konsos", "konsmesh", "shavoka_ki"],
-    icon: Globe,
-    tier: "Foundational"
-  },
-  {
-    id: "konsmesh",
-    name: "KonsMesh",
-    tagline: "Ecosystem Network Synchronizer & Coordinator",
-    role: "Ecosystem Synchronization Engine",
-    metaphor: "A synchronized digital nervous system.",
-    description: "An advanced server registry coordinating state updates, event triggers, and system communications dynamically to ensure all tools and active sessions align.",
-    purpose: "Enables real-time data flow, synchronizes active collaboration boards, and alerts systems of updates.",
-    connectedTo: ["konsnet", "waides_ki", "shavoka_ki"],
-    icon: Network,
-    tier: "Intelligence Layer"
-  },
-  {
-    id: "waides_ki",
-    name: "Waides KI",
-    tagline: "Intelligent Interaction & Advisory Interface Layer",
-    role: "Ecosystem Intelligence Interface",
-    metaphor: "The intelligent interpreter of human intent.",
-    description: "An interactive, context-rich portal bridging humans with the ecosystem. Utilizing curated directories and semantic structures, it guides users through knowledge databases and learning pipelines.",
-    purpose: "Rejects text chatbots in favor of adaptive guidance screens, tool configurations, and cognitive interfaces that adapt to user objectives.",
-    connectedTo: ["womblayer", "konsmesh", "waides_niuz"],
-    icon: Brain,
-    tier: "Intelligence Layer"
-  },
-  {
-    id: "shavoka_ki",
-    name: "Shavoka KI",
-    tagline: "Ecosystem Security & Operational Safeguard Node",
-    role: "Ecosystem Security & Integrity Core",
-    metaphor: "The self-correcting immune system.",
-    description: "A proactive security monitoring terminal. Safeguards system keys, active API limits, database parameters, and user auth variables to maintain safe operating bounds.",
-    purpose: "Prevents data leaks, verifies RBAC rules, identifies routing failures, and neutralizes bad system coordinates automatically.",
-    connectedTo: ["konsnet", "konsmesh", "waidtred"],
-    icon: ShieldAlert,
-    tier: "Intelligence Layer"
-  },
-  {
-    id: "waides_niuz",
-    name: "Waides Niuz",
-    tagline: "Context-Rich Media & Strategic Meaning Engine",
-    role: "Ecosystem Meaning & Media Terminal",
-    metaphor: "A structural filter for global understanding.",
-    description: "A customized news and analysis database focused on explaining global shifts, technical breakthroughs, economic transformations, and future-oriented insights.",
-    purpose: "Avoids distracting news and instead indexes structural developments, providing deep context to enable intelligent planning for teams.",
-    connectedTo: ["waides_ki"],
-    icon: FileText,
-    tier: "Exchange & Gateway"
-  },
-  {
-    id: "waidtred",
-    name: "WaidTred",
-    tagline: "Financial Transit, Value Exchange & Digital Commerce",
-    role: "Value Exchange & Commerce Node",
-    metaphor: "The fluid digital economy pipe.",
-    description: "A robust transaction gateway facilitating value exchange, peer consulting fees, subscription clearing, and participating in global financial pipelines.",
-    purpose: "Removes localized transaction friction, processes microgrids, and anchors financial value access securely within the developer network.",
-    connectedTo: ["shavoka_ki", "waides_wealth_circle"],
-    icon: Coins,
-    tier: "Exchange & Gateway"
-  },
-  {
-    id: "konsnod",
-    name: "KonsNod",
-    tagline: "Single Unified Entry Gateway System",
-    role: "Ecosystem Access Gateway",
-    metaphor: "A single unified master key entry.",
-    description: "Instead of managing dozen disjointed account logins or platforms, KonsNod provides a streamlined, secure entry portal that authenticates user roles across all ecosystem apps.",
-    purpose: "Simplifies administrative access, enforces strict security keys, and manages active workspace states uniformly.",
-    connectedTo: ["konsos"],
-    icon: Activity,
-    tier: "Exchange & Gateway"
-  },
-  {
-    id: "waides_wealth_circle",
-    name: "Waides Wealth Circle",
-    tagline: "Collective Long-Term System Value Matrix",
-    role: "Ecosystem Shared Value Matrix",
-    metaphor: "The shared collective prosperity engine.",
-    description: "An interactive, contribution-based framework tracking system value, equity units, cooperative development pools, and collective project rewards.",
-    purpose: "Empowers contributors with long-term shared value, aligning developers, creators, and partners to grow in tandem with the platform.",
-    connectedTo: ["waidtred"],
-    icon: Users,
-    tier: "Exchange & Gateway"
-  }
+  id: "womblayer",
+  name: "WombLayer",
+  tagline: "The Eternal Memory",
+  role: "Memory, Storage & Backend Layer",
+  metaphor: "The womb that stores, protects, and gives life to ecosystem data.",
+  description: "The living backend and memory foundation of the Konsmik ecosystem. It stores identity records, files, media, histories, application data, system memory, and long-term knowledge used by connected entities.",
+  purpose: "Provides secure data storage, media handling, backend services, historical memory, and synchronized records so every Konsmik entity can remember, retrieve, and build on trusted information.",
+  connectedTo: [
+    "konsos",
+    "konsgate",
+    "waideschain",
+    "waidespruf",
+    "waides_ki"
+  ],
+  icon: Database,
+  tier: "Foundational"
+},
+{
+  id: "konsnet",
+  name: "KonsNet",
+  tagline: "The Universal Network",
+  role: "Universal Connectivity Layer",
+  metaphor: "The digital bloodstream connecting every entity in the ecosystem.",
+  description: "The universal network of the Konsmik ecosystem. It connects users, KI systems, applications, services, and infrastructure, enabling secure communication and continuous connectivity across all connected entities.",
+  purpose: "Provides reliable communication, secure data transmission, service discovery, and network connectivity, allowing every Konsmik entity to exchange information and operate as one unified ecosystem.",
+  connectedTo: [
+    "konsos",
+    "konsmesh",
+    "konsgate",
+    "konsnod"
+  ],
+  icon: Globe,
+  tier: "Foundational"
+},
+{
+  id: "konsmesh",
+  name: "KonsMesh",
+  tagline: "The Living Network Body",
+  role: "Real-Time Synchronization Layer",
+  metaphor: "The nervous system of the Konsmik ecosystem.",
+  description: "The living synchronization layer of the Konsmik ecosystem. It coordinates real-time communication, state synchronization, event propagation, and intelligent interactions between connected entities.",
+  purpose: "Enables every Konsmik entity to communicate, synchronize, react, and collaborate in real time, ensuring the ecosystem behaves as one living, responsive network.",
+  connectedTo: [
+    "konsos",
+    "konsnet",
+    "konsgate",
+    "waides_ki",
+    "shavoka_ki"
+  ],
+  icon: Network,
+  tier: "Foundational"
+},
+{
+  id: "waides_ki",
+  name: "Waides KI",
+  tagline: "The Trading Intelligence",
+  role: "Market Intelligence & Decision System",
+  metaphor: "The analytical mind that transforms market data into intelligent decisions.",
+  description: "The trading intelligence of the Konsmik ecosystem. It analyzes market structure, sentiment, momentum, volatility, liquidity, and multiple data sources to generate disciplined forecasts, trading signals, market insights, and no-trade decisions.",
+  purpose: "Empowers traders with AI-driven market intelligence, structured analysis, risk-aware decision support, and high-confidence trading opportunities across digital and financial markets.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsgate",
+    "konsmesh",
+    "waides_niuz",
+    "waidtred"
+  ],
+  icon: Brain,
+  tier: "Intelligence"
+},
+{
+  id: "shavoka_ki",
+  name: "Shavoka KI",
+  tagline: "The Strategic Intelligence",
+  role: "Strategic Analysis & Defense Intelligence",
+  metaphor: "The guardian mind that protects and guides the ecosystem.",
+  description: "The strategic intelligence of the Konsmik ecosystem. It analyzes risks, monitors system integrity, supports strategic decision-making, and strengthens the resilience, security, and long-term stability of connected entities.",
+  purpose: "Provides intelligent defense, strategic awareness, risk analysis, operational protection, and decision support to help the ecosystem remain secure, adaptive, and resilient.",
+  connectedTo: [
+    "konsos",
+    "konsgate",
+    "konsnet",
+    "konsmesh",
+    "waidespruf",
+    "waideschain"
+  ],
+  icon: ShieldAlert,
+  tier: "Intelligence"
+},
+{
+  id: "waides_niuz",
+  name: "Waides Niuz",
+  tagline: "The Information Engine",
+  role: "Media & Intelligence System",
+  metaphor: "The eyes and voice of the Konsmik ecosystem.",
+  description: "The information engine of the Konsmik ecosystem. It gathers, structures, analyzes, and delivers news, insights, research, trends, and narratives that help users understand events, industries, markets, and the evolving digital world.",
+  purpose: "Transforms information into meaningful intelligence, enabling users and connected KI systems to stay informed, discover opportunities, and make better decisions.",
+  connectedTo: [
+    "waides_ki",
+    "betramaid_ki",
+    "shavoka_ki",
+    "konsgate"
+  ],
+  icon: FileText,
+  tier: "Application"
+},
+{
+  id: "waidtred",
+  name: "WaidTred",
+  tagline: "The Financial Core",
+  role: "Financial & Transaction System",
+  metaphor: "The heartbeat that keeps value moving across the ecosystem.",
+  description: "The financial core of the Konsmik ecosystem. It powers payments, transfers, wallets, balances, funding, withdrawals, bill payments, and the secure movement of value between users, services, and connected entities.",
+  purpose: "Provides a unified financial infrastructure that enables trusted transactions, digital commerce, and seamless value exchange throughout the Konsmik ecosystem.",
+  connectedTo: [
+    "webonyix",
+    "waidespruf",
+    "waideschain",
+    "smaitredex",
+    "waides_wealth_circle",
+    "konsgate"
+  ],
+  icon: Coins,
+  tier: "Economic"
+},
+{
+  id: "konsnod",
+  name: "KonsNod",
+  tagline: "The Local Node Infrastructure",
+  role: "Distributed Infrastructure System",
+  metaphor: "The foundation that extends the ecosystem everywhere.",
+  description: "The distributed node infrastructure of the Konsmik ecosystem. It provides regional deployment, hosting, compute resources, and infrastructure that bring connected services closer to users while improving resilience, scalability, and availability.",
+  purpose: "Distributes the ecosystem across trusted nodes, enabling secure hosting, efficient resource management, regional expansion, and reliable access to connected Konsmik services.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsnet",
+    "konsgate"
+  ],
+  icon: Activity,
+  tier: "Foundational"
+},
+{
+  id: "waides_wealth_circle",
+  name: "Waides Wealth Circle",
+  tagline: "The Collective Wealth Engine",
+  role: "Collective Economic Growth System",
+  metaphor: "The economic pulse that keeps value circulating throughout the ecosystem.",
+  description: "The collective wealth engine of the Konsmik ecosystem. It enables individuals, businesses, and communities to build, circulate, and grow value together through coordinated economic participation, shared opportunities, and sustainable collaboration.",
+  purpose: "Strengthens the ecosystem by encouraging collective wealth creation, value circulation, collaboration, and long-term economic growth across connected entities.",
+  connectedTo: [
+    "waidtred",
+    "webonyix",
+    "smaitredex",
+    "waidespruf",
+    "waideschain"
+  ],
+  icon: Users,
+  tier: "Economic"
+},
+{
+  id: "konsgate",
+  name: "KonsGate",
+  tagline: "The Central API Brain",
+  role: "Universal Integration & Communication System",
+  metaphor: "The universal plug that connects every entity into one intelligent ecosystem.",
+  description: "The central integration layer of the Konsmik ecosystem. It provides a unified communication protocol that allows every entity to securely discover, connect, exchange data, and interact without requiring direct one-to-one integrations.",
+  purpose: "Enables one integration to access the entire ecosystem, simplifying communication, orchestration, interoperability, and intelligent collaboration across all Konsmik entities.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsnet",
+    "konsmesh",
+    "waides_ki",
+    "shavoka_ki",
+    "waidtred",
+    "webonyix",
+    "waideschain",
+    "waidespruf"
+  ],
+  icon: Plug,
+  tier: "Foundational"
+},
+{
+  id: "webonyix",
+  name: "Webonyix",
+  tagline: "The Transmutation Chamber",
+  role: "Value Transmutation & Economic Reserve System",
+  metaphor: "The heart that transforms potential value into usable value.",
+  description: "The value transmutation system of the Konsmik ecosystem. It converts Smaionyix into Onyix, manages ecosystem reserves, regulates value transformation, and powers the economic foundation that supports connected entities.",
+  purpose: "Provides a trusted mechanism for value transmutation, reserve management, economic stability, and the controlled distribution of usable ecosystem value.",
+  connectedTo: [
+    "waidtred",
+    "waidespruf",
+    "waideschain",
+    "smaitredex",
+    "konsgate"
+  ],
+  icon: RefreshCw,
+  tier: "Economic"
+},
+{
+  id: "waidespruf",
+  name: "WaidesPruf",
+  tagline: "The Proof System",
+  role: "Verification & Trust System",
+  metaphor: "The source of truth that validates every trusted action.",
+  description: "The verification engine of the Konsmik ecosystem. It validates identity, ownership, transactions, assets, permissions, and ecosystem activities, generating trusted proofs that establish authenticity across connected entities.",
+  purpose: "Provides cryptographic verification, proof of identity, proof of ownership, proof of transactions, and trusted validation for every verified action performed within the ecosystem.",
+  connectedTo: [
+    "waideschain",
+    "webonyix",
+    "waidtred",
+    "womblayer",
+    "konsgate"
+  ],
+  icon: BadgeCheck,
+  tier: "Trust"
+},
+{
+  id: "waideschain",
+  name: "WaidesChain",
+  tagline: "The Sovereign Chain",
+  role: "Immutable Record & Trust Ledger",
+  metaphor: "The unbreakable spine that preserves the truth of the ecosystem.",
+  description: "The sovereign record system of the Konsmik ecosystem. It permanently records verified transactions, ownership, value movement, proofs, and critical ecosystem events, creating an immutable history that connected entities can trust.",
+  purpose: "Provides transparent, tamper-resistant records for verification, auditing, accountability, and long-term trust across the entire Konsmik ecosystem.",
+  connectedTo: [
+    "waidespruf",
+    "webonyix",
+    "waidtred",
+    "womblayer",
+    "konsgate"
+  ],
+  icon: Link,
+  tier: "Trust"
+},
+{
+  id: "waidesmai",
+  name: "WaidesMai",
+  tagline: "The Identity & Communication System",
+  role: "Social Identity & Messaging Platform",
+  metaphor: "The voice that connects every user of the ecosystem.",
+  description: "The social identity and communication system of the Konsmik ecosystem. It enables users to establish a unified digital identity, communicate securely, build trusted relationships, and interact seamlessly across connected entities.",
+  purpose: "Provides unified identity, direct messaging, social interaction, contact discovery, and trusted communication, allowing users to stay connected throughout the entire Konsmik ecosystem.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsnet",
+    "konsmesh",
+    "konsgate",
+    "waidespruf"
+  ],
+  icon: MessageCircle,
+  tier: "Application"
+},
+{
+  id: "waidespai",
+  name: "WaidesPai",
+  tagline: "The Social Boost Engine",
+  role: "Attention & Visibility System",
+  metaphor: "The amplifier that helps ideas, people, and opportunities reach the right audience.",
+  description: "The attention and visibility engine of the Konsmik ecosystem. It powers promotions, advertising, content distribution, and audience targeting, helping users, businesses, and entities increase their reach across the ecosystem.",
+  purpose: "Enables intelligent promotion, campaign management, audience engagement, and visibility growth, ensuring valuable content, products, and opportunities reach the right people at the right time.",
+  connectedTo: [
+    "waidesreach",
+    "waidesmai",
+    "waidesniuz",
+    "waidtred",
+    "konsgate"
+  ],
+  icon: Megaphone,
+  tier: "Application"
+},
+{
+  id: "waidesreach",
+  name: "WaidesReach",
+  tagline: "The Proof of Attention Engine",
+  role: "Growth & Network Expansion System",
+  metaphor: "The pulse that measures and expands influence across the ecosystem.",
+  description: "The growth engine of the Konsmik ecosystem. It measures attention, tracks engagement, distributes campaigns, expands networks, and helps people, businesses, and communities grow their reach through trusted ecosystem interactions.",
+  purpose: "Provides intelligent growth, audience expansion, campaign distribution, engagement insights, and proof of attention to help opportunities reach the right people across the ecosystem.",
+  connectedTo: [
+    "waidespai",
+    "waidesmai",
+    "waidesniuz",
+    "waidtred",
+    "konsgate"
+  ],
+  icon: Radio,
+  tier: "Application"
+},
+{
+  id: "konsdev",
+  name: "KonsDev",
+  tagline: "The Builder Engine",
+  role: "Application Development & Automation System",
+  metaphor: "The workshop where ideas become intelligent products.",
+  description: "The builder engine of the Konsmik ecosystem. It enables the design, development, testing, automation, and deployment of applications, KI systems, workflows, and digital solutions that integrate seamlessly with the ecosystem.",
+  purpose: "Accelerates the creation of connected applications, intelligent agents, internal tools, and digital services while ensuring they follow the standards, architecture, and interoperability of the Konsmik ecosystem.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsgate",
+    "konsnet",
+    "konsmesh"
+  ],
+  icon: Code2,
+  tier: "Development"
+},
+{
+  id: "waidesakademi",
+  name: "Waides Akademi",
+  tagline: "The Learning System",
+  role: "Education & Skill Development Platform",
+  metaphor: "The academy where knowledge becomes capability.",
+  description: "The learning system of the Konsmik ecosystem. It empowers individuals to acquire knowledge, develop practical skills, earn verified achievements, and follow structured growth pathways that connect learning with real opportunities.",
+  purpose: "Provides education, certifications, learning pathways, mentorship, and continuous skill development while integrating achievements across the Konsmik ecosystem.",
+  connectedTo: [
+    "waidesmai",
+    "waidespruf",
+    "womblayer",
+    "konsgate",
+    "waides_ki"
+  ],
+  icon: GraduationCap,
+  tier: "Application"
+},
+{
+  id: "waidsoko",
+  name: "WaidSoko",
+  tagline: "The Global Marketplace",
+  role: "Commerce & Service Exchange Platform",
+  metaphor: "The marketplace where opportunities become transactions.",
+  description: "The marketplace of the Konsmik ecosystem. It enables individuals, businesses, and communities to discover, buy, sell, trade, and deliver products, services, and digital offerings through one connected commerce experience.",
+  purpose: "Provides a trusted marketplace that connects buyers and sellers, supports digital and physical commerce, and integrates seamlessly with the ecosystem's identity, payment, verification, and communication systems.",
+  connectedTo: [
+    "waidtred",
+    "waidespruf",
+    "waidesmai",
+    "konsgate",
+    "womblayer"
+  ],
+  icon: ShoppingCart,
+  tier: "Application"
+},
+{
+  id: "betramaid_ki",
+  name: "Betramaid KI",
+  tagline: "The Sports Intelligence",
+  role: "Sports Analysis & Prediction System",
+  metaphor: "The analyst that uncovers patterns behind every match.",
+  description: "The sports intelligence of the Konsmik ecosystem. It analyzes teams, players, form, statistics, historical performance, and contextual factors to generate structured insights, match analysis, and probability-based predictions.",
+  purpose: "Empowers users with intelligent sports analysis, data-driven predictions, and contextual insights that support informed decision-making across sporting events.",
+  connectedTo: [
+    "waidesniuz",
+    "konsgate",
+    "womblayer",
+    "shavoka_ki"
+  ],
+  icon: Trophy,
+  tier: "Intelligence"
+},
+{
+  id: "smaitredex",
+  name: "SmaiTredEx",
+  tagline: "The Exchange Layer",
+  role: "Digital Asset Exchange System",
+  metaphor: "The marketplace where ecosystem value flows through trusted exchange.",
+  description: "The exchange system of the Konsmik ecosystem. It enables the secure trading and exchange of Smaionyix-related currencies, ecosystem assets, and approved digital values through a trusted and connected exchange environment.",
+  purpose: "Provides a transparent, secure, and efficient marketplace for exchanging ecosystem assets while integrating with the ecosystem's financial, verification, and trust infrastructure.",
+  connectedTo: [
+    "waidtred",
+    "webonyix",
+    "waidespruf",
+    "waideschain",
+    "konsgate"
+  ],
+  icon: ArrowLeftRight,
+  tier: "Economic"
+},
+{
+  id: "maipaitred",
+  name: "MaiPaiTred",
+  tagline: "The Skill-Based Analytical Trading Center",
+  role: "Prediction & Event Trading Platform",
+  metaphor: "The arena where analysis meets opportunity.",
+  description: "The skill-based analytical trading platform of the Konsmik ecosystem. It enables users to analyze momentum, trends, outcomes, and events, applying strategy and knowledge to participate in structured prediction and event-based markets.",
+  purpose: "Provides an intelligent environment for analytical event trading, rewarding informed decision-making, strategic thinking, and disciplined participation through connected ecosystem services.",
+  connectedTo: [
+    "waides_ki",
+    "waidtred",
+    "webonyix",
+    "waidespruf",
+    "waideschain",
+    "konsgate"
+  ],
+  icon: Target,
+  tier: "Application"
+},
+{
+  id: "konsmik",
+  name: "Konsmik",
+  tagline: "The Living Mirror",
+  role: "Unified Ecosystem Experience",
+  metaphor: "The window through which people experience the entire ecosystem.",
+  description: "The central experience of the Konsmik ecosystem. It brings together every connected entity into one unified interface, allowing users to access intelligent services, digital tools, communication, learning, commerce, finance, and opportunities through a seamless connected experience.",
+  purpose: "Provides a single, intelligent entry point into the ecosystem where people, businesses, and communities can discover, access, and interact with every connected Konsmik entity without fragmentation.",
+  connectedTo: [
+    "konsos",
+    "konsgate",
+    "waidesmai",
+    "womblayer",
+    "konsnet",
+    "konsmesh",
+    "waides_ki",
+    "waidtred"
+  ],
+  icon: Compass,
+  tier: "Experience"
+},
+{
+  id: "stockpilot",
+  name: "StockPilot",
+  tagline: "The Smart Inventory Intelligence",
+  role: "Inventory & Stock Management System",
+  metaphor: "The navigator that keeps every business moving with confidence.",
+  description: "An intelligent inventory and stock management system by WaidSoko. It helps businesses monitor inventory, track product movement, manage warehouses, optimize stock levels, and gain real-time insights for smarter operational decisions.",
+  purpose: "Empowers businesses to manage inventory efficiently, reduce stock losses, automate stock operations, improve forecasting, and streamline the movement of products across their supply chain.",
+  connectedTo: [
+    "waidsoko",
+    "waidtred",
+    "waidespruf",
+    "womblayer",
+    "konsgate"
+  ],
+  icon: Boxes,
+  tier: "Business"
+},
+{
+  id: "ki_matrix",
+  name: "KI Matrix",
+  tagline: "The Intelligence Foundation",
+  role: "Universal Intelligence Architecture",
+  metaphor: "The living mind that gives intelligence to the entire ecosystem.",
+  description: "The intelligence foundation of the Konsmik ecosystem. KI Matrix unifies reasoning, memory, learning, planning, verification, coordination, prediction, creativity, and autonomous decision-making into one adaptive intelligence architecture that powers every connected entity. It is model-independent, allowing external AI models and future intelligence systems to extend its capabilities without defining its identity.",
+  purpose: "Provides a shared intelligence layer that enables every Konsmik entity to think, learn, reason, remember, coordinate, and evolve through one consistent intelligence architecture while remaining adaptable to future technologies.",
+  connectedTo: [
+    "konsos",
+    "womblayer",
+    "konsgate",
+    "konsnet",
+    "konsmesh",
+    "waides_ki",
+    "shavoka_ki",
+    "betramaid_ki"
+  ],
+  icon: BrainCircuit,
+  tier: "Sovereign"
+},
 ];
 
 const CORE_PRINCIPLES = [
@@ -499,7 +874,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
         <div className="relative z-20 max-w-4xl lg:max-w-[58%] space-y-6 text-left my-8">
           <div className="space-y-2">
             <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-300">
-              Nwogha Chigozie
+              Nwoara Chigozie
             </h1>
             <h2 className="text-lg md:text-xl font-mono text-cyan-400 font-bold tracking-wider">
               Founder of AfriWaid Studio
@@ -582,7 +957,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                 <User className="mb-4 h-14 w-14 text-cyan-300/70" />
                 <p className="text-sm font-bold text-white">Founder portrait slot</p>
                 <p className="mt-2 max-w-xs text-xs leading-5 text-slate-400">
-                  Upload the founder image from Admin Central, Site Customization to replace this reserved area.
+                  Upload the founder image.
                 </p>
               </div>
             )}
@@ -635,7 +1010,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
               <span className="text-[10px] text-cyan-600 dark:text-cyan-400 font-mono uppercase font-bold block">IMPORTANT SPECIFICATION</span>
               <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">One Founder. Multiple Expressions.</h3>
               <p className="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-sans max-w-4xl">
-                Nwogha Chigozie is a Nigerian ecosystem architect, innovator, creative thinker, and founder of AfriWaid Studio.
+                Nwaora Chigozie is a Nigerian ecosystem architect, innovator, creative thinker, and founder of AfriWaid Studio.
                 Throughout his journey, different names and identities have emerged to represent different dimensions of his work, creativity, philosophy, and thinking.
                 <strong> These are NOT separate individuals; they are different expressions of ONE founder</strong>, beautifully coordinating to form a single, robust system of identity and vision.
               </p>
@@ -779,13 +1154,13 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(6,182,212,0.1),transparent_50%)]" />
               <div className="max-w-4xl space-y-4 relative z-10">
                 <span className="px-3 py-1 bg-white/10 border border-white/25 rounded-md text-[10px] font-mono font-bold tracking-widest uppercase">
-                  PRIMARY INCUBATION DEPOT
+                  First of all...
                 </span>
                 <h3 className="text-3xl md:text-4xl font-display font-black tracking-tight leading-none text-white">
                   What is AfriWaid Studio?
                 </h3>
                 <p className="text-slate-300 text-sm md:text-base leading-relaxed font-sans">
-                  AfriWaid Studio is a premium technology and innovation studio founded by Nwogha Chigozie. It functions as the central creation hub where ideas are structured, coded, and transformed into secure, production-grade applications, tools, and connected ecosystem components.
+                  AfriWaid Studio is a premium technology, creative, and innovation studio founded by Nwaora Chigozie. It serves as the central creation hub where ideas are transformed into modern digital experiences, from websites and web applications to intelligent systems, digital media, branding, and scalable technology solutions. Through a multidisciplinary team of developers, designers, creatives, and strategists, AfriWaid Studio delivers secure, production-ready products that help individuals, businesses, startups, and organizations bring their visions to life.
                 </p>
               </div>
             </div>
@@ -837,7 +1212,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                   },
                   {
                     title: "Long-Term Ecosystem Builder",
-                    desc: "Drafting, funding, testing, and supporting the expansive components of the unified future Konsmia civilization.",
+                    desc: "Drafting, funding, testing, and supporting the expansive components of the unified future Konsmik civilization.",
                     tag: "LEGACY NODE"
                   }
                 ].map((role, idx) => (
@@ -860,7 +1235,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
           </motion.div>
         )}
 
-        {/* TAB 3: THE KI SYSTEMS MATRIX & KONSMIA Map */}
+        {/* TAB 3: THE KI SYSTEMS MATRIX & Konsmik Map */}
         {activeTab === "ecosystem" && (
           <motion.div
             key="ecosystem"
@@ -870,7 +1245,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
             transition={{ duration: 0.2 }}
             className="space-y-8 text-left"
           >
-            {/* INTRODUCING KONSMIA & CORE CLARIFICATION */}
+            {/* INTRODUCING Konsmik & CORE CLARIFICATION */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Introduction */}
               <div className="bg-slate-50 dark:bg-black/40 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-neutral-900 space-y-4">
@@ -878,10 +1253,10 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                   Future-Oriented Paradigm
                 </span>
                 <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                  What is Konsmia?
+                  What is Konsmik?
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed font-sans">
-                  Konsmia is an integrated digital growth ecosystem designed to support comprehensive human growth, continuous learning, spatial collaboration, and seamless opportunity creation.
+                  Konsmik is an integrated digital growth ecosystem that bridges fragmented digital experiences by connecting people, technology, knowledge, intelligence, and opportunities into one seamless ecosystem. Through interconnected AI, digital services, and shared infrastructure, Konsmik empowers individuals, businesses, and communities to learn, collaborate, create, innovate, and grow.
                 </p>
                 <div className="p-3.5 bg-cyan-500/5 border border-cyan-500/10 rounded-xl space-y-1">
                   <span className="text-[9px] text-cyan-600 dark:text-cyan-400 font-mono uppercase tracking-wider font-extrabold block">
@@ -900,12 +1275,12 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                   CRITICAL WORLDVIEW CLARIFICATION
                 </span>
                 <h4 className="text-lg font-display font-bold text-slate-900 dark:text-white uppercase tracking-tight mb-2">
-                  System Boundary & Rules
+                  Konsmik Civilization is not designed to replace existing digital platforms. It is designed to connect them.
                 </h4>
                 
                 <div className="grid grid-cols-2 gap-4 font-sans text-xs">
                   <div className="bg-red-500/10 p-3 rounded-xl border border-red-500/20 space-y-1.5">
-                    <span className="font-mono text-[9px] text-red-600 dark:text-red-400 uppercase font-black block">Konsmia is NOT:</span>
+                    <span className="font-mono text-[9px] text-red-600 dark:text-red-400 uppercase font-black block">Konsmik is NOT:</span>
                     <ul className="space-y-1 text-[11px] text-slate-700 dark:text-zinc-300">
                       <li>❌ A political government</li>
                       <li>❌ A structured religion</li>
@@ -914,7 +1289,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                   </div>
 
                   <div className="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20 space-y-1.5">
-                    <span className="font-mono text-[9px] text-emerald-600 dark:text-emerald-400 uppercase font-black block">Konsmia IS:</span>
+                    <span className="font-mono text-[9px] text-emerald-600 dark:text-emerald-400 uppercase font-black block">Konsmik IS:</span>
                     <ul className="space-y-1 text-[11px] text-slate-700 dark:text-zinc-300">
                       <li>✓ A digital growth ecosystem</li>
                       <li>✓ A network of connected apps</li>
@@ -923,8 +1298,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                   </div>
                 </div>
                 <p className="text-[10px] text-slate-500 dark:text-neutral-500 leading-relaxed font-sans">
-                  This clarification prevents any systemic confusion. The ecosystem represents zero authority, focusing purely on software models, transaction rails, database synchronization, and learning frameworks.
-                </p>
+                       Today’s digital world is fragmented. People move between disconnected apps to learn, create, collaborate, work, trade, earn, and grow, often rebuilding their identity, data, reputation, payments, and progress on every platform.   </p>
               </div>
             </div>
 
@@ -939,7 +1313,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                     ecosystem components • interaction map
                   </p>
                   <p className="text-xs text-slate-500 dark:text-neutral-500 italic mt-0.5">
-                    Note: These are explicitly designated as <strong>KI Systems</strong> (Knowledge Intelligence systems), built purely to support human workflow coordination.
+                    Note: These are explicitly designated as <strong>KI Systems</strong> (Konsmik Intelligence systems), built purely to support human workflow coordination.
                   </p>
                 </div>
 
@@ -1129,7 +1503,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
             <div className="border-b border-slate-200 dark:border-neutral-800 pb-3">
               <h3 className="text-2xl font-display font-black text-slate-900 dark:text-white uppercase tracking-tight">Ecosystem Core Laws</h3>
               <p className="text-slate-500 dark:text-zinc-400 text-xs font-sans">
-                The strict guiding matrix governing how Nwogha Chigozie builds systems across AfriWaid Studio and the Konsmia framework.
+                The strict guiding matrix governing how Nwoora Chigozie builds systems across AfriWaid Studio and the Konsmik framework.
               </p>
             </div>
 
@@ -1221,7 +1595,7 @@ export default function FounderProfile({ cvs = [], onDownloadIncrement, onContac
                 </div>
 
                 <p className="text-slate-300 text-sm md:text-lg leading-relaxed font-sans italic border-l-2 border-cyan-400/50 pl-4 py-1">
-                  “The goal is not simply to build applications. The goal is to build living systems that continue creating value long after their creator is gone. Every initiative within AfriWaid Studio and Konsmia exists to contribute to that long-term vision.”
+                  “The goal is not simply to build applications. The goal is to build living systems that continue creating value long after their creator is gone. Every initiative within AfriWaid Studio and Konsmik exists to contribute to that long-term vision.”
                 </p>
 
                 <div className="pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-[9px] text-zinc-500 uppercase tracking-widest leading-none font-semibold">

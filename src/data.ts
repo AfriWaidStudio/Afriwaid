@@ -120,10 +120,10 @@ export const INITIAL_PROJECTS: Project[] = [
     views: 412,
     overview: {
       id: "proj-1",
-      name: "WaidPulse AI Engine",
+      name: "KonsAi Engine",
       subtitle: "Enterprise Agentic Process Automation Middleware",
       description: "An advanced orchestration middleware that connects enterprise databases with autonomous LLM agents to automate cross-departmental operations.",
-      longSummary: "WaidPulse AI Engine represents a landmark in enterprise agentic process automation. Operating as a secure pipeline conductor, it bridges high-capacity Google Gemini models with SQL metadata nodes and dynamic internal network streams. By mapping natural language actions into highly serialized executable jobs, the WaidPulse AI engine allows automated systems to securely query data lakes, resolve logistic mismatches, and compile real-time latency diagnostics. Designed with a custom node graph visualizer in D3, supervisors retain continuous human-in-the-loop oversight to ensure absolute deterministic output and zero-trust security alignments.",
+      longSummary: "KonsAi Engine represents a landmark in enterprise agentic process automation. Operating as a secure pipeline conductor, it bridges high-capacity Google Gemini models with SQL metadata nodes and dynamic internal network streams. By mapping natural language actions into highly serialized executable jobs, the KonsAi engine allows automated systems to securely query data lakes, resolve logistic mismatches, and compile real-time latency diagnostics. Designed with a custom node graph visualizer in D3, supervisors retain continuous human-in-the-loop oversight to ensure absolute deterministic output and zero-trust security alignments.",
       status: "Active",
       category: "AI",
       industry: "Logistics & Supply Chain",
@@ -164,7 +164,7 @@ export const INITIAL_PROJECTS: Project[] = [
       impact: "45% reduction in manual shipping rescheduling tasks"
     },
     solution: {
-      summary: "WaidPulse AI Engine is a secure orchestration middleware that bridges enterprise databases with autonomous LLM agents.",
+      summary: "KonsAi Engine is a secure orchestration middleware that bridges enterprise databases with autonomous LLM agents.",
       approach: "Server-side Express controller integrating Google Gemini models with SQL metadata nodes and dynamic network streams.",
       innovation: "Custom node graph visualizer in D3 for human-in-the-loop oversight and deterministic output.",
       technicalDecisions: "Strict JSON output schemas to prevent edge-case failures and ensure system reliability.",
@@ -367,7 +367,7 @@ export const INITIAL_PROJECTS: Project[] = [
       }
     ],
     caseStudy: {
-      executiveSummary: "WaidPulse AI Engine reduced manual shipping rescheduling by 45% through autonomous multi-agent orchestration.",
+      executiveSummary: "KonsAi Engine reduced manual shipping rescheduling by 45% through autonomous multi-agent orchestration.",
       background: "Enterprise logistics pipelines require real-time coordination across multiple systems.",
       businessProblem: "Standard automation solutions fail due to exceptional conditions requiring adaptable reasoning.",
       research: "Analyzed 15,000 operational delay logs. 78% of bottlenecks resolved through cross-checking inventory databases.",
@@ -383,7 +383,7 @@ export const INITIAL_PROJECTS: Project[] = [
         enableAnalytics: true
       },
       seo: {
-        metaTitle: "WaidPulse AI Engine - Enterprise Agentic Automation",
+        metaTitle: "KonsAi Engine - Enterprise Agentic Automation",
         metaDescription: "Secure orchestration middleware connecting enterprise databases with autonomous LLM agents.",
         keywords: ["AI", "automation", "logistics", "enterprise"]
       },
@@ -600,7 +600,7 @@ export const INITIAL_JOURNAL: JournalEntry[] = [
   },
   {
     id: "j-2",
-    title: "Released WaidPulse AI Client Beta",
+    title: "Released KonsAi Client Beta",
     description: "Seeded the secure progress monitor in the Client Portal enabling live progress tracking, downloadable deliverables, and automatic invoice audits.",
     date: "2026-06-11",
     category: "update",
@@ -773,7 +773,7 @@ export const INITIAL_SERVICES: ServiceOffer[] = [
     ],
     estimatedTimeline: "4 to 12 weeks",
     portfolioExamples: [
-      { name: "WaidPulse AI Engine", projectId: "proj-1" },
+      { name: "KonsAi Engine", projectId: "proj-1" },
       { name: "KonsOS", projectId: "proj-2" }
     ]
   },
@@ -796,7 +796,7 @@ export const INITIAL_SERVICES: ServiceOffer[] = [
     ],
     estimatedTimeline: "6 to 8 weeks",
     portfolioExamples: [
-      { name: "WaidPulse AI Engine", projectId: "proj-1" }
+      { name: "KonsAi Engine", projectId: "proj-1" }
     ]
   },
   {
@@ -948,7 +948,7 @@ export const INITIAL_CLIENTS: ClientProfile[] = [
     name: "AeroGlobal Logistics",
     company: "AeroGlobal Inc.",
     email: "logistics@aeroglobal.com",
-    assignedProjectName: "WaidPulse AI Integrations",
+    assignedProjectName: "KonsAi Integrations",
     projectProgress: 65,
     progressLog: [
       { date: "2026-06-01", title: "Technical Discovery Completed", phase: "Research", status: "completed" },
@@ -1012,7 +1012,7 @@ export const INITIAL_ANALYTICS: TrackedAnalytics = {
     { path: "/journal", count: 120 }
   ],
   topProjects: [
-    { name: "WaidPulse AI Engine", views: 412 },
+    { name: "KonsAi Engine", views: 412 },
     { name: "KonsOS", views: 310 },
     { name: "AfriWaid Brand Canvas", views: 295 }
   ],
@@ -1033,11 +1033,13 @@ export function getStoredData<T>(key: string, defaultValue: T): T {
   }
 }
 
-export function setStoredData<T>(key: string, value: T): void {
+export function setStoredData<T>(key: string, value: T): boolean {
   try {
     localStorage.setItem(`afriwaid_${key}`, JSON.stringify(value));
+    return true;
   } catch (e) {
     console.warn(`Local storage write failed for key ${key}`, e);
+    return false;
   }
 }
 
@@ -1239,19 +1241,23 @@ export function loadInitialData(): AfriWaidDB {
   };
 }
 
-export function saveInitialData(db: AfriWaidDB): void {
-  setStoredData("projects", db.projects);
-  setStoredData("articles", db.articles);
-  setStoredData("journal", db.journal);
-  setStoredData("cvs", db.cvs);
-  setStoredData("clients", db.clients);
-  setStoredData("inquiries", db.inquiries);
-  setStoredData("analytics", db.analytics);
-  setStoredData("services", db.services);
-  setStoredData("media", db.media);
-  setStoredData("homepageStats", db.homepageStats);
-  setStoredData("techStack", db.techStack);
-  setStoredData("testimonials", db.testimonials);
-  setStoredData("teamMembers", db.teamMembers);
-  setStoredData("customization", db.customization);
+export function saveInitialData(db: AfriWaidDB): boolean {
+  const results = [
+    setStoredData("projects", db.projects),
+    setStoredData("articles", db.articles),
+    setStoredData("journal", db.journal),
+    setStoredData("cvs", db.cvs),
+    setStoredData("clients", db.clients),
+    setStoredData("inquiries", db.inquiries),
+    setStoredData("analytics", db.analytics),
+    setStoredData("services", db.services),
+    setStoredData("media", db.media),
+    setStoredData("homepageStats", db.homepageStats),
+    setStoredData("techStack", db.techStack),
+    setStoredData("testimonials", db.testimonials),
+    setStoredData("teamMembers", db.teamMembers),
+    setStoredData("customization", db.customization),
+  ];
+
+  return results.every(Boolean);
 }

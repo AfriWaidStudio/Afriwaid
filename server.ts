@@ -197,7 +197,7 @@ const INITIAL_CLIENTS = [
     company: "AeroGlobal Inc.",
     email: "logistics@aeroglobal.com",
     userId: "u-2",
-    assignedProjectName: "WaidPulse AI Integrations",
+    assignedProjectName: "KonsAi Integrations",
     projectProgress: 65,
     archived: false,
     createdAt: "2026-06-01T08:00:00.000Z"
@@ -207,7 +207,7 @@ const INITIAL_CLIENTS = [
 const INITIAL_PROJECTS = [
   {
     id: "proj-1",
-    name: "WaidPulse AI Integrations",
+    name: "KonsAi Integrations",
     category: "AI Middleware",
     coverImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop",
     description: "An advanced orchestration middleware that connects enterprise databases with autonomous LLM agents to automate cross-departmental operations.",
@@ -302,7 +302,7 @@ const INITIAL_DELIVERABLES = [
 ];
 
 const INITIAL_PROJECT_ACTIVITIES = [
-  { id: "act-1", projectId: "proj-1", title: "Project Initiated", details: "WaidPulse AI Integrations workspace created with AeroGlobal client allocation.", timestamp: "2026-06-01T09:00:00.000Z", userId: "u-1" },
+  { id: "act-1", projectId: "proj-1", title: "Project Initiated", details: "KonsAi Integrations workspace created with AeroGlobal client allocation.", timestamp: "2026-06-01T09:00:00.000Z", userId: "u-1" },
   { id: "act-2", projectId: "proj-1", title: "Requirements Blueprint Uploaded", details: "Senior architect uploaded standard discovery PDF.", timestamp: "2026-06-02T11:00:00.000Z", userId: "u-1" },
   { id: "act-3", projectId: "proj-1", title: "Milestone Approved", details: "Client entity approved Technical Discovery milestone.", timestamp: "2026-06-10T14:30:00.000Z", userId: "u-2" }
 ];
@@ -377,7 +377,7 @@ function ensureDemoAccounts(db: DatabaseSchema): boolean {
       company: "AfriWaid Demo Company",
       email: demoClient.email,
       userId: demoClient.id,
-      assignedProjectName: "WaidPulse AI Integrations",
+      assignedProjectName: "KonsAi Integrations",
       projectProgress: 65,
       archived: false,
       createdAt: new Date().toISOString()
@@ -2663,7 +2663,7 @@ Structure your answers with clean hierarchical sections. Give actual technical a
         let simulatedText = "";
         const query = message.toLowerCase();
         if (query.includes("waidpulse") || query.includes("pulse")) {
-          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **WaidPulse AI Engine** is our premier autonomous orchestration middleware. It seamlessly bridges enterprise SQL databases with Gemini models. \n\n**Core technologies used:** React, Express, @google/genai, TypeScript, and D3.js. It features a stunning real-time latency visualizer.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
+          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **KonsAi Engine** is our premier autonomous orchestration middleware. It seamlessly bridges enterprise SQL databases with Gemini models. \n\n**Core technologies used:** React, Express, @google/genai, TypeScript, and D3.js. It features a stunning real-time latency visualizer.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else if (query.includes("konsos") || query.includes("decision") || query.includes("matrix") || query.includes("mcda")) {
           simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\n**KonsOS** is our premium Multi-Criteria Decision Analysis (MCDA) and risk-calculation system. It combines weighted formulas with semantic vector collections.\n\n**Core technologies used:** React, Node.js, TypeScript, Recharts, and Vector databases.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else if (query.includes("tech") || query.includes("stack") || query.includes("languages") || query.includes("framework")) {
@@ -2671,7 +2671,7 @@ Structure your answers with clean hierarchical sections. Give actual technical a
         } else if (query.includes("brand") || query.includes("canvas") || query.includes("design") || query.includes("style")) {
           simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nThe **AfriWaid Brand Canvas** is our flagship stylebook and motion design guideline. It establishes our iconic **Cosmic Slate Theme** with geometric alignments and micro-animations using Space Grotesk and Inter.\n\n*To enable real live Gemini-powered chats, configure your \`GEMINI_API_KEY\` in the **Settings > Secrets** panel in AI Studio.*`;
         } else {
-          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nWelcome to AfriWaid's AI Lab Assistant! I can help you with questions about our **WaidPulse AI Engine**, **KonsOS**, **Brand Canvas**, or our premium **TypeScript & React 19 Tech Stack**.\n\nHow can I help you learn about our software capabilities today?\n\n*(Note: AI Chat is currently running in local offline simulation mode. Configure a \`GEMINI_API_KEY\` to enable real live chats).*`;
+          simulatedText = `**[AFRIWAID LAB BOT - OFFLINE SIMULATION]**\n\nWelcome to AfriWaid's AI Lab Assistant! I can help you with questions about our **KonsAi Engine**, **KonsOS**, **Brand Canvas**, or our premium **TypeScript & React 19 Tech Stack**.\n\nHow can I help you learn about our software capabilities today?\n\n*(Note: AI Chat is currently running in local offline simulation mode. Configure a \`GEMINI_API_KEY\` to enable real live chats).*`;
         }
         return res.json({ text: simulatedText });
       }
@@ -2690,7 +2690,7 @@ Structure your answers with clean hierarchical sections. Give actual technical a
 Your sole mission is to assist visitors in understanding AfriWaid's projects, core technology stack, services, and engineering capabilities.
 
 Here is the exact, unshakeable ground truth regarding our showcase projects:
-1. WaidPulse AI Engine (Category: AI, Status: Active)
+1. KonsAi Engine (Category: AI, Status: Active)
    - Description: An advanced orchestration middleware connecting enterprise databases with autonomous LLM agents to automate cross-departmental operations.
    - Core Concepts: Maps natural language queries safely to SQL metadata nodes and vector collections. Features an interactive node graph visualizer built with React and D3.js.
    - Tech Stack: React, Express, @google/genai, TypeScript, Tailwind CSS, D3.js.
@@ -2774,7 +2774,7 @@ Instructions for communication:
 ---
 
 #### 📈 1. Traffic Performance Synthesis
-* **Acquisition Surge (+14.2%):** Direct traffic and organic search remain your highest conviction acquisition vectors. Visitors showing interest in the **WaidPulse AI Engine** are converting to outbound inquiries at a **4.2%** rate.
+* **Acquisition Surge (+14.2%):** Direct traffic and organic search remain your highest conviction acquisition vectors. Visitors showing interest in the **KonsAi Engine** are converting to outbound inquiries at a **4.2%** rate.
 * **Engagement Velocity:** Average session duration stands at **4m 12s**, with the highest dwell times recorded on the /publishing (Publishing Hub) deep-dive case studies.
 * **Bounce Rate Optimality:** Your bounce rate is currently locked at **28.4%**, indicating a highly relevant user audience mapping perfectly to your tech-focused positioning.
 
@@ -2802,7 +2802,7 @@ Associated account email: ${email || "waidsoko@gmail.com"}
 Associated Measurement ID: ${googleAnalyticsId || "G-AFRIWAID99"}
 
 The report should include:
-1. Traffic Performance Synthesis (mock realistic high-scale numbers for AfriWaid's services like the WaidPulse AI Engine and KonsOS)
+1. Traffic Performance Synthesis (mock realistic high-scale numbers for AfriWaid's services like the KonsAi Engine and KonsOS)
 2. Traffic channels breakdown (organic, social, direct, referral)
 3. Actionable AI Recommendations for maximizing conversion rates on inquiries and CV downloads.
 

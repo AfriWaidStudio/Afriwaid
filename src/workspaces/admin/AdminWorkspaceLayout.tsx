@@ -63,11 +63,8 @@ export function AdminWorkspaceLayout({ children }: AdminWorkspaceLayoutProps) {
           <Button
             variant="ghost"
             onClick={() => {
-              localStorage.removeItem('auth_token');
-              localStorage.removeItem('token');
-              localStorage.removeItem('afriwaid_admin_role');
               localStorage.removeItem('afriwaid_auth_token');
-              localStorage.removeItem('afriwaid_fallback_user');
+              localStorage.removeItem('afriwaid_user');
               window.location.href = '/';
             }}
             className="w-full justify-start text-slate-600 dark:text-zinc-400 hover:text-red-600"

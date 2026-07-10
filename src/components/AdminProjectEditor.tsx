@@ -263,7 +263,7 @@ export default function AdminProjectEditor({ project, onSave, onCancel }: AdminP
                 />
               </div>
             </div>
-          )}>
+          )}
 
           {/* Features Tab */}
           {activeTab === "features" && (

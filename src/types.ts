@@ -304,7 +304,7 @@ export interface ServiceOffer {
   id: string;
   name: string;
   description: string;
-  category: "Software Development" | "AI Solutions" | "KI Systems" | "Logo Design" | "Branding" | "Video Production" | "Copywriting" | "Consulting";
+  category: "Software Development" | "AI Solutions" | "KI Systems" | "Logo Design" | "Branding" | "Video Production" | "Copywriting" | "Consulting" | "Blog Writing";
   deliverables: string[];
   process: string[];
   estimatedTimeline: string;

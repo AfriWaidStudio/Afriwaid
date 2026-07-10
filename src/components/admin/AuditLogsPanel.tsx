@@ -4,13 +4,14 @@ import { AuditLog } from "../../types";
 import { Activity, Search, RefreshCw, AlertTriangle, ShieldCheck, HelpCircle, Loader2 } from "lucide-react";
 
 export default function AuditLogsPanel() {
-  const { token } = useAuth();
+  const { token, isLoading: authLoading } = useAuth();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const loadAuditLogs = async () => {
+    if (authLoading || !token) return;
     setLoading(true);
     setErrorMsg("");
     try {
@@ -41,8 +42,9 @@ export default function AuditLogsPanel() {
   };
 
   useEffect(() => {
+    if (authLoading || !token) return;
     loadAuditLogs();
-  }, [token]);
+  }, [authLoading, token]);
 
   const filteredLogs = logs.filter(l =>
     l.action.toLowerCase().includes(search.toLowerCase()) ||

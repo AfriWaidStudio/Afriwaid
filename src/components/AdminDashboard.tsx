@@ -23,7 +23,7 @@ interface AdminDashboardProps {
   testimonials: Testimonial[];
   teamMembers: TeamMember[];
   customization?: CustomizationSettings;
-  onUpdateCustomization?: (settings: CustomizationSettings) => void;
+  onUpdateCustomization?: (settings: CustomizationSettings) => boolean | void;
   onAddProject: (p: Project) => void;
   onUpdateProject: (p: Project) => void;
   onDeleteProject: (id: string) => void;
@@ -59,15 +59,10 @@ export default function AdminDashboard({
   onAddProject, onUpdateProject, onDeleteProject, onAddArticle, onDeleteArticle, onUpdateArticle, onAddJournal, onUpdateJournal, onDeleteJournal, onToggleCV, onUpdateCV, onAddCV, onDeleteCV, onAddMedia, onDeleteMedia, onUpdateTechStack, onAddTestimonial, onDeleteTestimonial, onUpdateTestimonial, onAddTeamMember, onDeleteTeamMember, onUpdateTeamMember, onAddService, onUpdateService, onDeleteService, onUpdateInquiryStatus, onUpdateHomepageStats,
   initialSubTab
 }: AdminDashboardProps) {
-  const { user: authUser, checkPermission } = useAuth();
-  const [authorizedRole, setAuthorizedRole] = useState<"Super Admin" | "Admin" | "Editor" | null>(() => {
-    if (typeof window !== "undefined" && localStorage.getItem("afriwaid_admin_role")) {
-      return localStorage.getItem("afriwaid_admin_role") as "Super Admin" | "Admin" | "Editor";
-    }
-    return null;
-  });
-  const [passcode, setPasscode] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const { user: authUser, token, isLoading: authLoading, checkPermission } = useAuth();
+  const [dashboardLocked, setDashboardLocked] = useState(false);
+  const authorizedRole: "Super Admin" | "Admin" | null =
+    !dashboardLocked && (authUser?.role === "Super Admin" || authUser?.role === "Admin") ? authUser.role : null;
 
   const [activeSubTab, setActiveSubTab] = useState<"analytics" | "projects" | "articles" | "journal" | "inquiries" | "cvs" | "media" | "tech" | "stats" | "testimonials" | "team" | "services" | "users" | "roles" | "audit_logs" | "workspaces" | "clients_billing" | "support_chat" | "alert_broadcasts" | "site_customization">(initialSubTab || "analytics");
 
@@ -139,22 +134,6 @@ export default function AdminDashboard({
       setIsLoadingAIReport(false);
     }
   };
-
-  // Automatically authenticate active session owner to avoid typing password
-  useEffect(() => {
-    if (authUser) {
-      if (authUser.role === "Super Admin") {
-        setAuthorizedRole("Super Admin");
-        localStorage.setItem("afriwaid_admin_role", "Super Admin");
-      } else if (authUser.role === "Admin") {
-        setAuthorizedRole("Admin");
-        localStorage.setItem("afriwaid_admin_role", "Admin");
-      } else if (authUser.role === "Moderator" || authUser.role === "Auditor" || authUser.role === "Developer" || authUser.role === "Operator") {
-        setAuthorizedRole("Editor");
-        localStorage.setItem("afriwaid_admin_role", "Editor");
-      }
-    }
-  }, [authUser]);
 
   // Form states - Add Testimonial
   const [newTestClientName, setNewTestClientName] = useState("");
@@ -256,6 +235,7 @@ export default function AdminDashboard({
   const [custConsultationCards, setCustConsultationCards] = useState(customization?.consultationCards || INITIAL_CONSULTATION_CARDS);
 
   const [custSuccess, setCustSuccess] = useState(false);
+  const [custError, setCustError] = useState("");
 
   useEffect(() => {
     if (customization) {
@@ -349,8 +329,16 @@ export default function AdminDashboard({
 
   const handleSaveCustomization = (e: React.FormEvent) => {
     e.preventDefault();
+    setCustError("");
+    setCustSuccess(false);
+
+    if (custLogoType === "image" && !custLogoUrl.trim()) {
+      setCustError("Upload a logo image or switch the logo type back to text.");
+      return;
+    }
+
     if (onUpdateCustomization) {
-      onUpdateCustomization({
+      const saved = onUpdateCustomization({
         appName: custAppName,
         appNickname: custAppNickname,
         tagline: custTagline,
@@ -404,6 +392,12 @@ export default function AdminDashboard({
         journalDescription: custJournalDescription,
         consultationCards: custConsultationCards
       });
+
+      if (saved === false) {
+        setCustError("Logo settings could not be saved. Try a smaller image or an external image URL.");
+        return;
+      }
+
       setCustSuccess(true);
       setTimeout(() => setCustSuccess(false), 3000);
     }
@@ -523,7 +517,11 @@ export default function AdminDashboard({
       setCustConsultationCards(defaults.consultationCards || INITIAL_CONSULTATION_CARDS);
 
       if (onUpdateCustomization) {
-        onUpdateCustomization(defaults);
+        const saved = onUpdateCustomization(defaults);
+        if (saved === false) {
+          setCustError("Factory defaults could not be saved. Browser storage may be full.");
+          return;
+        }
       }
       setCustSuccess(true);
       setTimeout(() => setCustSuccess(false), 3000);
@@ -631,24 +629,6 @@ export default function AdminDashboard({
     setStatsVideos(homepageStats.videosProduced);
     setStatsClients(homepageStats.clientsServed);
   }, [homepageStats]);
-
-  const handleAdminVerify = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passcode === "afriwaid2026") {
-      setAuthorizedRole("Super Admin");
-      setErrorMsg("");
-    } else if (passcode === "editor") {
-      setAuthorizedRole("Editor");
-      setErrorMsg("");
-    } else {
-      setErrorMsg("Error: Invalid administrator credential node.");
-    }
-  };
-
-  const handleBypass = (role: "Super Admin" | "Editor") => {
-    setAuthorizedRole(role);
-    setErrorMsg("");
-  };
 
   // Savers
   const handleStartEditProject = (proj: Project) => {
@@ -965,62 +945,21 @@ export default function AdminDashboard({
       </div>
 
       {!authorizedRole ? (
-        // Login panel
         <div className="max-w-md mx-auto bg-neutral-950 border border-white/10 rounded-sm p-6 md:p-8 space-y-6">
           <div className="text-center space-y-2">
             <div className="w-12 h-12 rounded-sm bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mx-auto">
               <ShieldCheck className="w-6 h-6 animate-pulse" />
             </div>
-            <h3 className="text-lg font-display text-white font-bold">Admin Verification Required</h3>
-            <p className="text-xs text-neutral-400">Enter your assigned administration key credentials to access core managers.</p>
-          </div>
-
-          <form onSubmit={handleAdminVerify} className="space-y-4">
-            {errorMsg && (
-              <div className="p-3 rounded-sm border border-red-500/30 bg-red-500/5 text-red-400 text-xs font-mono">
-                {errorMsg}
-              </div>
-            )}
-            <div className="space-y-1.5 text-xs text-neutral-400">
-              <label className="font-mono uppercase tracking-wider">Access Passcode Key</label>
-              <input
-                type="password"
-                required
-                value={passcode}
-                onChange={(e) => setPasscode(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-2.5 bg-neutral-900 border border-white/10 rounded-sm text-neutral-200 focus:outline-[#2563eb] focus:ring-1 focus:ring-blue-500 text-xs"
-                id="admin-pass-input"
-              />
-            </div>
+            <h3 className="text-lg font-display text-white font-bold">Admin Console Locked</h3>
+            <p className="text-xs text-neutral-400">Access is controlled by your authenticated JWT role. Recheck the current session to open this console.</p>
             <button
-              type="submit"
-              className="w-full py-3 bg-blue-600 text-white font-extrabold text-[10px] uppercase rounded-sm hover:bg-blue-700 transition duration-150 tracking-wider font-mono shadow-lg"
-              id="admin-pass-submit"
+              type="button"
+              onClick={() => setDashboardLocked(false)}
+              className="mt-4 w-full py-3 bg-blue-600 text-white font-extrabold text-[10px] uppercase rounded-sm hover:bg-blue-700 transition duration-150 tracking-wider font-mono shadow-lg"
+              id="admin-unlock-current-session"
             >
-              Verify Passcode
+              Recheck Current Session
             </button>
-          </form>
-
-          {/* Direct verification options for convenient inspection */}
-          <div className="space-y-2 pt-4 border-t border-neutral-900 text-center">
-            <span className="text-[10px] text-neutral-500 uppercase tracking-wider font-mono font-bold block">Developer Inspection Bypass</span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => handleBypass("Super Admin")}
-                className="py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 font-mono text-[10px] uppercase rounded-lg border border-neutral-800 transition duration-150"
-                id="bypass-super"
-              >
-                Super Admin Role
-              </button>
-              <button
-                onClick={() => handleBypass("Editor")}
-                className="py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 font-mono text-[10px] uppercase rounded-lg border border-neutral-800 transition duration-150"
-                id="bypass-editor"
-              >
-                Editor Role
-              </button>
-            </div>
           </div>
         </div>
       ) : (
@@ -1257,8 +1196,7 @@ export default function AdminDashboard({
 
             <button
               onClick={() => {
-                setAuthorizedRole(null);
-                localStorage.removeItem("afriwaid_admin_role");
+                setDashboardLocked(true);
               }}
               className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-mono text-red-400 hover:bg-red-500/10 transition duration-150 flex items-center gap-2 border-t border-neutral-800 lg:mt-4"
               id="admin-logout-trigger"
@@ -4341,6 +4279,13 @@ export default function AdminDashboard({
                   </div>
                 )}
 
+                {custError && (
+                  <div className="p-4 bg-red-950/50 border border-red-500/30 text-red-300 text-xs font-mono rounded-xl flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-red-300" />
+                    <span>{custError}</span>
+                  </div>
+                )}
+
                 <form onSubmit={handleSaveCustomization} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Left: General Settings and Labels */}
                   <div className="lg:col-span-2 space-y-6">
@@ -4481,6 +4426,9 @@ export default function AdminDashboard({
                               multiple={false}
                               label="Header Logo Upload"
                               placeholderText="Upload the logo shown beside the AfriWaid Studio name"
+                              maxSizeMB={2}
+                              maxDimension={512}
+                              compressionQuality={0.78}
                             />
                           </div>
                         )}
@@ -4514,6 +4462,9 @@ export default function AdminDashboard({
                           multiple={false}
                           label="Upload Custom Favicon (PNG/ICO)"
                           placeholderText="Drag & drop your favicon image here or click to browse"
+                          maxSizeMB={1}
+                          maxDimension={256}
+                          compressionQuality={0.8}
                         />
                       </div>
 
@@ -4524,6 +4475,9 @@ export default function AdminDashboard({
                           multiple={false}
                           label="Founder Hero Portrait"
                           placeholderText="Upload the portrait used on the Founder Profile hero"
+                          maxSizeMB={3}
+                          maxDimension={1200}
+                          compressionQuality={0.82}
                         />
                         <p className="mt-2 text-[10px] leading-4 text-neutral-500 font-sans">
                           This controls the protected portrait slot on the right side of the founder hero card. Use a tall image for best framing.
@@ -5501,10 +5455,10 @@ export default function AdminDashboard({
                           <div
                             key={c.id}
                             onClick={async () => {
+                              if (authLoading || !token) return;
                               setSelectedAdminClientId(c.id);
                               setActiveAdminConvoId("");
                               setAdminChatMessages([]);
-                              const token = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token") || "";
                               try {
                                 const res = await fetch("/api/conversations", {
                                   headers: { "Authorization": `Bearer ${token}` }
@@ -5581,9 +5535,8 @@ export default function AdminDashboard({
                         {/* Send bar */}
                         <form onSubmit={async (e) => {
                           e.preventDefault();
-                          if (!adminNewMessageText.trim()) return;
+                          if (!adminNewMessageText.trim() || authLoading || !token) return;
                           
-                          const token = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token") || "";
                           const targetConvoId = activeAdminConvoId;
                           if (!targetConvoId) return;
 
@@ -5649,9 +5602,8 @@ export default function AdminDashboard({
 
                   <form onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!broadcastTitle || !broadcastBody) return;
+                    if (!broadcastTitle || !broadcastBody || authLoading || !token) return;
                     
-                    const token = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token") || "";
                     try {
                       const res = await fetch("/api/notifications/broadcast", {
                         method: "POST",

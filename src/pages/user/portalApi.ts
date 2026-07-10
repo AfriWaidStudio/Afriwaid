@@ -1,6 +1,10 @@
-import { getPortalAuthHeaders } from "./auth";
+import { getPortalAuthHeaders, getPortalAuthToken } from "./auth";
 
 export async function portalRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  if (!getPortalAuthToken()) {
+    throw new Error("Authentication is not ready.");
+  }
+
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), 15000);
   const headers = {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BarChart3, FileText, BadgeDollarSign, Layers, Users, Calendar, Activity, MessageSquare } from "lucide-react";
+import { BarChart3, FileText, BadgeDollarSign, Layers, Activity, MessageSquare } from "lucide-react";
 import { useAuth } from "../../components/AuthContext";
 import { Card } from "../../components/ui";
-import { getPortalAuthToken } from "./auth";
 
 interface PortalMetricCardProps {
   label: string;
@@ -12,7 +11,7 @@ interface PortalMetricCardProps {
   helper?: string;
 }
 
-function PortalMetricCard({ label, value, icon: Icon, tone = "cyan", helper }: PortalMetricCardProps) {
+function PortalMetricCard({ label, value, tone = "cyan", helper }: PortalMetricCardProps) {
   const toneClasses = {
     cyan: "text-cyan-500 bg-cyan-500/10",
     purple: "text-purple-500 bg-purple-500/10",
@@ -30,7 +29,7 @@ function PortalMetricCard({ label, value, icon: Icon, tone = "cyan", helper }: P
 }
 
 export default function UserDashboardPage() {
-  const { user } = useAuth();
+  const { user, token, isLoading } = useAuth();
   const [stats, setStats] = useState({
     progress: 75,
     projects: 1,
@@ -41,25 +40,31 @@ export default function UserDashboardPage() {
   });
 
   useEffect(() => {
-    const token = getPortalAuthToken();
-    if (!token) return;
+    if (isLoading || !token) return;
 
     Promise.all([
-      fetch("/api/projects", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.ok ? r.json() : null),
-      fetch("/api/conversations", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.ok ? r.json() : null),
-    ]).then(([projectsData, conversationsData]) => {
-      const projects = projectsData?.projects || [];
-      const conversations = conversationsData?.conversations || [];
-      setStats({
-        progress: projects.length > 0 ? 65 : 0,
-        projects: projects.length,
-        deliverables: projects.reduce((sum: number, p: any) => sum + (p.deliverables?.length || 0), 0),
-        invoices: 2,
-        unreadMessages: conversations.reduce((sum: number, c: any) => sum + (c.unreadCount || 0), 0),
-        upcomingMeetings: 1,
+      fetch("/api/projects", { headers: { Authorization: `Bearer ${token}` } }),
+      fetch("/api/conversations", { headers: { Authorization: `Bearer ${token}` } }),
+    ])
+      .then(async ([projectsRes, conversationsRes]) => {
+        const projectsData = projectsRes.ok ? await projectsRes.json() : null;
+        const conversationsData = conversationsRes.ok ? await conversationsRes.json() : null;
+        const projects = projectsData?.projects || [];
+        const conversations = conversationsData?.conversations || [];
+
+        setStats({
+          progress: projects.length > 0 ? 65 : 0,
+          projects: projects.length,
+          deliverables: projects.reduce((sum: number, p: any) => sum + (p.deliverables?.length || 0), 0),
+          invoices: 2,
+          unreadMessages: conversations.reduce((sum: number, c: any) => sum + (c.unreadCount || 0), 0),
+          upcomingMeetings: 1,
+        });
+      })
+      .catch((err) => {
+        console.error("Dashboard fetch failed", err);
       });
-    });
-  }, []);
+  }, [isLoading, token]);
 
   return (
     <div className="space-y-8">

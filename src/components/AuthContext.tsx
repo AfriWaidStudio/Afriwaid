@@ -20,6 +20,8 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
+const AUTH_TOKEN_KEY = "afriwaid_auth_token";
+const AUTH_USER_KEY = "afriwaid_user";
 
 function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}, timeoutMs = 15000): Promise<Response> {
   const controller = new AbortController();
@@ -44,12 +46,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Reload dynamically defined Permissions matrix
   const reloadPermissionsAndUsers = async () => {
+    const activeToken = token || localStorage.getItem(AUTH_TOKEN_KEY);
+    if (isLoading || !activeToken) {
+      return;
+    }
+
     try {
-      const headers: HeadersInit = {};
-      const activeToken = token || localStorage.getItem("afriwaid_auth_token");
-      if (activeToken) {
-        headers["Authorization"] = `Bearer ${activeToken}`;
-      }
+      const headers: HeadersInit = { Authorization: `Bearer ${activeToken}` };
 
       const [resRoles, resPerms] = await Promise.all([
         fetchWithTimeout("/api/admin/roles", { headers }),
@@ -69,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      const storedToken = localStorage.getItem("afriwaid_auth_token") || sessionStorage.getItem("afriwaid_auth_token");
+      const storedToken = localStorage.getItem(AUTH_TOKEN_KEY);
       
       if (storedToken) {
         try {
@@ -83,25 +86,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const data = await res.json();
             setUser(data.user);
             setToken(storedToken);
+            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
           } else {
-            // Token expired or invalid
-            localStorage.removeItem("afriwaid_auth_token");
-            sessionStorage.removeItem("afriwaid_auth_token");
+            localStorage.removeItem(AUTH_TOKEN_KEY);
+            localStorage.removeItem(AUTH_USER_KEY);
           }
         } catch (e) {
           console.warn("Auth bootstrap failed; clearing local session.", e);
-          localStorage.removeItem("afriwaid_auth_token");
-          sessionStorage.removeItem("afriwaid_auth_token");
+          localStorage.removeItem(AUTH_TOKEN_KEY);
+          localStorage.removeItem(AUTH_USER_KEY);
         }
       }
       
-      // Load Initial System Permission Matrix
-      await reloadPermissionsAndUsers();
       setIsLoading(false);
     };
 
     initializeAuth();
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && token) {
+      reloadPermissionsAndUsers();
+    }
+  }, [isLoading, token]);
 
   // Auth Operations
   const login = async (credential: string, code: string, remember: boolean): Promise<{ success: boolean; error?: string }> => {
@@ -116,13 +123,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (res.ok && data.success) {
         setUser(data.user);
         setToken(data.token);
-        if (remember) {
-          localStorage.setItem("afriwaid_auth_token", data.token);
-        } else {
-          sessionStorage.setItem("afriwaid_auth_token", data.token);
-          localStorage.removeItem("afriwaid_auth_token");
-        }
-        await reloadPermissionsAndUsers();
+        localStorage.setItem(AUTH_TOKEN_KEY, data.token);
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
         return { success: true };
       } else {
         return { success: false, error: data.error || "Logins authenticate trigger failed." };
@@ -169,9 +171,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setUser(null);
     setToken(null);
-    localStorage.removeItem("afriwaid_auth_token");
-    localStorage.removeItem("afriwaid_admin_role");
-    sessionStorage.removeItem("afriwaid_auth_token");
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    localStorage.removeItem(AUTH_USER_KEY);
   };
 
   const updateProfile = async (first: string, last: string, userStr: string): Promise<{ success: boolean; error?: string }> => {
@@ -258,6 +259,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (user) {
           const updated = { ...user, isEmailVerified: true };
           setUser(updated);
+          localStorage.setItem(AUTH_USER_KEY, JSON.stringify(updated));
         }
         return { success: true };
       }

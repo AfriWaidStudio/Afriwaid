@@ -4,7 +4,7 @@ import { Role, Permission } from "../../types";
 import { ShieldCheck, Loader2, CheckSquare, Square, RefreshCcw, Save, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function RbacController() {
-  const { token, reloadPermissionsAndUsers } = useAuth();
+  const { token, isLoading: authLoading, reloadPermissionsAndUsers } = useAuth();
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [selectedRoleName, setSelectedRoleName] = useState<string>("");
@@ -16,6 +16,7 @@ export default function RbacController() {
   const [successMsg, setSuccessMsg] = useState("");
 
   const loadRbacData = async () => {
+    if (authLoading || !token) return;
     setLoading(true);
     setErrorMsg("");
     try {
@@ -64,8 +65,9 @@ export default function RbacController() {
   };
 
   useEffect(() => {
+    if (authLoading || !token) return;
     loadRbacData();
-  }, [token]);
+  }, [authLoading, token]);
 
   // Adjust permissions checking when chosen role changes
   useEffect(() => {
